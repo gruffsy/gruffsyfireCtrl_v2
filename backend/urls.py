@@ -6,12 +6,14 @@ from django.conf.urls import include, url
 from django.views.static import serve
 import os
 from django.views.generic.base import RedirectView
-favicon_view = RedirectView.as_view(url=os.path.join(settings.STATIC_URL,'favicon.ico'), permanent=True)
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    path('favicon.ico', favicon_view),
     path('', TemplateView.as_view(template_name='index.html')),
+    path('about/', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
+    url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     url(r'^static/(?P<path>.*)$', serve,
         {'document_root': settings.STATIC_ROOT}),
     url(r'^dmedia/(?P<path>.*)$', serve,
@@ -27,6 +29,7 @@ urlpatterns = [
         {'document_root': os.path.join(settings.VUE_ROOT, 'css')}),
     url(r'^fonts/(?P<path>.*)$', serve,
         {'document_root': os.path.join(settings.VUE_ROOT, 'fonts')}),
+    
 ]
 
 
