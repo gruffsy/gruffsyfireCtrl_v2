@@ -1,1 +1,1 @@
-python manage.py runserver --settings=backend.settings.dev
+python manage.py runserver 0.0.0.0:8000 --settings=backend.settings.dev

@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from .models import Month, Customer
+from .models import Month, Customer, Slokketype, Extinguishant, Objekt
 
 # Modell Month
 class MonthType(DjangoObjectType):
@@ -24,9 +24,21 @@ class CreateMonth(graphene.Mutation):
 class CustomerType(DjangoObjectType):
     class Meta:
         model = Customer
+
+# Model Slokketype
+class SlokketypeType(DjangoObjectType):
+    class Meta:
+        model = Slokketype
     
+# Model Extinguishant
+class ExtinguishantType(DjangoObjectType):
+    class Meta:
+        model = Extinguishant
 
-
+#Model Objekt
+class ObjektType(DjangoObjectType):
+    class Meta:
+        model = Objekt
 
 class Query(graphene.ObjectType):
     month = graphene.Field(MonthType, id=graphene.Int())
@@ -34,6 +46,15 @@ class Query(graphene.ObjectType):
 
     customer = graphene.Field(CustomerType, id=graphene.Int())
     customers = graphene.List(CustomerType)
+
+    slokketype = graphene.Field(SlokketypeType, id=graphene.Int())
+    slokketypes = graphene.List(SlokketypeType)
+
+    extinguishant = graphene.Field(ExtinguishantType, id=graphene.Int())
+    extinguishants = graphene.List(ExtinguishantType)
+
+    objekt = graphene.Field(ObjektType, id=graphene.Int())
+    objekts = graphene.List(ObjektType)
 
     # sinle queries
 
@@ -53,7 +74,29 @@ class Query(graphene.ObjectType):
 
         return None
 
+    def resolve_slokketype(self, info, **kwargs):
+        id = kwargs.get('id')
 
+        if id is not None:
+            return Slokketype.objects.get(pk=id)
+
+        return None
+
+    def resolve_extinguishant(self, info, **kwargs):
+        id = kwargs.get('id')
+
+        if id is not None:
+            return Extinguishant.objects.get(pk=id)
+
+        return None
+
+    def resolve_objekt(self, info, **kwargs):
+        id = kwargs.get('id')
+
+        if id is not None:
+            return Objekt.objects.get(pk=id)
+
+        return None
 
     # mange queries
     def resolve_months(self, info):
@@ -61,6 +104,16 @@ class Query(graphene.ObjectType):
     
     def resolve_customers(self, info):
         return Customer.objects.all()
+
+    def resolve_slokketypes(self, info):
+        return Slokketype.objects.all()
+
+    def resolve_extinguishants(self, info):
+        return Extinguishant.objects.all()
+    
+    def resolve_objekts(self, info):
+        return Objekt.objects.all()
+
 
 
 

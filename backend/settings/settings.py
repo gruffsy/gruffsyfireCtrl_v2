@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'fireCtrl_app',
     'graphene_django',
+    'import_export',
 ]
 
 MIDDLEWARE = [
