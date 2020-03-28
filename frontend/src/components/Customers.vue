@@ -6,6 +6,7 @@
             <li v-for="(month, index) in months"
             :key="index">Månedsnavn: {{ month.navn }}</li>
         </ol>
+        <v-btn color="success" @click="logout">logout</v-btn>
     </v-container>
         
     
@@ -34,7 +35,11 @@ export default {
         router.push("/login");
       }
     },
-    all: function() {
+    logout() {
+        this.$session.destroy();
+        router.go("/login");
+    },
+    all() {
       axios
       .get("api/months/")
       .then(response => {
