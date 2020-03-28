@@ -1,13 +1,12 @@
 # backend/views.py
-from .models import Subscription
-from .serializers import SubscriptionSerializer
+from .serializers import *
 from rest_framework import generics
 
 
-class SubscriptionList(generics.ListCreateAPIView):
-    queryset = Subscription.objects.all()
-    serializer_class = SubscriptionSerializer
+class MonthList(generics.ListCreateAPIView):
+    queryset = Month.objects.all()
+    serializer_class = MonthSerializer
 
-class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Subscription.objects.all()
-    serializer_class = SubscriptionSerializer
+class MonthDetail(generics.RetrieveUpdateAPIView):
+    queryset = Month.objects.all()
+    serializer_class = MonthSerializer

@@ -1,16 +1,5 @@
 from django.db import models
 from django.utils import timezone
-# Create your models here.
-class Subscription(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    currency = models.CharField(max_length=255)
-    amount = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
         
 # Create your models here.
 
@@ -44,7 +33,7 @@ class Customer(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
+        if not self.pk:
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Customer, self).save(*args, **kwargs)
@@ -97,7 +86,7 @@ class Object(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
+        if not self.pk:
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Object, self).save(*args, **kwargs)
@@ -115,7 +104,7 @@ class Avvik(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
+        if not self.pk:
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Avvik, self).save(*args, **kwargs)
@@ -142,7 +131,7 @@ class ObjTr(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
+        if not self.pk:
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(ObjTr, self).save(*args, **kwargs)

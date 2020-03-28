@@ -3,6 +3,6 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from backend import views
 
 urlpatterns = [
-    path('subscriptions/', views.SubscriptionList.as_view()),
-    path('subscriptions/<int:pk>/', views.SubscriptionDetail.as_view()),
+    path('months/', views.MonthList.as_view()),
+    path('months/<int:pk>/', views.MonthDetail.as_view()),
 ]

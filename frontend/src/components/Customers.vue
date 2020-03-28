@@ -1,13 +1,29 @@
 <template>
-    <div>
-        Customer page
-    </div>
+    <v-container grid-list-xs>
+        
+        <h1>Måneder</h1>
+        <ol>
+            <li v-for="(month, index) in months"
+            :key="index">Månedsnavn: {{ month.navn }}</li>
+        </ol>
+    </v-container>
+        
+    
 </template>
 
 <script>
 import router from "../router/index";
+import axios from "axios";
 export default {
-  name: "Movies",
+  name: "Customers",
+   data() {
+    return {
+      months: []
+    };
+  },
+  created() {
+    this.all();
+  },
   mounted() {
     this.checkLoggedIn();
   },
@@ -17,6 +33,13 @@ export default {
       if (!this.$session.has("token")) {
         router.push("/login");
       }
+    },
+    all: function() {
+      axios
+      .get("api/months/")
+      .then(response => {
+        this.months = response.data;
+      });
     }
   }
 };
