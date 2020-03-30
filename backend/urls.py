@@ -6,8 +6,8 @@ from .views import MonthViewSet, CustomerViewset, UserViewSet
 
 router = routers.DefaultRouter()
 router.register('months', MonthViewSet)
-router.register('customers', MonthViewSet)
-router.register('users', MonthViewSet)
+router.register('customers', CustomerViewset)
+router.register('users', UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
