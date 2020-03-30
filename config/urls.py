@@ -4,16 +4,16 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls import include, url
 from django.views.static import serve
-from rest_framework_jwt.views import obtain_jwt_token
 import os
+from rest_framework.authtoken.views import obtain_auth_token
 from django.views.generic.base import RedirectView
 favicon_view = RedirectView.as_view(url=os.path.join(settings.STATIC_URL,'favicon.ico'), permanent=True)
 
 urlpatterns = [
     path('favicon.ico', favicon_view),
     path('admin/', admin.site.urls),
-    path('auth/', obtain_jwt_token),
     path('api/', include('backend.urls')),
+    path('auth/', obtain_auth_token),
     url(r'^static/(?P<path>.*)$', serve,
         {'document_root': settings.STATIC_ROOT}),
     url(r'^dmedia/(?P<path>.*)$', serve,

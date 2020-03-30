@@ -1,8 +1,14 @@
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
-from backend import views
+from rest_framework import routers
+from django.conf.urls import include
+from .views import MonthViewSet, CustomerViewset, UserViewSet
+
+
+router = routers.DefaultRouter()
+router.register('months', MonthViewSet)
+router.register('customers', MonthViewSet)
+router.register('users', MonthViewSet)
 
 urlpatterns = [
-    path('months/', views.MonthList.as_view()),
-    path('months/<int:pk>/', views.MonthDetail.as_view()),
+    path('', include(router.urls)),
 ]
