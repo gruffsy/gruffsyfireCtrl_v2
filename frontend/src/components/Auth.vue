@@ -1,4 +1,6 @@
 <template>
+<div>
+<Navbar />
   <v-container grid-list-md>
     <v-layout row wrap align-center justify-center fill-height>
       <v-flex xs12 sm8 lg4 md5>
@@ -36,13 +38,17 @@
       </v-flex>
     </v-layout>
   </v-container>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-//import router from "../router/index";
+import Navbar from "./Navbar";
 export default {
   name: "Auth",
+  components: {
+    Navbar,
+  },
   data() {
     return {
       username: "",
@@ -62,13 +68,13 @@ export default {
           console.log(this.token);
           localStorage.setItem("user-token", resp.data.token);
           this.$router.push('/');
+          this.$router.go(0);
         })
         .catch(err => {
           localStorage.removeItem("user-token");
           console.log(err);
         });
-      //console.log(this.username);
-      //console.log(this.password);
+     
     }
   },
 };

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Customers from "../components/Customers";
+import Customers from "../pages/Customers";
 import Auth from "../components/Auth";
 
 Vue.use(VueRouter);
