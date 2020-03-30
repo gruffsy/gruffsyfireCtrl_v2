@@ -6,11 +6,13 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import VueSession from "vue-session";
+import { TokenService } from "./storage/service";
 
 Vue.use(vuetify);
 Vue.use(VueSession);
 
 Vue.config.productionTip = false;
+Vue.prototype.$token = TokenService;
 
 new Vue({
   router,

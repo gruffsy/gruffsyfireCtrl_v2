@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Customers from "../pages/Customers";
 import Auth from "../components/Auth";
+import CustomerObjects from "../pages/CustomerObjects"
 
 Vue.use(VueRouter);
 
@@ -16,7 +17,11 @@ const routes = [
     name: "Auth",
     component: Auth
   },
- 
+  {
+    path: "/customer-objects/:id",
+    name: "CustomerObjects",
+    component: CustomerObjects
+  },
 ];
 const router = new VueRouter({
   mode: "history",

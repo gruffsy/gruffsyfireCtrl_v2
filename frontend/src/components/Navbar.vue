@@ -45,7 +45,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      token: localStorage.getItem("user-token") || null,
+     // token: localStorage.getItem("user-token") || null,
       drawer: false,
       meny_icon: "mdi-fire",
       items: [
@@ -65,9 +65,22 @@ export default {
       right: null
     };
   },
+   mounted() {
+    
+    this.checkLoggedIn();
+  },
+  created(){
+    this.token = this.$token.getToken();
+  },
   methods: {
     meny() {
       this.drawer = !this.drawer;
+    },
+     checkLoggedIn() {
+      //console.log(this.token)
+      if (!this.token) {
+        this.$router.push("/login");
+      }
     },
     logout() {
       localStorage.removeItem("user-token");
