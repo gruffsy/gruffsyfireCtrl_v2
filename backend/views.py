@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
-from .models import Month, Customer
-from .serializers import MonthSerializer, CustomerSerializer, UserSerializer
+from .models import Month, Customer, Object
+from .serializers import ObjectSerializer, MonthSerializer, CustomerSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -25,6 +25,12 @@ class MonthViewSet(NestedViewSetMixin, ModelViewSet):
 
 class CustomerViewset(NestedViewSetMixin, ModelViewSet):
     queryset=Customer.objects.all()
+    serializer_class = CustomerSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
+
+class ObjectViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Object.objects.all()
     serializer_class = CustomerSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )

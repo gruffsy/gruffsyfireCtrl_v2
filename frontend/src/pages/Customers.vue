@@ -29,17 +29,21 @@
               prepend-icon="mdi-house"
               three-line
               router
-              :to="`/customer-objects/${kunde.id}`"
+              :to="{path:`/customer-objects/${kunde.id}`, query: {monthId: month.id}}"
+
+              
+
+
               v-for="kunde in customers"
               :key="kunde.id"
-              v-if="kunde.month === month.id"
+              v-if="kunde.month == month.url"
             >
               <!-- eslint-enable -->
               <v-list-item-content>
                 <v-list-item-icon>
                   <v-icon>mdi-home-city</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>{{ kunde.kunde }}</v-list-item-title>
+                <v-list-item-title>{{ kunde.kunde }} måned {{ month.url }}</v-list-item-title>
                 <v-list-item-subtitle>
                   {{ kunde.badresse }}, {{ kunde.bpoststed }}&nbsp;{{
                   kunde.bpoststed

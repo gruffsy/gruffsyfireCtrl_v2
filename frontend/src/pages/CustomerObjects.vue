@@ -6,6 +6,7 @@
       <br />
       <v-btn @click="getCustomer">ID:{{ id }}</v-btn>
       <h2>Kunde: {{ customer.kunde }}</h2>
+      <h3>Månedsnummer: {{ monthId }} </h3>
       <v-expansion-panels focusable>
         <v-expansion-panel v-if="customer.length < 0" v-for="obj in customer" :key="obj.id">
           <v-expansion-panel-header>{{ obj.kunde }}. Etage</v-expansion-panel-header>
@@ -68,6 +69,7 @@ export default {
   },
   beforeCreate() {
     this.id = parseInt(this.$route.params.id);
+    this.monthId = parseInt(this.$route.query.monthId);
   },
   created() {
     this.getCustomer();
