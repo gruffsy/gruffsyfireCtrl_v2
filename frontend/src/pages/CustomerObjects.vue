@@ -8,7 +8,9 @@
       <h2>Kunde: {{ customer.kunde }}</h2>
       <h3>Månedsnummer: {{ monthId }} </h3>
       <v-expansion-panels focusable>
+        <!-- eslint-disable -->
         <v-expansion-panel v-if="customer.length < 0" v-for="obj in customer" :key="obj.id">
+          <!-- eslint-enable -->
           <v-expansion-panel-header>{{ obj.kunde }}. Etage</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-list>
