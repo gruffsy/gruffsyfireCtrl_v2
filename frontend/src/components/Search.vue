@@ -17,8 +17,7 @@
             v-for="photo in filteredPhotoFeed"
             v-bind:key="photo.id"
           >
-            <img v-bind:src="photo.download_url" />
-            <span class="author">{{ photo.author }}</span>
+            <span class="author">{{ photo.kunde }}</span>
           </li>
         </ul>
         <!--
@@ -55,25 +54,20 @@ export default {
       }
     };
   },
-  created() {
-   
-    this.allCustomers();
-  },
+  created() {},
   mounted() {
     axios
       .get("https://picsum.photos/v2/list?page=2&limit=10")
       .then(response => {
-        this.photoFeed = response.data;
+        this.customers = response.data;
       })
       .catch(error => console.log(error));
+
+    axios.get("api/customers/", this.axiosConfig).then(response => {
+      this.photoFeed = response.data;
+    });
   },
-  methods: {
-    allCustomers() {
-      axios.get("api/customers/", this.axiosConfig).then(response => {
-        this.customers = response.data;
-      });
-    }
-  },
+  methods: {},
   computed: {
     filteredPhotoFeed: function() {
       var photos = this.photoFeed;
@@ -82,11 +76,11 @@ export default {
       if (!authorNameSearchString) {
         return photos;
       }
-    //var searchString;
+      //var searchString;
       authorNameSearchString = authorNameSearchString.trim().toLowerCase();
 
       photos = photos.filter(function(item) {
-        if (item.author.toLowerCase().indexOf(authorNameSearchString) !== -1) {
+        if (item.kunde.toLowerCase().indexOf(authorNameSearchString) !== -1) {
           return item;
         }
       });
