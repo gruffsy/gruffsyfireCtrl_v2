@@ -15,6 +15,9 @@ export default {
   components: {
   //  Navbar
   },
+  created() {
+    
+  },
   data: () => ({
     //
   })

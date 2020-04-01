@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'backend',
     'corsheaders',
+    'import_export',
 
 
 ]

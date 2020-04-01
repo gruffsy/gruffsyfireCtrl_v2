@@ -1,62 +1,81 @@
 <template>
   <div>
     <Navbar />
-
+    <Search />
     <v-container>
-      <v-card outlined link route to class="primary" dark>
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="overline mb-4">Siste kunde</div>
-            <v-list-item-title class="headline mb-1">Siste aktive kunde</v-list-item-title>
-            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-          </v-list-item-content>
+      
 
-          <v-list-item-avatar tile size="80" color="grey">mdi-account</v-list-item-avatar>
-        </v-list-item>
+      <div id="prev_customer">
+        <v-card outlined link route to class="primary" dark>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">Siste kunde</div>
+              <v-list-item-title class="headline mb-1"
+                >Siste aktive kunde</v-list-item-title
+              >
+              <v-list-item-subtitle
+                >Greyhound divisely hello coldly
+                fonwderfully</v-list-item-subtitle
+              >
+            </v-list-item-content>
 
-        <v-card-actions></v-card-actions>
-      </v-card>
-
-      <br />
-      <v-expansion-panels focusable>
-        <v-expansion-panel v-for="month in months" :key="month.id">
-          <v-expansion-panel-header>{{ month.navn }}</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <!-- eslint-disable -->
-            <v-list-item
-              dense
-              link
-              prepend-icon="mdi-house"
-              three-line
-              router
-              :to="{path:`/customer-objects/${kunde.id}`, query: {monthId: month.id}}"
-
-              
-
-
-              v-for="kunde in customers"
-              :key="kunde.id"
-              v-if="kunde.month == month.url"
+            <v-list-item-avatar tile size="80" color="grey"
+              >mdi-account</v-list-item-avatar
             >
-              <!-- eslint-enable -->
-              <v-list-item-content>
-                <v-list-item-icon>
-                  <v-icon>mdi-home-city</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>{{ kunde.kunde }} måned {{ month.url }}</v-list-item-title>
-                <v-list-item-subtitle>
-                  {{ kunde.badresse }}, {{ kunde.bpoststed }}&nbsp;{{
-                  kunde.bpoststed
-                  }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>Kontaktperson: {{ kunde.kontaktperson }}</v-list-item-subtitle>
-                <v-list-item-subtitle>{{ kunde.tlf1 }}</v-list-item-subtitle>
-                <v-list-item-subtitle>{{ kunde.tlf2 }}</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+          </v-list-item>
+
+          <v-card-actions></v-card-actions>
+        </v-card>
+      </div>
+      <br />
+      <div id="byMonth">
+        <v-expansion-panels focusable>
+          <v-expansion-panel v-for="month in months" :key="month.id">
+            <v-expansion-panel-header>{{
+              month.navn
+            }}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <!-- eslint-disable -->
+              <v-list-item
+                dense
+                link
+                prepend-icon="mdi-house"
+                three-line
+                router
+                :to="{
+                  path: `/customer-objects/${kunde.id}`,
+                  query: { monthId: month.id }
+                }"
+                v-for="kunde in customers"
+                :key="kunde.id"
+                v-if="kunde.month == month.url"
+              >
+                <!-- eslint-enable -->
+                <v-list-item-content>
+                  <v-list-item-icon>
+                    <v-icon>mdi-home-city</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title style="font-size: 20px">{{
+                    kunde.kunde
+                  }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ kunde.badresse }}, {{ kunde.bpoststed }}&nbsp;{{
+                      kunde.bpoststed
+                    }}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle
+                    >Kontaktperson:
+                    {{ kunde.kontaktperson }}</v-list-item-subtitle
+                  >
+                  <v-list-item-subtitle>{{ kunde.tlf1 }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ kunde.tlf2 }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </div>
+
       <br />
       <br />
       <br />
@@ -69,10 +88,12 @@
 <script>
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import Search from "../components/Search";
 export default {
   name: "Customers",
   components: {
-    Navbar
+    Navbar,
+    Search
   },
   data() {
     return {
