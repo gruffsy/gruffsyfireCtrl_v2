@@ -1,63 +1,43 @@
 <template>
   <div>
-    <v-container>
-      <H1>SEARCH</H1>
-      <div id="app-instasearch">
-        <div class="input-container">
-          <input
-            type="text"
-            placeholder="Type a name"
-            v-model="kundeNameSearchString"
-          />
-        </div>
-        <!-- eslint-disable -->
-        <v-text-field 
-        placeholder="Type a name"
-            v-model="kundeNameSearchString"></v-text-field>
-        <v-list-item
-          dense
-          link
-          prepend-icon="mdi-house"
-          three-line
-          router
-          :to="{
-            path: `/customer-objects/${customer.id}`,
-            
-          }"
-           v-for="customer in filteredCustomerFeed"
-            v-bind:key="customer.id"
-        >
-          <!-- eslint-enable -->
-          <v-list-item-content>
-            <v-list-item-icon>
-              <v-icon>mdi-home-city</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="font-size: 20px">{{
-              customer.kunde
-            }}</v-list-item-title>
-            <v-list-item-subtitle>
-              {{ customer.badresse }}, {{ customer.bpoststed }}&nbsp;{{
-                customer.bpoststed
-              }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle
-              >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
-            >
-            <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-        <ul>
-          <li
-            class="photo"
-            v-for="customer in filteredCustomerFeed"
-            v-bind:key="customer.id"
+    <H1>Alle kunder</H1>
+    <div id="app-instasearch">
+      <v-text-field
+        placeholder="Søk etter kunde"
+        v-model="kundeNameSearchString"
+      ></v-text-field>
+      <v-list-item
+        dense
+        link
+        prepend-icon="mdi-house"
+        three-line
+        router
+        :to="{
+          path: `/customer-objects/${customer.id}`
+        }"
+        v-for="customer in filteredCustomerFeed"
+        v-bind:key="customer.id"
+      >
+        <v-list-item-content>
+          <v-list-item-icon>
+            <v-icon>mdi-home-city</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title style="font-size: 20px">{{
+            customer.kunde
+          }}</v-list-item-title>
+          <v-list-item-subtitle>
+            {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
+              customer.bpoststed
+            }}
+          </v-list-item-subtitle>
+          <v-list-item-subtitle
+            >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
           >
-            <span class="author">{{ customer.kunde }}</span>
-          </li>
-        </ul>
-      </div>
-    </v-container>
+          <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </div>
   </div>
 </template>
 
