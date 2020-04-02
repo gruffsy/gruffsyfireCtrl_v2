@@ -13,7 +13,8 @@
           three-line
           router
           :to="{
-            path: `/customer-objects/${customer.id}`
+            path: `/customer-objects/${customer.id}`,
+            query: { monthId:customer.month }
           }"
           v-for="customer in filteredCustomerFeed"
           v-bind:key="customer.id"

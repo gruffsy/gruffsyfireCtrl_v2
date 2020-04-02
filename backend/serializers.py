@@ -1,12 +1,12 @@
 # backend/serializers.py
 from rest_framework import serializers
-from .models import Month, Customer, Object
+from .models import Month, Customer, Object, Slokketype, Extinguishant, Avvik, ObjTr
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    #id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = User
@@ -20,8 +20,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
 
-class MonthSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class MonthSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Month
@@ -29,18 +29,46 @@ class MonthSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {'navn': {'required': True}}
 
 
-class CustomerSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class CustomerSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Customer
         fields = '__all__'
 
-class ObjectSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class SlokketypeSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Slokketype
+        fields = '__all__'
+
+class ExtinguishantSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Extinguishant
+        fields = '__all__'
+
+class ObjectSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Object
+        fields = '__all__'
+
+class AvvikSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Avvik
+        fields = '__all__'
+
+class ObjTrSerializer(serializers.ModelSerializer):
+   #id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = ObjTr
         fields = '__all__'
 
 

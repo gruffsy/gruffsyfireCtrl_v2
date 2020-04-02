@@ -16,7 +16,7 @@
           }"
           v-for="customer in customers"
           :key="customer.id"
-          v-if="customer.month == month.url"
+          v-if="customer.month == month.id"
         >
           <!-- eslint-enable -->
           <v-list-item-content>

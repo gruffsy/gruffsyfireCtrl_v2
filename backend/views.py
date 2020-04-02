@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
-from .models import Month, Customer, Object
-from .serializers import ObjectSerializer, MonthSerializer, CustomerSerializer, UserSerializer
+from .models import *
+from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -29,8 +29,35 @@ class CustomerViewset(NestedViewSetMixin, ModelViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )
 
-class ObjectViewset(NestedViewSetMixin, ModelViewSet):
-    queryset = Object.objects.all()
-    serializer_class = CustomerSerializer
+class SlokketypeViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Slokketype.objects.all()
+    serializer_class = SlokketypeSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )
+
+class ExtinguishantViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Extinguishant.objects.all()
+    serializer_class = ExtinguishantSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
+
+class ObjectViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Object.objects.all()
+    serializer_class = ObjectSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
+
+class AvvikViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Avvik.objects.all()
+    serializer_class = AvvikSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
+
+class ObjTrViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = ObjTr.objects.all()
+    serializer_class = ObjectSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
+
+
+
