@@ -2,7 +2,7 @@
   <nav>
     <v-app-bar class="primary darken-2" dark app height="84">
       <v-icon @click="meny" x-large>{{ meny_icon }}</v-icon>
-      <v-toolbar-title dark>
+      <v-toolbar-title @click="meny" dark>
         <span class="font-weight-light">fire</span>
         <span>Ctrl</span>
       </v-toolbar-title>

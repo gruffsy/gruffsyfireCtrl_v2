@@ -11,31 +11,31 @@
           three-line
           router
           :to="{
-            path: `/customer-objects/${kunde.id}`,
+            path: `/customer-objects/${customer.id}`,
             query: { monthId: month.id }
           }"
-          v-for="kunde in customers"
-          :key="kunde.id"
-          v-if="kunde.month == month.url"
+          v-for="customer in customers"
+          :key="customer.id"
+          v-if="customer.month == month.url"
         >
           <!-- eslint-enable -->
           <v-list-item-content>
-            <v-list-item-icon>
-              <v-icon>mdi-home-city</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="font-size: 20px">{{
-              kunde.kunde
-            }}</v-list-item-title>
+            
+
+            
+            <v-list-item-title x-large><v-list-item-icon>
+              <v-icon x-large>mdi-home-city</v-icon>
+            </v-list-item-icon>{{ customer.kunde }}</v-list-item-title>
             <v-list-item-subtitle>
-              {{ kunde.badresse }}, {{ kunde.bpostnr }}&nbsp;{{
-                kunde.bpoststed
+              {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
+                customer.bpoststed
               }}
             </v-list-item-subtitle>
             <v-list-item-subtitle
-              >Kontaktperson: {{ kunde.kontaktperson }}</v-list-item-subtitle
+              >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
             >
-            <v-list-item-subtitle>{{ kunde.tlf1 }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ kunde.tlf2 }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-expansion-panel-content>
@@ -47,15 +47,13 @@
 import axios from "axios";
 
 export default {
-  name: "Customers",
-  components: {
-    
-  },
+  name: "Month",
+  components: {},
   data() {
     return {
       months: [],
       month_detail: [],
-      
+
       customers: [],
       axiosConfig: {
         headers: {

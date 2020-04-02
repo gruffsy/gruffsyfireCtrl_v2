@@ -1,42 +1,43 @@
 <template>
   <div>
-    <H1>Alle kunder</H1>
     <div id="app-instasearch">
-      <v-text-field
-        placeholder="Søk etter kunde"
-        v-model="kundeNameSearchString"
-      ></v-text-field>
-      <v-list-item
-        dense
-        link
-        prepend-icon="mdi-house"
-        three-line
-        router
-        :to="{
-          path: `/customer-objects/${customer.id}`
-        }"
-        v-for="customer in filteredCustomerFeed"
-        v-bind:key="customer.id"
+      <v-card>
+        <v-card-text>
+          <v-text-field
+            label="Søk etter kunde"
+            v-model="kundeNameSearchString"
+          ></v-text-field>
+        </v-card-text>
+        <v-list-item
+          link
+          three-line
+          router
+          :to="{
+            path: `/customer-objects/${customer.id}`
+          }"
+          v-for="customer in filteredCustomerFeed"
+          v-bind:key="customer.id"
+        >
+          <v-list-item-content>
+            
+
+            
+            <v-list-item-title x-large><v-list-item-icon>
+              <v-icon x-large>mdi-home-city</v-icon>
+            </v-list-item-icon>{{ customer.kunde }}</v-list-item-title>
+            <v-list-item-subtitle>
+              {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
+                customer.bpoststed
+              }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle
+              >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
+            >
+            <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item></v-card
       >
-        <v-list-item-content>
-          <v-list-item-icon>
-            <v-icon>mdi-home-city</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title style="font-size: 20px">{{
-            customer.kunde
-          }}</v-list-item-title>
-          <v-list-item-subtitle>
-            {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
-              customer.bpoststed
-            }}
-          </v-list-item-subtitle>
-          <v-list-item-subtitle
-            >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
-          >
-          <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
-          <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
     </div>
   </div>
 </template>
