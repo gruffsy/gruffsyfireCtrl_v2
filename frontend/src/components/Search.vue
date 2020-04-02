@@ -7,28 +7,20 @@
           <input
             type="text"
             placeholder="Type a name"
-            v-model="authorNameSearchString"
+            v-model="kundeNameSearchString"
           />
         </div>
 
         <ul>
           <li
             class="photo"
-            v-for="photo in filteredPhotoFeed"
-            v-bind:key="photo.id"
+            v-for="customer in filteredCustomerFeed"
+            v-bind:key="customer.id"
           >
-            <span class="author">{{ photo.kunde }}</span>
+            <span class="author">{{ customer.kunde }}</span>
           </li>
         </ul>
-        <!--
-    v-for=”photo in filteredPhotoFeed”: Makes Vue able to repeat an li for each element in the filteredPhotoFeed array
-    v-bind:key=”photo.id”: It’s important to choose a key to uniquely represent an image in order to be able to animate the list
-    v-bind:src=”photo.download_url”: Without this, we won’t see the image
-    {{ photo.author }}: To print the author name near each photo
-    -->
       </div>
-
-      {{ customers }}
     </v-container>
   </div>
 </template>
@@ -41,12 +33,8 @@ export default {
   components: {},
   data() {
     return {
-      months: [],
-      month_detail: [],
-      authorNameSearchString: "", // It will contain the search string bound to our input box
-      photoFeed: null, // It will contain the array of images after download
       kundeNameSearchString: "",
-      customers: null,
+      customerFeed: null,
       axiosConfig: {
         headers: {
           Authorization: "Token " + this.$token.getToken()
@@ -54,38 +42,34 @@ export default {
       }
     };
   },
-  created() {},
+  
   mounted() {
     axios
-      .get("https://picsum.photos/v2/list?page=2&limit=10")
+      .get("api/customers/", this.axiosConfig)
       .then(response => {
-        this.customers = response.data;
+        this.customerFeed = response.data;
       })
       .catch(error => console.log(error));
-
-    axios.get("api/customers/", this.axiosConfig).then(response => {
-      this.photoFeed = response.data;
-    });
   },
-  methods: {},
+  
   computed: {
-    filteredPhotoFeed: function() {
-      var photos = this.photoFeed;
-      var authorNameSearchString = this.authorNameSearchString;
+    filteredCustomerFeed: function() {
+      var customers = this.customerFeed;
+      var kundeNameSearchString = this.kundeNameSearchString;
 
-      if (!authorNameSearchString) {
-        return photos;
+      if (!kundeNameSearchString) {
+        return customers;
       }
-      //var searchString;
-      authorNameSearchString = authorNameSearchString.trim().toLowerCase();
+      
+      kundeNameSearchString = kundeNameSearchString.trim().toLowerCase();
 
-      photos = photos.filter(function(item) {
-        if (item.kunde.toLowerCase().indexOf(authorNameSearchString) !== -1) {
+      customers = customers.filter(function(item) {
+        if (item.kunde.toLowerCase().indexOf(kundeNameSearchString) !== -1) {
           return item;
         }
       });
 
-      return photos;
+      return customers;
     }
   }
 };
