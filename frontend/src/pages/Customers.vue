@@ -3,6 +3,7 @@
     <Navbar />
 
     <v-container>
+      
       <v-tabs>
         <v-tab @click="isActive = 'prev'">Siste kunder</v-tab>
         <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
@@ -29,6 +30,7 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Month from "../components/Month";
 import PrevCustomers from "../components/PrevCustomers";
+
 export default {
   name: "Customers",
   components: {
@@ -36,6 +38,7 @@ export default {
     Search,
     Month,
     PrevCustomers,
+    
   },
   data() {
     return {

@@ -1,51 +1,20 @@
 <template>
   <div>
     <Navbar />
-
+    {{ etgs }}
     <v-container>
       <br />
       <v-btn @click="getCustomer">ID:{{ id }}</v-btn>
       <h2>Kunde: {{ customer.kunde }}</h2>
-      <h3>Månedsnummer: {{ monthId }} </h3>
-      <v-expansion-panels focusable>
-        <!-- eslint-disable -->
-        <v-expansion-panel v-if="customer.length < 0" v-for="obj in customer" :key="obj.id">
-          <!-- eslint-enable -->
-          <v-expansion-panel-header>{{ obj.kunde }}. Etage</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-list>
-              <v-list-group>
-                <template v-slot:activator>
-                  <v-list-item-title>Lokasjon</v-list-item-title>
-                </template>
-                <v-list-group no-action sub-group>
-                  <template v-slot:activator>
-                    <v-list-item-content>
-                      <v-list-item-title>Plassering</v-list-item-title>
-                    </v-list-item-content>
-                  </template>
-                  <v-list-item link three-line router to="/object-details">
-                    <v-list-item-content>
-                      <v-list-item-icon>
-                        <v-icon>mdi-fire-extinguisher</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-title>Objekt</v-list-item-title>
-                      <v-list-item-subtitle>hei på deg</v-list-item-subtitle>
-                      <v-list-item-subtitle>hei på deg</v-list-item-subtitle>
-                      <v-list-item-subtitle>hei på deg</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-group>
-              </v-list-group>
-            </v-list>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <h3>Månedsnummer: {{ monthId }}</h3>
+      
+      <ul>
+        <li v-for="etg in etgs" :key="etg.id">Etasje:{{ etg.etg }} 
+        <ul><!-- eslint-disable -->
+          <li v-if="obj.etg == etg.etg" v-for="obj in objects" :key="obj.id">{{ obj.lokasjon }}</li>
+         <!-- eslint-enable -->
+        </ul></li>
+      </ul>
     </v-container>
   </div>
 </template>
@@ -60,8 +29,9 @@ export default {
   },
   data() {
     return {
-      isHidden: false,
-      customer: [],
+      customer: null,
+      etgs: null,
+      objects: null,
       axiosConfig: {
         headers: {
           Authorization: "Token " + this.$token.getToken()
@@ -75,13 +45,30 @@ export default {
   },
   created() {
     this.getCustomer();
+    this.getObjects();
+    this.getEtgs();
   },
   methods: {
     getCustomer() {
-      axios.get("../api/customers/" + this.id + "/", this.axiosConfig)
-      .then(res => {
-        this.customer = res.data;
-      });
+      axios
+        .get("../api/customers/" + this.id + "/", this.axiosConfig)
+        .then(res => {
+          this.customer = res.data;
+        });
+    },
+    getObjects() {
+      axios
+        .get("../api/customers/" + this.id + "/objects/", this.axiosConfig)
+        .then(res => {
+          this.objects = res.data;
+        });
+    },
+    getEtgs() {
+      axios
+        .get("../api/customers/" + this.id + "/etgs/", this.axiosConfig)
+        .then(res => {
+          this.etgs = res.data;
+        });
     },
     hideIt() {
       this.isHidden = true;

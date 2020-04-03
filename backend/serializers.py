@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 
 class UserSerializer(serializers.ModelSerializer):
-    #id = serializers.IntegerField(read_only=True)
+    # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = User
@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class MonthSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Month
@@ -30,42 +30,71 @@ class MonthSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Customer
         fields = '__all__'
 
+
 class SlokketypeSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Slokketype
         fields = '__all__'
 
+
 class ExtinguishantSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Extinguishant
         fields = '__all__'
 
-class ObjectSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
 
-    class Meta:
-        model = Object
+class EtgSerializer(serializers.ModelSerializer):
+   # id = serializers.IntegerField(read_only=True)
+    
+       
+    class Meta:  
+        model = Object  
+        fields = ['etg']
+
+class LokasjonSerializer(serializers.ModelSerializer):
+   # id = serializers.IntegerField(read_only=True)
+    
+       
+    class Meta:  
+        model = Object  
+        fields = ['etg', 'lokasjon']
+
+class PlasseringSerializer(serializers.ModelSerializer):
+   # id = serializers.IntegerField(read_only=True)
+    
+       
+    class Meta:  
+        model = Object  
+        fields = ['etg', 'lokasjon', 'plassering']
+
+
+class ObjectSerializer(serializers.ModelSerializer):
+   # id = serializers.IntegerField(read_only=True)
+    
+       
+    class Meta:  
+        model = Object  
         fields = '__all__'
 
 class AvvikSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Avvik
         fields = '__all__'
 
 class ObjTrSerializer(serializers.ModelSerializer):
-   #id = serializers.IntegerField(read_only=True)
+   # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ObjTr

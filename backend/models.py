@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models.query import QuerySet
+from django_group_by import GroupByMixin
         
 # Create your models here.
 
@@ -67,8 +69,13 @@ class Extinguishant(models.Model):
 
         return resultat
 
+class ObjectQuerySet(QuerySet, GroupByMixin):
+    pass
+
 
 class Object(models.Model):
+    objects = ObjectQuerySet.as_manager()
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     lokasjon = models.CharField(max_length=255)
     etg = models.SmallIntegerField(blank=False)
