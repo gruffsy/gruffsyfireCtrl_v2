@@ -1,19 +1,49 @@
 <template>
   <div>
     <Navbar />
-    {{ etgs }}
     <v-container>
       <br />
       <v-btn @click="getCustomer">ID:{{ id }}</v-btn>
       <h2>Kunde: {{ customer.kunde }}</h2>
       <h3>Månedsnummer: {{ monthId }}</h3>
-      
+
       <ul>
-        <li v-for="etg in etgs" :key="etg.id">Etasje:{{ etg.etg }} 
-        <ul><!-- eslint-disable -->
-          <li v-if="obj.etg == etg.etg" v-for="obj in objects" :key="obj.id">{{ obj.lokasjon }}</li>
-         <!-- eslint-enable -->
-        </ul></li>
+        <li v-for="etg in etgs" :key="etg.id">
+          Etasje:{{ etg.etg }}
+          <ul>
+            <!-- eslint-disable -->
+            <li
+              v-if="lok.etg == etg.etg"
+              v-for="lok in lokasjons"
+              :key="lok.id"
+            >
+              {{ lok.lokasjon }}
+              <ul>
+                <li
+                  v-if="plassering.lokasjon == lok.lokasjon"
+                  v-for="plassering in plasserings"
+                  :key="plassering.id"
+                >
+                  {{ plassering.plassering }}
+                  <ul>
+                    <li
+                      v-if="
+                        (obj.etg == etg.etg) &
+                          (obj.lokasjon == lok.lokasjon) &
+                          (obj.plassering == plassering.plassering)
+                      "
+                      v-for="obj in objects"
+                      :key="obj.id"
+                    >
+                      Objekt: {{ obj.extinguishant }}
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <!-- eslint-enable -->
+          </ul>
+        </li>
       </ul>
     </v-container>
   </div>
@@ -31,6 +61,8 @@ export default {
     return {
       customer: null,
       etgs: null,
+      lokasjons: null,
+      plasserings: null,
       objects: null,
       axiosConfig: {
         headers: {
@@ -68,6 +100,16 @@ export default {
         .get("../api/customers/" + this.id + "/etgs/", this.axiosConfig)
         .then(res => {
           this.etgs = res.data;
+        });
+      axios
+        .get("../api/customers/" + this.id + "/lokasjons/", this.axiosConfig)
+        .then(res => {
+          this.lokasjons = res.data;
+        });
+      axios
+        .get("../api/customers/" + this.id + "/plasserings/", this.axiosConfig)
+        .then(res => {
+          this.plasserings = res.data;
         });
     },
     hideIt() {
