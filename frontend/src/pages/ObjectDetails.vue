@@ -29,11 +29,10 @@
         </v-card-subtitle>
       </v-card><br>
 <v-spacer></v-spacer>
-    <v-card><!-- TODO: Legg till objektkortet -->
-        <v-card-title primary-title>
-            title
-        </v-card-title>
-    </v-card>
+    <!-- TODO: Legg till objektkortet -->
+        
+<Object />
+{{object}}
 
       <v-row justify="center">
         <v-btn color="primary" class="ma-2" dark @click="dialog = true">Open Dialog 1</v-btn>
@@ -181,11 +180,13 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import Object from "../components/Object";
 import axios from "axios";
 export default {
   name: "ObjectDetails",
   components: {
-    Navbar
+    Navbar,
+    Object
   },
   data() {
     return {

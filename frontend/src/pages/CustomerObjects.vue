@@ -10,8 +10,9 @@
             <v-list-item-title class="headline mb-1">{{customer.kundenavn}} - {{customer.customer}}</v-list-item-title>
             <v-card outlined color="primary" dark router
           :to="{
-            path: `/object-details/${customer.id}`,
-             query: { customerId: customer.customer }
+            path: `/object-details/`,
+             query: { customerId: customer.customer,
+                      objektid: customer.id }
              }">
             <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
             <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>

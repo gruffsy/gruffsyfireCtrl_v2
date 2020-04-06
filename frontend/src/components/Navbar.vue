@@ -1,4 +1,8 @@
-<!-- TODO: Lære meg VUEX og samle alle Axios spørringer 1 sted -->
+<!-- TODO: Lære meg VUEX og samle alle Axios spørringer 1 sted 
+              1. Lage http
+              2. lage Dataservice fra: 
+                      https://bezkoder.com/vue-js-crud-app/
+-->
 <template>
   <nav>
     <v-app-bar class="primary darken-2" dark app height="84">
