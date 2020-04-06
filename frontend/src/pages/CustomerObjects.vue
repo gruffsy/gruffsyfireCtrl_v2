@@ -44,6 +44,10 @@
                     v-for="obj in objects"
                     :key="obj.id"
                     link
+                    :to="{
+            path: `/object-details/${obj.id}`,
+            query: { customerId: obj.customer }
+          }"
                   >
                     <v-list-item-content><!-- eslint-enable -->
                       <v-list-item-title x-large>

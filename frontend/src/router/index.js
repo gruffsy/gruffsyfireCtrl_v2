@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Customers from "../pages/Customers";
 import Auth from "../components/Auth";
 import CustomerObjects from "../pages/CustomerObjects"
-
+import ObjectDetails from "../pages/ObjectDetails"
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,6 +21,11 @@ const routes = [
     path: "/customer-objects/:id",
     name: "CustomerObjects",
     component: CustomerObjects
+  },
+  {
+    path: "/object-details/:id",
+    name: "ObjectDetails",
+    component: ObjectDetails
   },
 ];
 const router = new VueRouter({
