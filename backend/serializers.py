@@ -47,7 +47,7 @@ class SlokketypeSerializer(serializers.ModelSerializer):
 
 class ExtinguishantSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-
+    
     class Meta:
         model = Extinguishant
         fields = '__all__'
@@ -80,8 +80,13 @@ class PlasseringSerializer(serializers.ModelSerializer):
 
 class ObjectSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-    
-       
+    #fabrikat = serializers.RelatedField(source='fabrikat', read_only=True)
+    fabrikat = serializers.ReadOnlyField(source='extinguishant.fabrikat')
+    type = serializers.ReadOnlyField(source='extinguishant.type')
+    lengde = serializers.ReadOnlyField(source='extinguishant.lengde')
+    slukkemiddel   = serializers.ReadOnlyField(source='extinguishant.slokketype.navn')
+    kundenavn = serializers.ReadOnlyField(source='customer.kunde')
+    month = serializers.ReadOnlyField(source='customer.month.navn')
     class Meta:  
         model = Object  
         fields = '__all__'
@@ -99,5 +104,4 @@ class ObjTrSerializer(serializers.ModelSerializer):
     class Meta:
         model = ObjTr
         fields = '__all__'
-
 

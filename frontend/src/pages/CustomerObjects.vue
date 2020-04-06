@@ -3,48 +3,59 @@
     <Navbar />
     <v-container>
       <br />
-      <v-btn @click="getCustomer">ID:{{ id }}</v-btn>
-      <h2>Kunde: {{ customer.kunde }}</h2>
-      <h3>Månedsnummer: {{ monthId }}</h3>
+       <v-card outlined link route to color="primary" dark>
+    <v-list-item three-line dark>
+      <v-list-item-content v-for="customer in objects.slice(0, 1)" :key="customer.id">
+        <div class="overline mb-4">Siste kunde:</div>
+        <v-list-item-title class="headline mb-1">{{customer.kundenavn}} - {{customer.id}}</v-list-item-title>
+        <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
+        <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>
+        <v-list-item-subtitle>{{customer.etg}}. etg -> {{customer.lokasjon}} -> {{customer.plassering}}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+       </v-card>
+      <v-expansion-panels>
+        <v-expansion-panel v-for="etg in etgs" :key="etg.id">
+          <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-list>
+              <v-list-group v-if="lok.etg == etg.etg" v-for="lok in lokasjons" :key="lok.id">
+                <template v-slot:activator>
+                  <v-list-item-title>{{lok.lokasjon}}</v-list-item-title>
+                </template>
 
-      <ul>
-        <li v-for="etg in etgs" :key="etg.id">
-          Etasje:{{ etg.etg }}
-          <ul>
-            <!-- eslint-disable -->
-            <li
-              v-if="lok.etg == etg.etg"
-              v-for="lok in lokasjons"
-              :key="lok.id"
-            >
-              {{ lok.lokasjon }}
-              <ul>
-                <li
+                <v-list-group
+                  no-action
+                  sub-group
                   v-if="plassering.lokasjon == lok.lokasjon"
                   v-for="plassering in plasserings"
                   :key="plassering.id"
                 >
-                  {{ plassering.plassering }}
-                  <ul>
-                    <li
-                      v-if="
-                        (obj.etg == etg.etg) &
+                  <template v-slot:activator>
+                    <v-list-item-content>
+                      <v-list-item-title>{{plassering.plassering}}</v-list-item-title>
+                    </v-list-item-content>
+                  </template>
+
+                  <v-list-item
+                    v-if="(obj.etg == etg.etg) &
                           (obj.lokasjon == lok.lokasjon) &
-                          (obj.plassering == plassering.plassering)
-                      "
-                      v-for="obj in objects"
-                      :key="obj.id"
-                    >
-                      Objekt: {{ obj.extinguishant }}
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <!-- eslint-enable -->
-          </ul>
-        </li>
-      </ul>
+                          (obj.plassering == plassering.plassering)"
+                    v-for="obj in objects"
+                    :key="obj.id"
+                    link
+                  >
+                    <v-list-item-title>Objekt{{ obj.id }}</v-list-item-title>
+                    <v-list-item-icon>
+                      <v-icon></v-icon>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </v-list-group>
+              </v-list-group>
+            </v-list>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-container>
   </div>
 </template>

@@ -87,6 +87,7 @@ class PlasseringViewset(NestedViewSetMixin, ModelViewSet):
     serializer_class = PlasseringSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     
+    
 
 
 
@@ -129,3 +130,10 @@ class ObjTrViewset(NestedViewSetMixin, ModelViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )
 
+class PrevCustomerViewset(NestedViewSetMixin, ModelViewSet):
+    queryset = Object.objects.order_by('-modified')
+    queryset = queryset.all()[:1]
+    #queryset = queryset.group_by('customer')
+    serializer_class = ObjectSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    

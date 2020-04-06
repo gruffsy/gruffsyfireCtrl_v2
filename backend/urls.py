@@ -18,6 +18,7 @@ router.register('etgs', EtgViewset)
 router.register('lokasjons', LokasjonViewset)
 router.register('plasserings', PlasseringViewset)
 router.register('cust_objects', CustomerViewset)
+router.register('prev_customers', PrevCustomerViewset)
 
 class NestedDefaultRouter(NestedRouterMixin, DefaultRouter):
     pass
@@ -46,7 +47,7 @@ cust_plasserings_router.register('plasserings', PlasseringViewset, basename='cus
 cust_objects_router = router.register('customers', CustomerViewset)    
 cust_objects_router.register('objects', ObjectViewset, basename="customer-objects", parents_query_lookups= ['customer'])
 
-
+prev_customer_router = router.register('prev_customers', PrevCustomerViewset)
 months_router = router.register('months', MonthViewSet)
 customers_router = router.register('customers', CustomerViewset)
 users_router = router.register('users', UserViewSet)
