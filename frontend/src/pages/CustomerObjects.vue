@@ -18,25 +18,25 @@
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
           <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-list>
+            <v-list><!-- eslint-disable -->
               <v-list-group v-if="lok.etg == etg.etg" v-for="lok in lokasjons" :key="lok.id">
                 <template v-slot:activator>
                   <v-list-item-title>{{lok.lokasjon}}</v-list-item-title>
-                </template>
-
+                </template><!-- eslint-enable -->
+<!-- eslint-disable -->
                 <v-list-group
                   no-action
                   sub-group
                   v-if="plassering.lokasjon == lok.lokasjon"
                   v-for="plassering in plasserings"
                   :key="plassering.id"
-                >
+                ><!-- eslint-enable -->
                   <template v-slot:activator>
                     <v-list-item-content>
                       <v-list-item-title>{{plassering.plassering}}</v-list-item-title>
                     </v-list-item-content>
                   </template>
-
+<!-- eslint-disable -->
                   <v-list-item
                     v-if="(obj.etg == etg.etg) &
                           (obj.lokasjon == lok.lokasjon) &
@@ -45,7 +45,7 @@
                     :key="obj.id"
                     link
                   >
-                    <v-list-item-content>
+                    <v-list-item-content><!-- eslint-enable -->
                       <v-list-item-title x-large>
                         <v-list-item-icon>
                           <v-icon x-large>mdi-fire-extinguisher</v-icon>
