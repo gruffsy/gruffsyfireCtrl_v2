@@ -1,3 +1,4 @@
+<!-- TODO: Lære meg VUEX og samle alle Axios spørringer 1 sted -->
 <template>
   <nav>
     <v-app-bar class="primary darken-2" dark app height="84">

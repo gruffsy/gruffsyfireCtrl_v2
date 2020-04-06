@@ -8,9 +8,15 @@
           <v-list-item-content v-for="customer in objects.slice(0, 1)" :key="customer.id">
             <div class="overline mb-4">Siste kunde:</div>
             <v-list-item-title class="headline mb-1">{{customer.kundenavn}} - {{customer.customer}}</v-list-item-title>
+            <v-card outlined color="primary" dark router
+          :to="{
+            path: `/object-details/${customer.id}`,
+             query: { customerId: customer.customer }
+             }">
             <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
             <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>
             <v-list-item-subtitle>{{customer.etg}}. etg -> {{customer.lokasjon}} -> {{customer.plassering}}</v-list-item-subtitle>
+            </v-card>
           </v-list-item-content>
         </v-list-item>
       </v-card>
