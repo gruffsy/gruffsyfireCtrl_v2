@@ -197,7 +197,6 @@ import { required, maxLength, email } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
-
   validations: {
     name: { required, maxLength: maxLength(10) },
     email: { required, email },

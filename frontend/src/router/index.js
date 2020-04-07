@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Customers from "../pages/Customers";
 import Auth from "../components/Auth";
+import Test from "../pages/test";
 
 
 Vue.use(VueRouter);
@@ -11,6 +12,13 @@ const routes = [
     path: "/",
     name: "customers",
     component: Customers
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: Test,
+    props: route => ({ kid: route.query.kid, 
+      objid: route.query.objid })
   },
   {
     path: "/login",

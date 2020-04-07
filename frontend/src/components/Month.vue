@@ -20,20 +20,18 @@
         >
           <!-- eslint-enable -->
           <v-list-item-content>
-            
-
-            
-            <v-list-item-title x-large><v-list-item-icon>
-              <v-icon x-large>mdi-home-city</v-icon>
-            </v-list-item-icon>{{ customer.kunde }}</v-list-item-title>
+            <v-list-item-title x-large>
+              <v-list-item-icon>
+                <v-icon x-large>mdi-home-city</v-icon>
+              </v-list-item-icon>
+              {{ customer.kunde }}
+            </v-list-item-title>
             <v-list-item-subtitle>
               {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
-                customer.bpoststed
+              customer.bpoststed
               }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle
-              >Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle
-            >
+            <v-list-item-subtitle>Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle>
             <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
             <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
           </v-list-item-content>
@@ -44,45 +42,42 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Month",
   components: {},
   data() {
     return {
       months: [],
-      month_detail: [],
-
-      customers: [],
-      axiosConfig: {
-        headers: {
-          Authorization: "Token " + this.$token.getToken()
-        }
-      }
+      customers: []
     };
   },
   created() {
-    this.allMonths();
-    this.allCustomers();
+    this.retrieveMonths();
+    this.retrieveCustomers()
+    
   },
-
   methods: {
-    allMonths() {
-      axios.get("api/months/", this.axiosConfig).then(response => {
-        this.months = response.data;
-      });
+    retrieveMonths() {
+      this.$dataservice
+        .getAllMonths()
+        .then(response => {
+          this.months = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    monthDetail(id) {
-      axios.get("api/months/" + id + "/", this.axiosConfig).then(response => {
-        this.month_detail = response.data;
-      });
+    retrieveCustomers() {
+      this.$dataservice.getAllCustomers()
+        .then(response => {
+          this.customers = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    allCustomers() {
-      axios.get("api/customers/", this.axiosConfig).then(response => {
-        this.customers = response.data;
-      });
-    }
   },
   computed: {}
 };

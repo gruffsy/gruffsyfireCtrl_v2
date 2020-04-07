@@ -7,7 +7,7 @@
         outlined
         link
         router
-         :to="{
+        :to="{
             path: '/customer-objects/',
             query: { kid: customer.id }
           }"
@@ -29,13 +29,13 @@
           tlf: {{ customer.tlf1 }}
           <span v-if="customer.tlf2">/ {{customer.tlf2}}</span>
         </v-card-subtitle>
-      </v-card><br>
-<v-spacer></v-spacer>
-    <!-- TODO: Legg till objektkortet -->
-        
-<Object />
-{{object}}
+      </v-card>
+      <br />
+      <v-spacer></v-spacer>
+      
+      <Object />
 
+      
       <v-row justify="center">
         <v-btn color="primary" class="ma-2" dark @click="dialog = true">Open Dialog 1</v-btn>
         <v-btn color="primary" class="ma-2" dark @click="dialog2 = true">Open Dialog 2</v-btn>
@@ -183,7 +183,7 @@
 <script>
 import Navbar from "../components/Navbar";
 import Object from "../components/Object";
-import axios from "axios";
+
 export default {
   name: "ObjectDetails",
   components: {
@@ -224,31 +224,32 @@ export default {
       widgets: false,
       object: [],
       customer: [],
-      axiosConfig: {
-        headers: {
-          Authorization: "Token " + this.$token.getToken()
-        }
-      }
+      
     };
   },
- 
   created() {
-    this.getObject();
-    this.getCustomer();
+    this.retrieveObject(this.objid);
+    this.retrieveCustomer(this.kid);
   },
   methods: {
-    getObject() {
-      axios
-        .get("../api/objects/" + this.objid + "/", this.axiosConfig)
-        .then(res => {
-          this.object = res.data;
+    retrieveObject(id) {
+      this.$dataservice
+        .getObject(id)
+        .then(response => {
+          this.object = response.data;
+        })
+        .catch(e => {
+          console.log(e);
         });
     },
-    getCustomer() {
-      axios
-        .get("../api/customers/" + this.kid + "/", this.axiosConfig)
-        .then(res => {
-          this.customer = res.data;
+    retrieveCustomer(id) {
+      this.$dataservice
+        .getCustomer(id)
+        .then(response => {
+          this.customer = response.data;
+        })
+        .catch(e => {
+          console.log(e);
         });
     }
   },

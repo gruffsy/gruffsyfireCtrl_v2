@@ -7,12 +7,16 @@ import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import VueSession from "vue-session";
 import { TokenService } from "./storage/service";
+import http from "./http-common";
+import DataService from "./services/DataService"
 
 Vue.use(vuetify);
 Vue.use(VueSession);
 
 Vue.config.productionTip = false;
 Vue.prototype.$token = TokenService;
+Vue.prototype.$http = http;
+Vue.prototype.$dataservice = DataService;
 
 new Vue({
   router,

@@ -1,7 +1,6 @@
-<!-- TODO: Lære meg VUEX og samle alle Axios spørringer 1 sted 
-              1. Lage http
-              2. lage Dataservice fra: 
-                      https://bezkoder.com/vue-js-crud-app/
+<!-- TODO:    3. Lage kundekort
+              4. Lage objektskort
+              5 gå igjennom å lage logikk for objid og kid
 -->
 <template>
   <nav>
