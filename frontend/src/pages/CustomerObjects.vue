@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <v-container>
-      <br />
+      <br /> <!-- TODO: Gjøre om til Card -->
       <v-card outlined link route to color="primary" dark>
         <v-list-item three-line dark>
           <v-list-item-content v-for="customer in objects.slice(0, 1)" :key="customer.id">
@@ -11,8 +11,8 @@
             <v-card outlined color="primary" dark router
           :to="{
             path: `/object-details/`,
-             query: { customerId: customer.customer,
-                      objektid: customer.id }
+             query: { kid: customer.customer,
+                      objid: customer.id }
              }">
             <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
             <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>
@@ -52,8 +52,8 @@
                     :key="obj.id"
                     link
                     :to="{
-            path: `/object-details/${obj.id}`,
-            query: { customerId: obj.customer }
+            path: '/object-details/',
+            query: { kid: obj.customer, objid: obj.id }
           }"
                   >
                     <v-list-item-content><!-- eslint-enable -->
@@ -103,9 +103,10 @@ export default {
     };
   },
   beforeCreate() {
-    this.id = parseInt(this.$route.params.id);
+    this.id = parseInt(this.kid);
     this.monthId = parseInt(this.$route.query.monthId);
   },
+   props: ["objid", "kid"],
   created() {
     this.getCustomer();
     this.getObjects();
@@ -114,31 +115,31 @@ export default {
   methods: {
     getCustomer() {
       axios
-        .get("../api/customers/" + this.id + "/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/", this.axiosConfig)
         .then(res => {
           this.customer = res.data;
         });
     },
     getObjects() {
       axios
-        .get("../api/customers/" + this.id + "/objects/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/objects/", this.axiosConfig)
         .then(res => {
           this.objects = res.data;
         });
     },
     getEtgs() {
       axios
-        .get("../api/customers/" + this.id + "/etgs/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/etgs/", this.axiosConfig)
         .then(res => {
           this.etgs = res.data;
         });
       axios
-        .get("../api/customers/" + this.id + "/lokasjons/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/lokasjons/", this.axiosConfig)
         .then(res => {
           this.lokasjons = res.data;
         });
       axios
-        .get("../api/customers/" + this.id + "/plasserings/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/plasserings/", this.axiosConfig)
         .then(res => {
           this.plasserings = res.data;
         });

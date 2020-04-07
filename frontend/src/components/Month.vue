@@ -11,8 +11,8 @@
           three-line
           router
           :to="{
-            path: `/customer-objects/${customer.id}`,
-            query: { monthId: month.id }
+            path: '/customer-objects/',
+            query: { kid: customer.id }
           }"
           v-for="customer in customers"
           :key="customer.id"

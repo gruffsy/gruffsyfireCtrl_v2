@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Customers from "../pages/Customers";
 import Auth from "../components/Auth";
-import CustomerObjects from "../pages/CustomerObjects"
-import ObjectDetails from "../pages/ObjectDetails"
+
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,14 +18,20 @@ const routes = [
     component: Auth
   },
   {
-    path: "/customer-objects/:id",
+    path: "/customer-objects/",
     name: "CustomerObjects",
-    component: CustomerObjects
+    component: () => 
+      import("../pages/CustomerObjects"),
+    props: route => ({ kid: route.query.kid, 
+      objid: route.query.objid }) // kid = kundeid, objid = objectid
   },
   {
     path: "/object-details/",
     name: "ObjectDetails",
-    component: ObjectDetails
+    component: () => 
+      import("../pages/ObjectDetails"),
+    props: route => ({ kid: route.query.kid, 
+      objid: route.query.objid }) // kid = kundeid, objid = objectid
   },
   {
     path: "/about",

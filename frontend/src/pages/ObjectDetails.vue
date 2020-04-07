@@ -7,8 +7,10 @@
         outlined
         link
         router
-        :to="{
-            path: `/customer-objects/${customer.id}`}"
+         :to="{
+            path: '/customer-objects/',
+            query: { kid: customer.id }
+          }"
         color="primary"
         dark
       >
@@ -188,6 +190,7 @@ export default {
     Navbar,
     Object
   },
+  props: ["objid", "kid"],
   data() {
     return {
       items: [
@@ -228,10 +231,7 @@ export default {
       }
     };
   },
-  beforeCreate() {
-    this.id = parseInt(this.$route.params.id);
-    this.customerId = parseInt(this.$route.query.customerId);
-  },
+ 
   created() {
     this.getObject();
     this.getCustomer();
@@ -239,14 +239,14 @@ export default {
   methods: {
     getObject() {
       axios
-        .get("../api/objects/" + this.id + "/", this.axiosConfig)
+        .get("../api/objects/" + this.objid + "/", this.axiosConfig)
         .then(res => {
           this.object = res.data;
         });
     },
     getCustomer() {
       axios
-        .get("../api/customers/" + this.customerId + "/", this.axiosConfig)
+        .get("../api/customers/" + this.kid + "/", this.axiosConfig)
         .then(res => {
           this.customer = res.data;
         });

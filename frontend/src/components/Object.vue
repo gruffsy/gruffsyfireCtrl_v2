@@ -1,15 +1,7 @@
 <template>
   <v-card>
     <v-container grid-list-xs>
-      <!--TODO: 
-        
-        
-        sisteservice
-        sistekontroll
-        nesteservice
-        aktiv
-
-      -->
+      
       <form>
         <v-row>
           <v-col cols="12" md="4">
