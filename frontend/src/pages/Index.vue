@@ -32,7 +32,7 @@ import Month from "../components/Month";
 import PrevCustomers from "../components/PrevCustomers";
 
 export default {
-  name: "Customers",
+  name: "Index",
   components: {
     Navbar,
     Search,
