@@ -4,8 +4,8 @@ class DataService {
   getAllCustomers() {
     return http.get("/customers/");
   }
-  getAllObjects() {
-      return http.get("/objects/");
+  getCustomerObjects(id) {
+      return http.get(`/customers/${id}/objects/`);
   }
   getAllMonths() {
     return http.get("/months/")
@@ -27,6 +27,9 @@ class DataService {
   }
   getObject(id) {
     return http.get(`/objects/${id}/`);
+  }
+  getAllExtinguishants() {
+    return http.get("/extinguishants/")
   }
 }
 

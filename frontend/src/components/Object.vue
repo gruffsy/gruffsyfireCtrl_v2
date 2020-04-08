@@ -1,27 +1,52 @@
 <template>
   <v-card>
     <v-container grid-list-xs>
-      
       <form>
         <v-row>
           <v-col cols="12" md="4">
             <!--TODO Hente Extinguishants fra Model-->
             <v-select
               :disabled="status == false"
-              v-model="name"
-              :error-messages="nameErrors"
+              :items="extinguishantItems"
+              
               label="Extinguishant TODO: Må hente Extinguishant Model"
-              required
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
-            ></v-select>
+              
+              
+              
+              
+            v-model="dbSelect"
+            return-object
+            item-text="fabrikat"
+            item-value="id"
+           
+            >
+            
+            <template slot="selection" slot-scope="data">
+                         
+                {{ data.item.fabrikat }} - {{ data.item.type }}
+              
+            </template>
+            <template slot="item" slot-scope="data">
+              <template >
+                 <v-list-tile-content>
+                  <v-list-tile-title v-html="data.item.fabrikat"></v-list-tile-title>
+                  <v-list-tile-sub-title v-html="data.item.type"></v-list-tile-sub-title>
+                </v-list-tile-content>
+              </template>
+            </template>
+            
+            
+            
+            
+            </v-select>
           </v-col>
           <v-col cols="12" md="4">
             <v-text-field
               :disabled="status == false"
-              v-model="email"
+              
               :error-messages="emailErrors"
               label="Etasje"
+              v-model="etg"
               required
               @input="$v.email.$touch()"
               @blur="$v.email.$touch()"
@@ -31,7 +56,7 @@
             <!--TODO Hente Kunder fra Customers-->
             <v-select
               :disabled="status == false"
-              v-model="select"
+              
               :items="items"
               :error-messages="selectErrors"
               label="Kundenavn (TODO: Må hentes fra kunde)"
@@ -45,9 +70,9 @@
           <v-col cols="12" md="4">
             <v-text-field
               :disabled="status == false"
-              v-model="name"
+              
               :error-messages="nameErrors"
-              :counter="10"
+              
               label="Lokasjon"
               required
               @input="$v.name.$touch()"
@@ -57,7 +82,7 @@
           <v-col cols="12" md="4">
             <v-text-field
               :disabled="status == false"
-              v-model="email"
+              
               :error-messages="emailErrors"
               label="Plassering"
               required
@@ -68,7 +93,7 @@
           <v-col cols="12" md="4">
             <v-text-field
               :disabled="status == false"
-              v-model="select"
+              
               :items="items"
               :error-messages="selectErrors"
               label="Produksjonsår"
@@ -172,7 +197,7 @@
 
   <v-checkbox
           :disabled="status==false"
-          v-model="deleted"
+          
           label="Fjernes?"
           @change="$v.checkbox.$touch()"
           @blur="$v.checkbox.$touch()"
@@ -183,7 +208,7 @@
           @change="aktiver()"
           @blur="$v.checkbox.$touch()"
         ></v-checkbox>
-        {{ status }}
+        {{ status }} - {{dbSelect}}
         <v-btn :hidden="status == false" class="mr-4" @click="submit">submit</v-btn>
         <v-btn :hidden="status == false" @click="clear">clear</v-btn>
       </form>
@@ -201,6 +226,7 @@ export default {
     name: { required, maxLength: maxLength(10) },
     email: { required, email },
     select: { required },
+    
     checkbox: {
       checked(val) {
         return val;
@@ -209,11 +235,14 @@ export default {
   },
 
   data: () => ({
-    status: false,
-    name: "",
-    email: "",
-    select: null,
+    etg: "1.etasje",
+    status: true,
+    //name: "",
+    //email: "",
+    //select: null,
+    dbSelect: "",
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    extinguishantItems: [],
     checkbox: false,
     fromDateMenu: false,
     fromDateVal: null,
@@ -254,7 +283,9 @@ export default {
       return errors;
     }
   },
-
+  mounted(){
+    this.retrieveExtinguishants();
+  },
   methods: {
     submit() {
       this.$v.$touch();
@@ -269,7 +300,18 @@ export default {
       this.email = "";
       this.select = null;
       this.checkbox = false;
-    }
+    },
+    retrieveExtinguishants() {
+      this.$dataservice
+        .getAllExtinguishants()
+        .then(response => {
+          this.extinguishantItems = response.data;
+          console.log(this.extinguishantItems);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
   }
 };
 </script>

@@ -17,20 +17,8 @@
           v-bind:key="customer.id"
         >
           <v-list-item-content>
-            <v-list-item-title x-large>
-              <v-list-item-icon>
-                <v-icon x-large>mdi-home-city</v-icon>
-              </v-list-item-icon>
-              {{ customer.kunde }}
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
-              customer.bpoststed
-              }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle>Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
+            
+           <Customer :kid="customer.id"/>
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -39,9 +27,12 @@
 </template>
 
 <script>
+import Customer from "../components/Customer"
 export default {
   name: "Customers",
-  components: {},
+  components: {
+    Customer
+  },
   data() {
     return {
       kundeNameSearchString: "",
@@ -87,3 +78,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+  color: red
+</style>

@@ -20,20 +20,7 @@
         >
           <!-- eslint-enable -->
           <v-list-item-content>
-            <v-list-item-title x-large>
-              <v-list-item-icon>
-                <v-icon x-large>mdi-home-city</v-icon>
-              </v-list-item-icon>
-              {{ customer.kunde }}
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ customer.badresse }}, {{ customer.bpostnr }}&nbsp;{{
-              customer.bpoststed
-              }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle>Kontaktperson: {{ customer.kontaktperson }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ customer.tlf1 }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ customer.tlf2 }}</v-list-item-subtitle>
+           <Customer :kid="customer.id"/>
           </v-list-item-content>
         </v-list-item>
       </v-expansion-panel-content>
@@ -42,9 +29,12 @@
 </template>
 
 <script>
+import Customer from "../components/Customer"
 export default {
   name: "Month",
-  components: {},
+  components: {
+    Customer
+  },
   data() {
     return {
       months: [],

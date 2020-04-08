@@ -3,30 +3,11 @@
     <Navbar />
     <v-container>
       <br />
-      <!-- TODO: Gjøre om til Card -->
-      <v-card outlined link route to color="primary" dark>
-        <v-list-item three-line dark>
-          <v-list-item-content v-for="customer in objects.slice(0, 1)" :key="customer.id">
-            <div class="overline mb-4">Siste kunde:</div>
-            <v-list-item-title class="headline mb-1">{{customer.kundenavn}} - {{customer.customer}}</v-list-item-title>
-            <v-card
-              outlined
-              color="primary"
-              dark
-              router
-              :to="{
-            path: `/object-details/`,
-             query: { kid: customer.customer,
-                      objid: customer.id }
-             }"
-            >
-              <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
-              <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{customer.etg}}. etg -> {{customer.lokasjon}} -> {{customer.plassering}}</v-list-item-subtitle>
-            </v-card>
-          </v-list-item-content>
-        </v-list-item>
-      </v-card>
+      <Customer :kid="kid"/>
+      <br>
+      
+      
+      <!-- TODO: Lage siste objekter Card -->
       <v-expansion-panels>
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
           <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
@@ -92,11 +73,12 @@
 
 <script>
 import Navbar from "../components/Navbar";
-
+import Customer from "../components/Customer";
 export default {
   name: "CustomerObjects",
   components: {
-    Navbar
+    Navbar,
+    Customer,
   },
   data() {
     return {
@@ -115,7 +97,7 @@ export default {
   methods: {
     retrieveAll() {
       [
-        this.retrieveObjects(),
+        this.retrieveObjects(this.kid),
         this.retrieveEtgs(this.kid),
         this.retrieveLokasjons(this.kid),
         this.retrievePlasserings(this.kid),
@@ -132,9 +114,9 @@ export default {
           console.log(e);
         });
     },
-    retrieveObjects() {
+    retrieveObjects(id) {
       this.$dataservice
-        .getAllObjects()
+        .getCustomerObjects(id)
         .then(response => {
           this.objects = response.data;
           console.log(response.data);

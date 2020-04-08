@@ -4,14 +4,17 @@
 
     <v-container>
       
-      <v-tabs>
-        <v-tab @click="isActive = 'prev'">Siste kunder</v-tab>
-        <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
-        <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
-      </v-tabs>
+      
       <br />
       
-      <PrevCustomers v-if="isActive == 'prev'" />
+      <PrevCustomers v-if="isActive == 'prev'"/>
+      <br>
+      <v-tabs>
+        <v-tab @click="isActive = 'prev'">Siste kunde</v-tab>
+        <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
+        <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
+      </v-tabs>
+      <br />
       <Search v-if="isActive == 'search'" />
 
       <Month v-if="isActive == 'month'" />

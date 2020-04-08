@@ -1,10 +1,9 @@
-<!-- TODO:    3. Lage kundekort
-              4. Lage objektskort
+<!-- TODO:    4. Lage objektskort
               5 gå igjennom å lage logikk for objid og kid
 -->
 <template>
   <nav>
-    <v-app-bar class="primary darken-2" dark app height="84">
+    <v-app-bar class="primary darken-2" dark app height="84" hide-on-scroll>
       <v-icon @click="meny" x-large>{{ meny_icon }}</v-icon>
       <v-toolbar-title @click="meny" dark>
         <span class="font-weight-light">fire</span>

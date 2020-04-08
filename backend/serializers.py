@@ -47,6 +47,7 @@ class SlokketypeSerializer(serializers.ModelSerializer):
 
 class ExtinguishantSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
+    slokketype_navn   = serializers.ReadOnlyField(source='slokketype.navn')
     
     class Meta:
         model = Extinguishant

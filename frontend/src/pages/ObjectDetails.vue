@@ -3,33 +3,7 @@
     <Navbar />
     <v-container grid-list-xs>
       <br />
-      <v-card
-        outlined
-        link
-        router
-        :to="{
-            path: '/customer-objects/',
-            query: { kid: customer.id }
-          }"
-        color="primary"
-        dark
-      >
-        <v-card-title class="headline mb-1" primary-title>
-          <v-icon>mdi-home-city</v-icon>
-          {{customer.kunde}}
-        </v-card-title>
-
-        <v-card-subtitle>
-          {{ customer.badresse }},
-          <br />
-          {{ customer.bpostnr }} {{customer.bpoststed}}
-          <br />
-          Kontaktperson: {{ customer.kontaktperson }}
-          <br />
-          tlf: {{ customer.tlf1 }}
-          <span v-if="customer.tlf2">/ {{customer.tlf2}}</span>
-        </v-card-subtitle>
-      </v-card>
+     <Customer :kid="kid" />
       <br />
       <v-spacer></v-spacer>
       
@@ -183,12 +157,14 @@
 <script>
 import Navbar from "../components/Navbar";
 import Object from "../components/Object";
+import Customer from "../components/Customer";
 
 export default {
   name: "ObjectDetails",
   components: {
     Navbar,
-    Object
+    Object,
+    Customer
   },
   props: ["objid", "kid"],
   data() {

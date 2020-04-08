@@ -3,7 +3,7 @@ import { TokenService } from "./storage/service";
 
 
 export default axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "/api",
   headers: {
     Authorization: "Token " + TokenService.getToken()
   }

@@ -62,12 +62,14 @@ class SlokketypeViewset(NestedViewSetMixin, ModelViewSet):
 
 
 class ExtinguishantViewset(NestedViewSetMixin, ModelViewSet):
-    queryset = Extinguishant.objects.all()
+    queryset = Extinguishant.objects.order_by('fabrikat', 'type', 'lengde', 'slukkemiddel')
     serializer_class = ExtinguishantSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )
+
+    
 
 
 class EtgViewset(NestedViewSetMixin, ModelViewSet):

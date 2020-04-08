@@ -1,66 +1,61 @@
 <template>
-  <div>
-    <v-card
-      v-for="customer in prevCustomers"
-      :key="customer.id"
-      outlined
-      color="primary"
-      dark
-      router
-      :to="{
+  <v-card
+    outlined
+    link
+    router
+    :to="{
             path: '/customer-objects/',
-            query: { kid: customer.customer }
+            query: {kid: customer.id}
           }"
-    >
-      <!--TODO: Gjøre om dette til EN component i som kan deles -->
-      <v-list-item three-line dark>
-        <v-list-item-content>
-          <div class="overline mb-4">Siste kunde:</div>
-          <v-list-item-title class="headline mb-1">{{customer.kundenavn}} - {{customer.customer}}</v-list-item-title>
-          <v-card
-            outlined
-            color="primary"
-            dark
-            router
-            :to="{
-            path: '/customer-objects/',
-            query: { kid: customer.id }
-          }"
-          >
-            <v-list-item-subtitle>Siste objekt:</v-list-item-subtitle>
-            <v-list-item-subtitle>{{customer.fabrikat}} {{customer.type}} {{customer.slukkemiddel}} {{customer.lengde}} - {{customer.id}}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{customer.etg}}. etg -> {{customer.lokasjon}} -> {{customer.plassering}}</v-list-item-subtitle>
-          </v-card>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>
-  </div>
+    color="primary"
+    dark
+  >
+    <v-card-title class="headline mb-1" primary-title>
+      <v-icon x-large class="pa-2">mdi-home-city</v-icon>
+      {{customer.kunde}}
+    </v-card-title>
+
+    <v-card-subtitle>
+      Trippletex: {{customer.tripletex}}
+      <br />
+      Adresse: {{customer.badresse}},
+      <br />
+      Postnr./-sted: {{customer.bpostnr}} {{customer.bpoststed}}
+      <br />
+      Kontaktperson: {{customer.kontaktperson}}
+      <br />
+      tlf: {{customer.tlf1}}
+      <span v-if="customer.tlf2">/ {{customer.tlf2}}</span>
+    </v-card-subtitle>
+  </v-card>
 </template>
+
 <script>
 export default {
   name: "PrevCustomers",
-
   data() {
     return {
-      prevCustomers: null
+      customer: [],
+      kid: 344
     };
   },
-  created() {
-    this.retrievePrevCustomers();
-  },
   methods: {
-    retrievePrevCustomers() {
-      this.$dataservice
-        .getPrevCustomers()
-        .then(response => {
-          this.prevCustomers = response.data;
-          console.log(response.data);
+    async retrievePrevCustomers() {
+      let kid;
+      this.$dataservice.getPrevCustomers().then(response => {
+        kid = response.data[0].customer;
+        this.$dataservice.getCustomer(kid).then(response => {
+          this.customer = response.data;
+          this.kid = kid;
         })
-        .catch(e => {
-          console.log(e);
-        });
+      })
     }
   },
-  computed: {}
+
+  async mounted() {
+    await this.retrievePrevCustomers();
+    
+    
+  }
 };
 </script>
