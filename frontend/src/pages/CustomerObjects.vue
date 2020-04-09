@@ -7,7 +7,7 @@
       <br>
       
       
-      <!-- TODO: Lage siste objekter Card -->
+      
       <v-expansion-panels>
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
           <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>

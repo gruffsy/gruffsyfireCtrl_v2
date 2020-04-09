@@ -88,9 +88,7 @@ class ObjectSerializer(serializers.ModelSerializer):
     slukkemiddel   = serializers.ReadOnlyField(source='extinguishant.slokketype.navn')
     kundenavn = serializers.ReadOnlyField(source='customer.kunde')
     month = serializers.ReadOnlyField(source='customer.month.navn')
-    sistekontroll = serializers.DateField(format="%d. %b %Y")
-    sisteservice  = serializers.DateField(format="%d. %b %Y")
-    nesteservice = serializers.DateField(format="%d. %b %Y")
+    #nesteservice = serializers.DateField(format="%d. %b %Y")
     class Meta:  
         model = Object  
         fields = '__all__'

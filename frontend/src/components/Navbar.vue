@@ -1,5 +1,7 @@
-<!-- TODO:    4. Lage objektskort
-              5 gå igjennom å lage logikk for objid og kid
+<!-- TODO:    4. Få til oppdatering av object
+     TODO:    5 gå igjennom å lage logikk for objid og kid
+     TODO:    6 Lage sisteobjekt-kort
+     TODO:    7 Lage ObjTr API
 -->
 <template>
   <nav>
