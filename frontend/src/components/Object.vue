@@ -8,9 +8,10 @@
             <v-select
               :disabled="status == false"
               :items="extinguishantItems"
-              :label="extinguishantSelect"
+              label="Slokker"
+              :placeholder="extLabel"
               v-model="extInput.extinguishant"
-              return-object
+              
               item-text="fabrikat"
               item-value="id"
             >
@@ -217,6 +218,9 @@ export default {
       extinguishantItems: [],
       object: null,
       extinguishantNumber: null,
+      extInput: {
+        extinguishant: null
+      },
       checkbox: false,
       fromDateMenu: false,
       fromDateVal: null,
@@ -226,8 +230,8 @@ export default {
   },
 
   computed: {
-    extInput() {
-      return {extinguishant: this.extinguishantNumber}
+    extLabel() {
+      return this.object.fabrikat + " " + this.object.type;
     },
     fromDateDisp() {
       return this.fromDateVal;
@@ -294,7 +298,7 @@ export default {
     retrieveObject(id) {
       this.$dataservice.getObject(id).then(resp => {
         this.object = resp.data;
-        this.extinguishantNumber = resp.data.extinguishant;
+        this.extInput.extinguishant = resp.data.extinguishant;
       });
     }
   }
