@@ -7,7 +7,7 @@
       <br />
       <v-spacer></v-spacer>
       
-      <Object />
+      <Object :objid="objid"/>
 
       
       <v-row justify="center">
