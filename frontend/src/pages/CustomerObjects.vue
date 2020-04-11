@@ -4,7 +4,7 @@
     <v-container>
       <br />
       <Customer :kid="kid"/>
-      <br>
+      
       
       
       
@@ -23,7 +23,8 @@
                 <v-list-group
                   no-action
                   sub-group
-                  v-if="plassering.lokasjon == lok.lokasjon"
+                  v-if="(plassering.lokasjon == lok.lokasjon) & 
+                  (plassering.etg == etg.etg)"
                   v-for="plassering in plasserings"
                   :key="plassering.id"
                 >

@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar />
-{{customers}}
+{{month}} <br>
+{{message}}
+<VBtn color="success" @click="updateO()">text</VBtn>
   </div>
 </template>
 
@@ -15,50 +17,39 @@ export default {
   },
   data() {
     return {
-      customers: [],
-      objects: [],
-      customer: null
+      month: [],
+      message: null
+     
     };
   },
-  props: ["kid"],
+  
   methods: {
-    retrieveCustomers() {
+    updateO() {
+      this.$dataservice.updateMonth(1, {"navn": "Janu"})
+      .then(response => {
+          console.log(response.data);
+          this.message = 'The tutorial was updated successfully!';
+        })
+        .catch(e => {
+          console.log(e);
+          this.message = 'noe gokk forferdelg galt!';
+        });
+    },
+    retrieveMonth(id) {
       this.$dataservice
-        .getAllExtinguishants()
+        .getMonth(id)
         .then(response => {
-          this.customers = response.data;
+          this.month = response.data;
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
-    retrieveObjects() {
-      this.$dataservice
-        .getAllObjects()
-        .then(response => {
-          this.objects = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    retrieveCustomer(id) {
-      this.$dataservice
-        .getCustomer(id)
-        .then(response => {
-          this.customer = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
   },
   mounted() {
-    this.retrieveCustomers();
-    this.retrieveObjects();
-    this.retrieveCustomer(this.kid);
+    this.retrieveMonth(1);
+    
   }
 };
 </script>

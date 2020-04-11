@@ -10,6 +10,12 @@ class DataService {
   getAllMonths() {
     return http.get("/months/")
   }
+  getMonth(id) {
+    return http.get(`/months/${id}/`)
+  }
+  updateMonth(id, data) {
+    return http.put(`/months/${id}/`, data)
+  }
   getPrevCustomers() {
     return http.get("/prev_customers/");
   }
@@ -27,6 +33,9 @@ class DataService {
   }
   getObject(id) {
     return http.get(`/objects/${id}/`);
+  }
+  updateObject(id, data) {
+    return http.patch(`/objects/${id}/`, data)
   }
   getAllExtinguishants() {
     return http.get("/extinguishants/")

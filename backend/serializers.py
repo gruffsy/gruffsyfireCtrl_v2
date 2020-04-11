@@ -26,7 +26,8 @@ class MonthSerializer(serializers.ModelSerializer):
     class Meta:
         model = Month
         fields = '__all__'
-        extra_kwargs = {'navn': {'required': True}}
+        #extra_kwargs = {'navn': {'required': True}}
+        read_only_fields = ('id', )
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -47,8 +48,8 @@ class SlokketypeSerializer(serializers.ModelSerializer):
 
 class ExtinguishantSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-    slokketype_navn   = serializers.ReadOnlyField(source='slokketype.navn')
-    
+    slokketype_navn = serializers.ReadOnlyField(source='slokketype.navn')
+
     class Meta:
         model = Extinguishant
         fields = '__all__'
@@ -56,26 +57,25 @@ class ExtinguishantSerializer(serializers.ModelSerializer):
 
 class EtgSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-    
-       
-    class Meta:  
-        model = Object  
+
+    class Meta:
+        model = Object
         fields = ['etg']
+
 
 class LokasjonSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-    
-       
-    class Meta:  
-        model = Object  
+
+    class Meta:
+        model = Object
         fields = ['etg', 'lokasjon']
+
 
 class PlasseringSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
-    
-       
-    class Meta:  
-        model = Object  
+
+    class Meta:
+        model = Object
         fields = ['etg', 'lokasjon', 'plassering']
 
 
@@ -85,13 +85,17 @@ class ObjectSerializer(serializers.ModelSerializer):
     fabrikat = serializers.ReadOnlyField(source='extinguishant.fabrikat')
     type = serializers.ReadOnlyField(source='extinguishant.type')
     lengde = serializers.ReadOnlyField(source='extinguishant.lengde')
-    slukkemiddel   = serializers.ReadOnlyField(source='extinguishant.slokketype.navn')
+    slukkemiddel = serializers.ReadOnlyField(
+        source='extinguishant.slokketype.navn')
     kundenavn = serializers.ReadOnlyField(source='customer.kunde')
     month = serializers.ReadOnlyField(source='customer.month.navn')
     #nesteservice = serializers.DateField(format="%d. %b %Y")
-    class Meta:  
-        model = Object  
+
+    class Meta:
+        model = Object
         fields = '__all__'
+
+    
 
 class AvvikSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
@@ -100,10 +104,10 @@ class AvvikSerializer(serializers.ModelSerializer):
         model = Avvik
         fields = '__all__'
 
+
 class ObjTrSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ObjTr
         fields = '__all__'
-

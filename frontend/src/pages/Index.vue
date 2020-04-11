@@ -8,7 +8,9 @@
       <br />
       
       <PrevCustomers v-if="isActive == 'prev'"/>
-      <br>
+
+      
+      <PrevObject v-if="isActive == 'prev'"/>
       <v-tabs>
         <v-tab @click="isActive = 'prev'">Siste kunde</v-tab>
         <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
@@ -33,7 +35,7 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Month from "../components/Month";
 import PrevCustomers from "../components/PrevCustomers";
-
+import PrevObject from "../components/PrevObject"
 export default {
   name: "Index",
   components: {
@@ -41,6 +43,7 @@ export default {
     Search,
     Month,
     PrevCustomers,
+    PrevObject,
     
   },
   data() {

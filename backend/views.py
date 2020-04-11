@@ -1,6 +1,7 @@
 # backend/views.py
+import django_filters
 from django.shortcuts import render
-from rest_framework import status
+from rest_framework import status, filters
 from rest_framework.viewsets import ModelViewSet
 from .models import *
 from .serializers import *
@@ -26,7 +27,7 @@ class MonthViewSet(NestedViewSetMixin, ModelViewSet):
     serializer_class = MonthSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
 
 
@@ -38,6 +39,7 @@ class CustomerViewset(NestedViewSetMixin, ModelViewSet):
     authentication_classes = (
         TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
 
     def get_queryset(self):
         queryset = super(CustomerViewset, self).get_queryset()
@@ -97,9 +99,10 @@ class PlasseringViewset(NestedViewSetMixin, ModelViewSet):
 class ObjectViewset(NestedViewSetMixin, ModelViewSet):
     queryset = Object.objects.all()
     serializer_class = ObjectSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created", "nestekontroll"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
@@ -138,4 +141,5 @@ class PrevCustomerViewset(NestedViewSetMixin, ModelViewSet):
     #queryset = queryset.group_by('customer')
     serializer_class = ObjectSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
+
     

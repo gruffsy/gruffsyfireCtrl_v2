@@ -5,12 +5,13 @@
       <br />
       <Customer :kid="kid" />
       <br />
+      
       <v-spacer></v-spacer>
 
       <v-row justify="center">
-        <v-btn color="primary" class="ma-2" dark @click="dialog = true">Open Dialog 1</v-btn>
-        <v-btn color="primary" class="ma-2" dark @click="dialog2 = true">Open Dialog 2</v-btn>
-        <v-btn color="primary" class="ma-2" dark @click="dialog3 = true">Open Dialog 3</v-btn>
+        <v-btn color="primary" class="ma-2" dark @click="dialog = true">Objektdetaljer</v-btn>
+        <v-btn color="primary" class="ma-2" dark @click="dialog2 = true">Avvikskontroll</v-btn>
+        <v-btn color="error" class="ma-2" dark @click="dialog3 = true">Slett objekt</v-btn>
         <v-menu bottom offset-y>
           <template v-slot:activator="{ on }">
             <v-btn class="ma-2" v-on="on">A Menu</v-btn>
@@ -46,8 +47,8 @@
               </v-tooltip>
 
               <v-divider></v-divider>
-
-              <Object :objid="objid" />
+<Object :objid="objid" />
+              
             </v-card-subtitle>
 
             <div style="flex: 1 1 auto;"></div>

@@ -4,48 +4,49 @@
       <form>
         <v-row>
           <!-- Etasje -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               :disabled="status == false"
               label="Etasje"
-              v-model="object.etg"
+              v-model="objectInput.etg"
               type="number"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              prepend-icon="mdi-home-floor-1"
+              
             ></v-text-field>
           </v-col>
 
           <!-- Lokasjon -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               :disabled="status == false"
               label="Lokasjon"
-              v-model="object.lokasjon"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              v-model="objectInput.lokasjon"
+              prepend-icon="mdi-home-import-outline"
+              
             ></v-text-field>
           </v-col>
 
           <!-- Plassering -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               :disabled="status == false"
               label="Plassering"
-              v-model="object.plassering"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              prepend-icon="mdi-home-search-outline"
+              v-model="objectInput.plassering"
+              
             ></v-text-field>
           </v-col>
         </v-row>
 
         <v-row>
           <!-- Slokkervalg -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-select
               :disabled="status == false"
               :items="extinguishantItems"
               label="Slokker"
-              v-model="extInput.extinguishant"
+              prepend-icon="mdi-fire-extinguisher"
+              v-model="objectInput.extinguishant"
               item-text="fabrikat"
               item-value="id"
             >
@@ -65,14 +66,14 @@
           </v-col>
 
           <!-- Produksjonsår -->
-          <v-col cols="12" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               :disabled="status == false"
               label="Produksjonsår"
-              v-model="object.prodyear"
+              v-model="objectInput.prodyear"
+              prepend-icon="mdi-update"
               type="text"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              
             ></v-text-field>
           </v-col>
 
@@ -94,7 +95,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="prevServiceInput.sisteservice"
+                  v-model="objectInput.sisteservice"
                   label="Forrige 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
                   readonly
@@ -104,7 +105,7 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="prevServiceInput.sisteservice"
+                v-model="objectInput.sisteservice"
                 @input="prevServiceDateMenu = false"
               ></v-date-picker>
             </v-menu>
@@ -122,7 +123,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="nextServiceInput.nesteservice"
+                  v-model="objectInput.nesteservice"
                   label="Neste 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
                   readonly
@@ -132,7 +133,7 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="nextServiceInput.nesteservice"
+                v-model="objectInput.nesteservice"
                 @input="nextServiceDateMenu = false"
               ></v-date-picker>
             </v-menu>
@@ -150,7 +151,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="prevKontrollInput.sistekontroll"
+                  v-model="objectInput.sistekontroll"
                   label="Forrige 1-årskontroll"
                   prepend-icon="mdi-calendar"
                   readonly
@@ -160,29 +161,28 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="prevKontrollInput.sistekontroll"
+                v-model="objectInput.sistekontroll"
                 @input="prevKontrollDateMenu = false"
               ></v-date-picker>
             </v-menu>
           </v-col>
         </v-row>
-
-        {{prevServiceInput}} date {{date}}
-        <v-checkbox
-          :disabled="status==false"
-          label="Fjernes?"
-          @change="$v.checkbox.$touch()"
-          @blur="$v.checkbox.$touch()"
-        ></v-checkbox>
+         
+         
+      
+      
         <v-checkbox
           v-model="checkbox"
           label="Redigere?"
           @change="aktiver()"
           @blur="$v.checkbox.$touch()"
         ></v-checkbox>
-        <v-btn :hidden="status == false" class="mr-4" @click="submit">Oppdater</v-btn>
-        <v-btn :hidden="status == false" @click="clear">Avbryt</v-btn>
+        <v-btn :hidden="status == false" class="mr-4" @click="updateObject()">Oppdater</v-btn>
+        <br>
+        {{message}}
       </form>
+     
+
     </v-container>
   </v-card>
 </template>
@@ -192,24 +192,21 @@ export default {
   props: ["kid", "objid"],
   data() {
     return {
-      date: new Date().toISOString().substr(0, 7),
-      menu2: false,
-      etg: "1.etasje",
-      status: true,
+      status: false,
       extinguishantItems: [],
       object: null,
       extinguishantNumber: null,
-      extInput: {
-        extinguishant: null
-      },
-      prevServiceInput: {
-        sisteservice: new Date().toISOString().substr(0, 7)
-      },
-      nextServiceInput: {
-        nesteservice: new Date().toISOString().substr(0, 7)
-      },
-      prevKontrollInput: {
-        sistekontroll: new Date().toISOString().substr(0, 7)
+      message: null,
+      objectInput: {
+        extinguishant: null,
+        etg: null,
+        plassering: null,
+        lokasjon: null,
+        prodyear: null,
+        sisteservice: null,
+        nesteservice: null,
+        sistekontroll: null,
+        modified: Date.now()
       },
       checkbox: false,
       prevServiceDateMenu: false,
@@ -235,6 +232,18 @@ export default {
     aktiver() {
       this.status = !this.status;
     },
+    updateObject() {
+      
+      this.$dataservice.updateObject(this.object.id, this.objectInput)
+        .then(response => {
+          console.log(response.data);
+          this.message = 'Objektet ble oppdatert!';
+        })
+        .catch(e => {
+          console.log(e);
+          this.message = 'Noe gikk forferdelig galt!';
+        });
+    },
     retrieveExtinguishants() {
       this.$dataservice
         .getAllExtinguishants()
@@ -248,10 +257,7 @@ export default {
     retrieveObject(id) {
       this.$dataservice.getObject(id).then(resp => {
         this.object = resp.data;
-        this.extInput.extinguishant = resp.data.extinguishant;
-        this.prevServiceInput.sisteservice = resp.data.sisteservice;
-        this.prevKontrollInput.sistekontroll = resp.data.sistekontroll;
-        this.nextServiceInput.nesteservice = resp.data.nesteservice;
+        this.objectInput = resp.data;
       });
     }
   }

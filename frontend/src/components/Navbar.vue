@@ -1,7 +1,8 @@
-<!-- TODO:    4. Få til oppdatering av object
-     TODO:    5 gå igjennom å lage logikk for objid og kid
-     TODO:    6 Lage sisteobjekt-kort
+<!-- TODO:    6 Lage sisteobjekt-kort
      TODO:    7 Lage ObjTr API
+     TODO:    8. Object: Gi mer informasjon Slokker-velger
+     TODO:    9. Lage karusell for object og kunde
+     TODO:   10. Lage meny Customer-kortet
 -->
 <template>
   <nav>
