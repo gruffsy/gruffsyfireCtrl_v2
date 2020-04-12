@@ -59,7 +59,7 @@ class SlokketypeViewset(NestedViewSetMixin, ModelViewSet):
     serializer_class = SlokketypeSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
 
 
@@ -68,7 +68,7 @@ class ExtinguishantViewset(NestedViewSetMixin, ModelViewSet):
     serializer_class = ExtinguishantSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
 
     
@@ -77,20 +77,26 @@ class ExtinguishantViewset(NestedViewSetMixin, ModelViewSet):
 class EtgViewset(NestedViewSetMixin, ModelViewSet):
     queryset = Object.objects.group_by('etg').order_by('etg').distinct()
     serializer_class = EtgSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
-    
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = '__all__'
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created", "nestekontroll"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
 
 class LokasjonViewset(NestedViewSetMixin, ModelViewSet):
     queryset = Object.objects.group_by('lokasjon', 'etg').order_by('etg', 'lokasjon').distinct()
     serializer_class = LokasjonSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
-    
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = '__all__'
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created", "nestekontroll"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
 
 class PlasseringViewset(NestedViewSetMixin, ModelViewSet):
     queryset = Object.objects.group_by('plassering', 'lokasjon', 'etg').order_by('etg', 'lokasjon', 'plassering').distinct()
     serializer_class = PlasseringSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
-    
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = '__all__'
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created", "nestekontroll"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
     
 
 
@@ -123,7 +129,7 @@ class AvvikViewset(NestedViewSetMixin, ModelViewSet):
     serializer_class = AvvikSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
 
 
@@ -132,7 +138,7 @@ class ObjTrViewset(NestedViewSetMixin, ModelViewSet):
     serializer_class = ObjectSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
 
 class PrevCustomerViewset(NestedViewSetMixin, ModelViewSet):
@@ -140,6 +146,6 @@ class PrevCustomerViewset(NestedViewSetMixin, ModelViewSet):
     queryset = queryset.all()[:1]
     #queryset = queryset.group_by('customer')
     serializer_class = ObjectSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
 
     

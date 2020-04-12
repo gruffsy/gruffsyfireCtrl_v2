@@ -3,11 +3,16 @@
     <Navbar />
     <v-container>
       <br />
-      <Customer :kid="kid"/>
+      <Customer :kid="kid" />
       
       
-      
-      
+<v-btn color="primary" @click="alleTilKontroll">Alle objekter</v-btn>
+<v-btn color="success" @click="kontrollerte">Kontrollerte objekter</v-btn>
+<v-btn color="warning" @click="ikkeKontrollerte">Gjenstår å kontrollere</v-btn>
+<v-btn color="error" @click="kontrollerteAvvik">Kontrollerte med avvik</v-btn>
+
+<h3 class="pa-3"> Antall objekter: {{resultCount}}</h3> 
+
       <v-expansion-panels>
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
           <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
@@ -79,7 +84,7 @@ export default {
   name: "CustomerObjects",
   components: {
     Navbar,
-    Customer,
+    Customer
   },
   data() {
     return {
@@ -87,7 +92,12 @@ export default {
       etgs: null,
       lokasjons: null,
       plasserings: null,
-      objects: []
+      objects: [],
+      strFilter: this.filterAlle,
+      filterIkkeKontrollerte: "sistekontroll__lte=2020-04-11",
+      filterKontrollerte: "sistekontroll__gte=2020-04-11",
+      filterAlle: "",
+      FIlterAvvik: "",
     };
   },
 
@@ -96,13 +106,33 @@ export default {
     this.retrieveAll();
   },
   methods: {
+    ikkeKontrollerte() {
+      this.strFilter = this.filterIkkeKontrollerte;
+      this.retrieveAll(); 
+      console.log(this.strFilter);
+    },
+    kontrollerte() {
+      this.strFilter = this.filterKontrollerte;
+      this.retrieveAll(); 
+      console.log(this.strFilter);
+    },
+    alleTilKontroll() {
+      this.strFilter = this.filterAlle;
+      this.retrieveAll(); 
+      console.log(this.strFilter);
+    },
+    kontrollerteAvvik() {
+      this.strFilter = this.FIlterAvvik;
+      this.retrieveAll(); 
+      console.log(this.strFilter);
+    },
     retrieveAll() {
       [
-        this.retrieveObjects(this.kid),
-        this.retrieveEtgs(this.kid),
-        this.retrieveLokasjons(this.kid),
-        this.retrievePlasserings(this.kid),
-        this.retrieveCustomer(this.kid),
+        this.retrieveObjects(this.kid, this.strFilter),
+        this.retrieveEtgs(this.kid, this.strFilter),
+        this.retrieveLokasjons(this.kid, this.strFilter),
+        this.retrievePlasserings(this.kid, this.strFilter),
+        this.retrieveCustomer(this.kid)
       ];
     },
     retrieveCustomer(id) {
@@ -110,14 +140,15 @@ export default {
         .getCustomer(id)
         .then(response => {
           this.customer = response.data;
+          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
-    retrieveObjects(id) {
+    retrieveObjects(id, strFilter) {
       this.$dataservice
-        .getCustomerObjects(id)
+        .getCustomerObjects(id, strFilter)
         .then(response => {
           this.objects = response.data;
           console.log(response.data);
@@ -126,9 +157,9 @@ export default {
           console.log(e);
         });
     },
-    retrieveEtgs(id) {
+    retrieveEtgs(id, strFilter) {
       this.$dataservice
-        .getEtgs(id)
+        .getEtgs(id, strFilter)
         .then(response => {
           this.etgs = response.data;
           console.log(response.data);
@@ -137,9 +168,9 @@ export default {
           console.log(e);
         });
     },
-    retrieveLokasjons(id) {
+    retrieveLokasjons(id, strFilter) {
       this.$dataservice
-        .getLokasjons(id)
+        .getLokasjons(id, strFilter)
         .then(response => {
           this.lokasjons = response.data;
           console.log(response.data);
@@ -148,9 +179,9 @@ export default {
           console.log(e);
         });
     },
-    retrievePlasserings(id) {
+    retrievePlasserings(id, strFilter) {
       this.$dataservice
-        .getPlasserings(id)
+        .getPlasserings(id, strFilter)
         .then(response => {
           this.plasserings = response.data;
           console.log(response.data);
@@ -163,6 +194,10 @@ export default {
       this.isHidden = true;
     }
   },
-  computed: {}
+  computed: {
+  resultCount () {
+    return this.objects && this.objects.length
+  }
+}
 };
 </script>

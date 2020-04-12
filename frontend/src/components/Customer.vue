@@ -36,10 +36,11 @@ export default {
   name: "Customer",
   data() {
     return {
-      customer: []
+      customer: [],
+      
     };
   },
-  props: ["kid"],
+  props: ["kid", "strFilter"],
   methods: {
     retrieveCustomer(id) {
       this.$dataservice
@@ -57,3 +58,4 @@ export default {
   }
 };
 </script>
+

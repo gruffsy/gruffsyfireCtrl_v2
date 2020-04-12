@@ -4,8 +4,8 @@ class DataService {
   getAllCustomers() {
     return http.get("/customers/");
   }
-  getCustomerObjects(id) {
-      return http.get(`/customers/${id}/objects/`);
+  getCustomerObjects(id, strFilter) {
+      return http.get(`/customers/${id}/objects/?${strFilter}`);
   }
   getAllMonths() {
     return http.get("/months/")
@@ -19,14 +19,14 @@ class DataService {
   getPrevCustomers() {
     return http.get("/prev_customers/");
   }
-  getEtgs(id) {
-    return http.get(`/customers/${id}/etgs/`);
+  getEtgs(id, strFilter) {
+    return http.get(`/customers/${id}/etgs/?${strFilter}`);
   }
-  getLokasjons(id) {
-    return http.get(`/customers/${id}/lokasjons/`);
+  getLokasjons(id, strFilter) {
+    return http.get(`/customers/${id}/lokasjons/?${strFilter}`);
   }
-  getPlasserings(id) {
-    return http.get(`/customers/${id}/plasserings/`);
+  getPlasserings(id, strFilter) {
+    return http.get(`/customers/${id}/plasserings/?${strFilter}`);
   }
   getCustomer(id) {
     return http.get(`/customers/${id}/`);
