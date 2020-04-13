@@ -14,9 +14,13 @@
     <v-card-title class="headline mb-1" primary-title>
        <v-icon x-large class="pa-2">mdi-home-city</v-icon>
       {{customer.kunde}}
+      <v-btn dark icon @click="hidden=!hidden">
+                <v-icon v-if="hidden">mdi-menu-down</v-icon>
+                <v-icon v-if="!hidden">mdi-menu-up</v-icon>
+              </v-btn>
     </v-card-title>
 
-    <v-card-subtitle hidden=true>
+    <v-card-subtitle :hidden="hidden">
       Trippletex: {{customer.tripletex}}
       <br />
       Adresse: {{customer.badresse}},
@@ -36,6 +40,7 @@ export default {
   name: "Customer",
   data() {
     return {
+      hidden: true,
       customer: [],
       
     };
