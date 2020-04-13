@@ -7,7 +7,7 @@
 
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          <strong>{{resultCount}} </strong>{{filterText}}
+          {{resultCount}} {{filterText}}
           <v-spacer></v-spacer>
           <v-menu right>
             <template v-slot:activator="{ on }">
@@ -27,6 +27,7 @@
       <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Gjenstår</v-chip>
       <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
+      <v-chip class="ma-1" color="light"><v-icon small>mdi-plus</v-icon> Legg til nytt objekt</v-chip>
       <v-tabs>
         <v-tab @click="hideTable">Pr. etasje</v-tab>
         <v-tab @click="hideEtg">Tabell</v-tab>
