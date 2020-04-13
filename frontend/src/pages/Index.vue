@@ -7,10 +7,10 @@
       
       <br />
       
-      <PrevCustomers v-if="isActive == 'prev'"/>
+      <PrevCustomers class="mb-1" v-if="isActive == 'prev'"/>
 
       
-      <PrevObject v-if="isActive == 'prev'"/>
+      <PrevObject class="my-1" v-if="isActive == 'prev'"/>
       <v-tabs>
         <v-tab @click="isActive = 'prev'">Siste kunde</v-tab>
         <v-tab @click="isActive = 'search'">Søk kunder</v-tab>

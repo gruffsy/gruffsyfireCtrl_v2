@@ -5,13 +5,45 @@
       <br />
       <Customer :kid="kid" />
       
-      
-<v-btn color="primary" @click="alleTilKontroll">Alle objekter</v-btn>
-<v-btn color="success" @click="kontrollerte">Kontrollerte objekter</v-btn>
-<v-btn color="warning" @click="ikkeKontrollerte">Gjenstår å kontrollere</v-btn>
-<v-btn color="error" @click="kontrollerteAvvik">Kontrollerte med avvik</v-btn>
+  <v-card class="my-2" flat dark color="primary">
+    <v-card-title>
+      {{filterText}}: {{resultCount}}
+       <v-spacer></v-spacer>
+    
+     <v-menu fixed=true right>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                dark
+                icon
+                v-on="on"
+              >
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in items"
+          :key="index"
+          
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu></v-card-title>
+  </v-card>    
+<v-chip color="primary" @click="alleTilKontroll">Alle objekter</v-chip>
+<v-chip color="success" @click="kontrollerte">Kontrollerte objekter</v-chip>
+<v-chip color="warning" @click="ikkeKontrollerte">Gjenstår å kontrollere</v-chip>
+<v-chip color="error" @click="kontrollerteAvvik">Kontrollerte med avvik</v-chip>
 
-<h3 class="pa-3"> Antall objekter: {{resultCount}}</h3> 
+<v-tabs>
+  <v-tab>
+    Pr. etasje
+  </v-tab>
+  <v-tab>
+    Tabell
+  </v-tab>
+</v-tabs>
 
       <v-expansion-panels>
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
@@ -88,6 +120,12 @@ export default {
   },
   data() {
     return {
+      items: [
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me 2' },
+      ],
       customer: null,
       etgs: null,
       lokasjons: null,
@@ -98,6 +136,7 @@ export default {
       filterKontrollerte: "sistekontroll__gte=2020-04-11",
       filterAlle: "",
       FIlterAvvik: "",
+      filterText: "Gjenstår å kontrollere"
     };
   },
 
@@ -108,21 +147,25 @@ export default {
   methods: {
     ikkeKontrollerte() {
       this.strFilter = this.filterIkkeKontrollerte;
+      this.filterText = "Gjenstår å kontrollere"
       this.retrieveAll(); 
       console.log(this.strFilter);
     },
     kontrollerte() {
       this.strFilter = this.filterKontrollerte;
+      this.filterText = "Kontrollerte objekter"
       this.retrieveAll(); 
       console.log(this.strFilter);
     },
     alleTilKontroll() {
       this.strFilter = this.filterAlle;
+      this.filterText = "Alle objekter"
       this.retrieveAll(); 
       console.log(this.strFilter);
     },
     kontrollerteAvvik() {
       this.strFilter = this.FIlterAvvik;
+      this.filterText = "Kontrollerte med avvik"
       this.retrieveAll(); 
       console.log(this.strFilter);
     },

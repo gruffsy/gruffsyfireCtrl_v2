@@ -7,7 +7,7 @@
             path: '/object-details/',
             query: { kid: object.customer, objid: object.id }
           }"
-    color="primary lighten-1"
+    color="primary"
     dark
   >
     <v-card-title class="headline mb-1" primary-title>

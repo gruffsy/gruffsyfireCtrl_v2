@@ -1,4 +1,5 @@
-<!-- TODO:    6 Lage sisteobjekt-kort
+<!-- TODO:    5 Lage tabell
+     TODO:    6 Skille etsje og tabell
      TODO:    7 Lage ObjTr API
      TODO:    8. Object: Gi mer informasjon Slokker-velger
      TODO:    9. Lage karusell for object og kunde
