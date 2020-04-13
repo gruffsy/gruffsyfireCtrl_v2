@@ -1,9 +1,7 @@
-<!-- TODO:    5 Lage tabell
-     TODO:    6 Skille etsje og tabell
-     TODO:    7 Lage ObjTr API
+<!-- TODO:    7  Lage meny Customer-kortet
      TODO:    8. Object: Gi mer informasjon Slokker-velger
-     TODO:    9. Lage karusell for object og kunde
-     TODO:   10. Lage meny Customer-kortet
+     TODO:    9. Lage karusell for object og kunde ??
+     TODO:   10. Lage ObjTr API
 -->
 <template>
   <nav>

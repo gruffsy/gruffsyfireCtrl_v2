@@ -6,21 +6,15 @@
         <!-- eslint-disable -->
         <v-list-item
           dense
-          link
           prepend-icon="mdi-house"
           three-line
-          router
-          :to="{
-            path: '/customer-objects/',
-            query: { kid: customer.id }
-          }"
           v-for="customer in customers"
           :key="customer.id"
           v-if="customer.month == month.id"
         >
           <!-- eslint-enable -->
           <v-list-item-content>
-           <Customer :kid="customer.id"/>
+            <Customer :kid="customer.id" />
           </v-list-item-content>
         </v-list-item>
       </v-expansion-panel-content>
@@ -29,7 +23,7 @@
 </template>
 
 <script>
-import Customer from "../components/Customer"
+import Customer from "../components/Customer";
 export default {
   name: "Month",
   components: {
@@ -43,8 +37,7 @@ export default {
   },
   created() {
     this.retrieveMonths();
-    this.retrieveCustomers()
-    
+    this.retrieveCustomers();
   },
   methods: {
     retrieveMonths() {
@@ -59,7 +52,8 @@ export default {
         });
     },
     retrieveCustomers() {
-      this.$dataservice.getAllCustomers()
+      this.$dataservice
+        .getAllCustomers()
         .then(response => {
           this.customers = response.data;
           console.log(response.data);
@@ -67,7 +61,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
+    }
   },
   computed: {}
 };

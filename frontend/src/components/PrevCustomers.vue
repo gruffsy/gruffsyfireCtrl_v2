@@ -9,9 +9,9 @@
           }"
     color="primary"
     dark
-  >
+  ><div class="overline ma-2">Siste kunde</div>
     <v-card-title class="headline mb-1" primary-title>
-      <v-icon x-large class="pa-2">mdi-home-city</v-icon>
+      <v-icon x-large class="px-1">mdi-home-city</v-icon>
       {{customer.kunde}}
     </v-card-title>
 

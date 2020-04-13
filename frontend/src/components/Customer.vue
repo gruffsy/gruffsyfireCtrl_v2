@@ -13,9 +13,9 @@
             query: {kid: customer.id}
           }"
         >
-      <v-btn dark icon depressed>
+      <v-btn  class="ml-10" dark icon depressed>
         
-        <v-icon>mdi-menu-right</v-icon>
+        <v-icon x-large>mdi-menu-right</v-icon>
       </v-btn></router-link>
       <v-spacer></v-spacer>
           <v-menu right>
