@@ -6,34 +6,31 @@
           <!-- Etasje -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              :disabled="status == false"
+             
               label="Etasje"
               v-model="objectInput.etg"
               type="number"
               prepend-icon="mdi-home-floor-1"
-              
             ></v-text-field>
           </v-col>
 
           <!-- Lokasjon -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              :disabled="status == false"
+              
               label="Lokasjon"
               v-model="objectInput.lokasjon"
               prepend-icon="mdi-home-import-outline"
-              
             ></v-text-field>
           </v-col>
 
           <!-- Plassering -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              :disabled="status == false"
+             
               label="Plassering"
               prepend-icon="mdi-home-search-outline"
               v-model="objectInput.plassering"
-              
             ></v-text-field>
           </v-col>
         </v-row>
@@ -42,7 +39,7 @@
           <!-- Slokkervalg -->
           <v-col cols="12" sm="6" md="4">
             <v-select
-              :disabled="status == false"
+             
               :items="extinguishantItems"
               label="Slokker"
               prepend-icon="mdi-fire-extinguisher"
@@ -68,18 +65,17 @@
           <!-- Produksjonsår -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              :disabled="status == false"
+            
               label="Produksjonsår"
               v-model="objectInput.prodyear"
               prepend-icon="mdi-update"
               type="text"
-              
             ></v-text-field>
           </v-col>
 
           <!-- Test monthpicker -->
 
-          <v-spacer></v-spacer>
+        
         </v-row>
 
         <v-row>
@@ -98,7 +94,7 @@
                   v-model="objectInput.sisteservice"
                   label="Forrige 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
-                  readonly
+               
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -140,7 +136,7 @@
           </v-col>
 
           <!-- Siste kontroll -->
-           <v-col cols="12" sm="6" md="4">
+          <v-col cols="12" sm="6" md="4">
             <v-menu
               v-model="prevKontrollDateMenu"
               :close-on-content-click="false"
@@ -167,35 +163,21 @@
             </v-menu>
           </v-col>
         </v-row>
-         
-         
-      
-      
-        <v-checkbox
-          v-model="checkbox"
-          label="Redigere?"
-          @change="aktiver()"
-          @blur="$v.checkbox.$touch()"
-        ></v-checkbox>
-        <v-btn :hidden="status == false" class="mr-4" @click="updateObject()">Oppdater</v-btn>
-        <br>
+
+        <v-btn class="mr-4" @click="updateObject()">Oppdater</v-btn>
+        <br />
         {{message}}
       </form>
-     
-
     </v-container>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ["kid", "objid"],
+  props: ["kid", "objid", "object", ],
   data() {
     return {
-      status: false,
       extinguishantItems: [],
-      object: null,
-      extinguishantNumber: null,
       message: null,
       objectInput: {
         extinguishant: null,
@@ -223,7 +205,8 @@ export default {
   },
   mounted() {
     this.retrieveExtinguishants();
-    this.retrieveObject(this.objid);
+    this.objectInput = this.object;
+    
   },
   methods: {
     submit() {
@@ -233,15 +216,16 @@ export default {
       this.status = !this.status;
     },
     updateObject() {
-      
-      this.$dataservice.updateObject(this.object.id, this.objectInput)
+      this.$dataservice
+        .updateObject(this.object.id, this.objectInput)
         .then(response => {
           console.log(response.data);
-          this.message = 'Objektet ble oppdatert!';
+          this.message = "Objektet ble oppdatert!";
+          this.dialog = false;
         })
         .catch(e => {
           console.log(e);
-          this.message = 'Noe gikk forferdelig galt!';
+          this.message = "Noe gikk forferdelig galt!";
         });
     },
     retrieveExtinguishants() {
@@ -254,12 +238,6 @@ export default {
           console.log(e);
         });
     },
-    retrieveObject(id) {
-      this.$dataservice.getObject(id).then(resp => {
-        this.object = resp.data;
-        this.objectInput = resp.data;
-      });
-    }
   }
 };
 </script>

@@ -8,17 +8,7 @@
         <v-icon v-if="hidden">mdi-menu-down</v-icon>
         <v-icon v-if="!hidden">mdi-menu-up</v-icon>
       </v-btn>
-      <router-link
-        class="routerLink"
-        :to="{
-            path: '/object-details/',
-            query: { kid: object.customer, objid: object.id }
-          }"
-      >
-        <v-btn class="ml-10" dark icon depressed>
-          <v-icon x-large>mdi-menu-right</v-icon>
-        </v-btn>
-      </router-link>
+      
       <v-spacer></v-spacer>
       <v-menu right>
         <template v-slot:activator="{ on }">
@@ -53,24 +43,18 @@
 
 <script>
 export default {
-  name: "PrevObject",
+  name: "PickedObject",
   data() {
     return {
-      hidden: true,
-      object: []
+      hidden: false,
+      
     };
   },
-
+props: ['objid', 'kid', "object"],
   methods: {
-    async retrievePrevObject() {
-      this.$dataservice.getPrevCustomers().then(response => {
-        this.object = response.data[0];
-      });
-    }
   },
 
   mounted() {
-    this.retrievePrevObject();
   }
 };
 </script>

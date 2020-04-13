@@ -2,13 +2,12 @@
   <div>
     <Navbar />
     <v-container>
-      <br />
-      <Customer :kid="kid" />
-      
+      <Customer :kid="kid" :arrow="arrow" />
+      <PrevObject class="my-1" />
 
-      <v-card class="my-2" flat dark color="primary">
+      <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          {{filterText}}: {{resultCount}}
+          <strong>{{resultCount}} </strong>{{filterText}}
           <v-spacer></v-spacer>
           <v-menu right>
             <template v-slot:activator="{ on }">
@@ -24,10 +23,10 @@
           </v-menu>
         </v-card-title>
       </v-card>
-      <v-chip color="success" @click="kontrollerte">Kontrollerte</v-chip>
-      <v-chip color="warning" @click="ikkeKontrollerte">Gjenstår</v-chip>
-      <v-chip color="error" @click="kontrollerteAvvik">Avvik</v-chip>
-      <v-chip color="primary" @click="alleTilKontroll">Alle</v-chip>
+      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte</v-chip>
+      <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Gjenstår</v-chip>
+      <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
+      <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
       <v-tabs>
         <v-tab @click="hideTable">Pr. etasje</v-tab>
         <v-tab @click="hideEtg">Tabell</v-tab>
@@ -100,13 +99,15 @@
 <script>
 import Navbar from "../components/Navbar";
 import Customer from "../components/Customer";
-import ObjectTable from "../components/ObjectTable"
+import ObjectTable from "../components/ObjectTable";
+import PrevObject from "../components/PrevObject";
 export default {
   name: "CustomerObjects",
   components: {
     Navbar,
     Customer,
-    ObjectTable
+    ObjectTable,
+    PrevObject,
   },
   data() {
     return {
@@ -121,12 +122,14 @@ export default {
       lokasjons: null,
       plasserings: null,
       objects: [],
-      strFilter: this.filterAlle,
+      strFilter: this.filterIkkeKontrollerte,
       filterIkkeKontrollerte: "sistekontroll__lte=2020-04-10",
       filterKontrollerte: "sistekontroll__gte=2020-04-10",
       filterAlle: "",
       FIlterAvvik: "",
-      filterText: "Gjenstår å kontrollere"
+      filterText: " gjenstår å kontrollere",
+      chipColor: "warning",
+      arrow: "true"
     };
   },
 
@@ -143,26 +146,30 @@ export default {
     },
     ikkeKontrollerte() {
       this.strFilter = this.filterIkkeKontrollerte;
-      this.filterText = "Gjenstår å kontrollere";
+      this.filterText = " gjenstår å kontrollere";
       this.retrieveAll();
+      this.chipColor = "warning";
       console.log(this.strFilter);
     },
     kontrollerte() {
       this.strFilter = this.filterKontrollerte;
-      this.filterText = "Kontrollerte objekter";
+      this.filterText = " er kontrollert";
       this.retrieveAll();
+      this.chipColor = "success";
       console.log(this.strFilter);
     },
     alleTilKontroll() {
       this.strFilter = this.filterAlle;
-      this.filterText = "Alle objekter";
+      this.filterText = " totalt";
       this.retrieveAll();
+      this.chipColor = "primary";
       console.log(this.strFilter);
     },
     kontrollerteAvvik() {
       this.strFilter = this.FIlterAvvik;
-      this.filterText = "Kontrollerte med avvik";
+      this.filterText = " er kontrollert med avvik";
       this.retrieveAll();
+      this.chipColor = "error";
       console.log(this.strFilter);
     },
     retrieveAll() {
@@ -170,7 +177,7 @@ export default {
         this.retrieveObjects(this.kid, this.strFilter),
         this.retrieveEtgs(this.kid, this.strFilter),
         this.retrieveLokasjons(this.kid, this.strFilter),
-        this.retrievePlasserings(this.kid, this.strFilter),
+        this.retrievePlasserings(this.kid, this.strFilter)
       ];
     },
     retrieveObjects(id, strFilter) {
@@ -223,7 +230,7 @@ export default {
   },
   computed: {
     resultCount() {
-      return this.objects && this.objects.length;
+      return this.objects && this.objects.length + " stk ";
     }
   }
 };

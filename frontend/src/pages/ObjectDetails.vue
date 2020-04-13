@@ -2,11 +2,8 @@
   <div>
     <Navbar />
     <v-container grid-list-xs>
-      <br />
       <Customer :kid="kid" />
-      <br />
-      
-      <v-spacer></v-spacer>
+      <PickedObject class="my-1" :kid="kid" :objid="objid" :object="object" />
 
       <v-row justify="center">
         <v-btn color="primary" class="ma-2" dark @click="dialog = true">Objektdetaljer</v-btn>
@@ -47,8 +44,7 @@
               </v-tooltip>
 
               <v-divider></v-divider>
-<Object :objid="objid" />
-              
+              <Object :kid="kid" :objid="objid" :object="object" />
             </v-card-subtitle>
 
             <div style="flex: 1 1 auto;"></div>
@@ -99,15 +95,17 @@
 import Navbar from "../components/Navbar";
 import Object from "../components/Object";
 import Customer from "../components/Customer";
+import PickedObject from "../components/PickedObject";
 
 export default {
   name: "ObjectDetails",
   components: {
     Navbar,
     Object,
-    Customer
+    Customer,
+    PickedObject
   },
-  props: ["objid", "kid"],
+  props: ["objid", "kid",],
   data() {
     return {
       items: [

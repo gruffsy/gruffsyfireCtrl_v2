@@ -3,18 +3,15 @@
     <Navbar />
 
     <v-container>
-      
-      
-      <PrevCustomers class="mb-1" v-if="isActive == 'prev'"/>
+      <PrevCustomers v-if="isActive == 'prev'" />
 
-      
-      <PrevObject class="my-1" v-if="isActive == 'prev'"/>
+      <PrevObject class="my-1" v-if="isActive == 'prev'" />
       <v-tabs>
         <v-tab @click="isActive = 'prev'">Siste kunde</v-tab>
         <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
         <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
       </v-tabs>
-      
+
       <Search :hide="hidden" v-if="isActive == 'search'" />
 
       <Month v-if="isActive == 'month'" />
@@ -33,7 +30,7 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Month from "../components/Month";
 import PrevCustomers from "../components/PrevCustomers";
-import PrevObject from "../components/PrevObject"
+import PrevObject from "../components/PrevObject";
 export default {
   name: "Index",
   components: {
@@ -41,8 +38,7 @@ export default {
     Search,
     Month,
     PrevCustomers,
-    PrevObject,
-    
+    PrevObject
   },
   data() {
     return {
@@ -55,3 +51,9 @@ export default {
   computed: {}
 };
 </script>
+<style>
+.routerLink {
+  text-decoration: none;
+  color: white;
+}
+</style>
