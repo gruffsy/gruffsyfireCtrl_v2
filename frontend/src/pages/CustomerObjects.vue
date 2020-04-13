@@ -5,47 +5,35 @@
       <br />
       <Customer :kid="kid" />
       
-  <v-card class="my-2" flat dark color="primary">
-    <v-card-title>
-      {{filterText}}: {{resultCount}}
-       <v-spacer></v-spacer>
-    
-     <v-menu fixed=true right>
+
+      <v-card class="my-2" flat dark color="primary">
+        <v-card-title>
+          {{filterText}}: {{resultCount}}
+          <v-spacer></v-spacer>
+          <v-menu right>
             <template v-slot:activator="{ on }">
-              <v-btn
-                dark
-                icon
-                v-on="on"
-              >
+              <v-btn dark icon v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-          
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu></v-card-title>
-  </v-card>    
-<v-chip color="primary" @click="alleTilKontroll">Alle objekter</v-chip>
-<v-chip color="success" @click="kontrollerte">Kontrollerte objekter</v-chip>
-<v-chip color="warning" @click="ikkeKontrollerte">Gjenstår å kontrollere</v-chip>
-<v-chip color="error" @click="kontrollerteAvvik">Kontrollerte med avvik</v-chip>
-
-<v-tabs>
-  <v-tab>
-    Pr. etasje
-  </v-tab>
-  <v-tab>
-    Tabell
-  </v-tab>
-</v-tabs>
-
-      <v-expansion-panels>
+            <v-list>
+              <v-list-item v-for="(item, index) in items" :key="index">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-card-title>
+      </v-card>
+      <v-chip color="success" @click="kontrollerte">Kontrollerte</v-chip>
+      <v-chip color="warning" @click="ikkeKontrollerte">Gjenstår</v-chip>
+      <v-chip color="error" @click="kontrollerteAvvik">Avvik</v-chip>
+      <v-chip color="primary" @click="alleTilKontroll">Alle</v-chip>
+      <v-tabs>
+        <v-tab @click="hideTable">Pr. etasje</v-tab>
+        <v-tab @click="hideEtg">Tabell</v-tab>
+      </v-tabs>
+      <ObjectTable :hidden="hidden=='table'" :objects="objects" :kid="kid" :objid="objid" />
+      <v-expansion-panels :hidden="hidden=='etg'">
         <v-expansion-panel v-for="etg in etgs" :key="etg.id">
           <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -112,28 +100,30 @@
 <script>
 import Navbar from "../components/Navbar";
 import Customer from "../components/Customer";
+import ObjectTable from "../components/ObjectTable"
 export default {
   name: "CustomerObjects",
   components: {
     Navbar,
-    Customer
+    Customer,
+    ObjectTable
   },
   data() {
     return {
+      hidden: "table",
       items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
       ],
-      customer: null,
       etgs: null,
       lokasjons: null,
       plasserings: null,
       objects: [],
       strFilter: this.filterAlle,
-      filterIkkeKontrollerte: "sistekontroll__lte=2020-04-11",
-      filterKontrollerte: "sistekontroll__gte=2020-04-11",
+      filterIkkeKontrollerte: "sistekontroll__lte=2020-04-10",
+      filterKontrollerte: "sistekontroll__gte=2020-04-10",
       filterAlle: "",
       FIlterAvvik: "",
       filterText: "Gjenstår å kontrollere"
@@ -145,28 +135,34 @@ export default {
     this.retrieveAll();
   },
   methods: {
+    hideTable() {
+      this.hidden = "table";
+    },
+    hideEtg() {
+      this.hidden = "etg";
+    },
     ikkeKontrollerte() {
       this.strFilter = this.filterIkkeKontrollerte;
-      this.filterText = "Gjenstår å kontrollere"
-      this.retrieveAll(); 
+      this.filterText = "Gjenstår å kontrollere";
+      this.retrieveAll();
       console.log(this.strFilter);
     },
     kontrollerte() {
       this.strFilter = this.filterKontrollerte;
-      this.filterText = "Kontrollerte objekter"
-      this.retrieveAll(); 
+      this.filterText = "Kontrollerte objekter";
+      this.retrieveAll();
       console.log(this.strFilter);
     },
     alleTilKontroll() {
       this.strFilter = this.filterAlle;
-      this.filterText = "Alle objekter"
-      this.retrieveAll(); 
+      this.filterText = "Alle objekter";
+      this.retrieveAll();
       console.log(this.strFilter);
     },
     kontrollerteAvvik() {
       this.strFilter = this.FIlterAvvik;
-      this.filterText = "Kontrollerte med avvik"
-      this.retrieveAll(); 
+      this.filterText = "Kontrollerte med avvik";
+      this.retrieveAll();
       console.log(this.strFilter);
     },
     retrieveAll() {
@@ -175,19 +171,7 @@ export default {
         this.retrieveEtgs(this.kid, this.strFilter),
         this.retrieveLokasjons(this.kid, this.strFilter),
         this.retrievePlasserings(this.kid, this.strFilter),
-        this.retrieveCustomer(this.kid)
       ];
-    },
-    retrieveCustomer(id) {
-      this.$dataservice
-        .getCustomer(id)
-        .then(response => {
-          this.customer = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
     },
     retrieveObjects(id, strFilter) {
       this.$dataservice
@@ -238,9 +222,9 @@ export default {
     }
   },
   computed: {
-  resultCount () {
-    return this.objects && this.objects.length
+    resultCount() {
+      return this.objects && this.objects.length;
+    }
   }
-}
 };
 </script>

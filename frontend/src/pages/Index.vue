@@ -5,8 +5,6 @@
     <v-container>
       
       
-      <br />
-      
       <PrevCustomers class="mb-1" v-if="isActive == 'prev'"/>
 
       
@@ -16,7 +14,7 @@
         <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
         <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
       </v-tabs>
-      <br />
+      
       <Search v-if="isActive == 'search'" />
 
       <Month v-if="isActive == 'month'" />

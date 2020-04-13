@@ -15,7 +15,7 @@
       {{customer.kunde}}
     </v-card-title>
 
-    <v-card-subtitle>
+    <v-card-subtitle hidden=true>
       Trippletex: {{customer.tripletex}}
       <br />
       Adresse: {{customer.badresse}},

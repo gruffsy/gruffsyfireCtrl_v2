@@ -10,12 +10,12 @@
     color="primary"
     dark
   >
-    <v-card-title class="headline mb-1" primary-title>
+    <v-card-title dense>
       <v-icon x-large class="pa-2">mdi-fire-extinguisher</v-icon>
       {{object.fabrikat}} {{object.type}} {{object.lengde}} {{object.slukkemiddel}}
     </v-card-title>
 
-    <v-card-subtitle><v-icon class="pl-4">mdi-home</v-icon>
+    <v-card-subtitle hidden=true><v-icon class="pl-4">mdi-home</v-icon>
         Plassering: {{object.etg}}. etg => {{object.lokasjon}} => {{object.plassering}}</v-card-subtitle>
   </v-card>
 </template>
