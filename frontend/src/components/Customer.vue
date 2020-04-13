@@ -1,23 +1,35 @@
 <template>
-  <v-card
-    outlined
-    link
-    router
-    :to="{
+  <v-card outlined color="primary" dark>
+    <v-card-title class="headline mb-1" primary-title>
+      <v-icon x-large class="pa-2">mdi-home-city</v-icon>
+      {{customer.kunde}}
+      <v-btn dark icon @click="hidden=!hidden">
+        <v-icon v-if="hidden">mdi-menu-down</v-icon>
+        <v-icon v-if="!hidden">mdi-menu-up</v-icon>
+      </v-btn>
+      <router-link
+          :to="{
             path: '/customer-objects/',
             query: {kid: customer.id}
           }"
-    color="primary"
-    dark
-  >
- 
-    <v-card-title class="headline mb-1" primary-title>
-       <v-icon x-large class="pa-2">mdi-home-city</v-icon>
-      {{customer.kunde}}
-      <v-btn dark icon @click="hidden=!hidden">
-                <v-icon v-if="hidden">mdi-menu-down</v-icon>
-                <v-icon v-if="!hidden">mdi-menu-up</v-icon>
+        >
+      <v-btn dark icon depressed>
+        
+        <v-icon>mdi-menu-right</v-icon>
+      </v-btn></router-link>
+      <v-spacer></v-spacer>
+          <v-menu right>
+            <template v-slot:activator="{ on }">
+              <v-btn dark icon v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, index) in items" :key="index">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
     </v-card-title>
 
     <v-card-subtitle :hidden="hidden">
@@ -41,8 +53,7 @@ export default {
   data() {
     return {
       hidden: true,
-      customer: [],
-      
+      customer: []
     };
   },
   props: ["kid", "strFilter"],

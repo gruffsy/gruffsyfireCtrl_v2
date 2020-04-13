@@ -8,11 +8,7 @@
         <v-list-item
           link
           three-line
-          router
-          :to="{
-            path: '/customer-objects/',
-            query: { kid: customer.id }
-          }"
+         
           v-for="customer in filteredCustomerFeed"
           v-bind:key="customer.id"
         >
@@ -29,7 +25,7 @@
 <script>
 import Customer from "../components/Customer"
 export default {
-  name: "Customers",
+  name: "Search",
   components: {
     Customer
   },

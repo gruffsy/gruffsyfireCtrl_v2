@@ -15,7 +15,7 @@
         <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
       </v-tabs>
       
-      <Search v-if="isActive == 'search'" />
+      <Search :hide="hidden" v-if="isActive == 'search'" />
 
       <Month v-if="isActive == 'month'" />
 
