@@ -1,25 +1,23 @@
-<!-- TODO:    1. Lage tabell av kunder, søkbar sortert på måned, filtrerbar
-     TODO:    2. Filtrere kunderesultat
+<!-- TODO:    2. Filtrere kunderesultat
+     TODO:    3. Legge tre-punktsmenyen først.
      TODO:    7  Lage meny Customer-kortet
-     TODO:    8. Object: Gi mer informasjon Slokker-velger
-     TODO:    9. Lage karusell for object og kunde ??
      TODO:   10. Lage ObjTr API
 -->
 <template>
   <nav>
     <v-app-bar class="primary darken-2" dark app height="84" hide-on-scroll>
-      
       <router-link class="routerLink" :to="{
             path: '/',}">
         <v-icon x-large>{{ meny_icon }}</v-icon>
       </router-link>
-        <router-link class="routerLink" :to="{
+      <router-link class="routerLink" :to="{
             path: '/',}">
         <v-toolbar-title dark>
           <span class="font-weight-light">fire</span>
           <span>Ctrl</span>
-        </v-toolbar-title> </router-link>
-     
+        </v-toolbar-title>
+      </router-link>
+
       <v-spacer></v-spacer>
       <v-btn v-if="token" @click="logout" text dark>
         <span>Logg ut</span>
@@ -105,8 +103,8 @@ export default {
 };
 </script>
 <style scoped>
-.routerLink{
-     text-decoration: none;
-     color: white;;
- }
+.routerLink {
+  text-decoration: none;
+  color: white;
+}
 </style>

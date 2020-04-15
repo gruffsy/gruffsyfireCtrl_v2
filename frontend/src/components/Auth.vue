@@ -1,43 +1,43 @@
 <template>
-<div>
-<Navbar />
-  <v-container grid-list-md>
-    <v-layout row wrap align-center justify-center fill-height>
-      <v-flex xs12 sm8 lg4 md5>
-        <v-card class="login-card">
-          <v-card-title>
-            <span class="headline">Logg inn - fireCtrl</span>
-          </v-card-title>
+  <div>
+    <Navbar />
+    <v-container grid-list-md>
+      <v-layout row wrap align-center justify-center fill-height>
+        <v-flex xs12 sm8 lg4 md5>
+          <v-card class="login-card">
+            <v-card-title>
+              <span class="headline">Logg inn - fireCtrl</span>
+            </v-card-title>
 
-          <v-spacer />
+            <v-spacer />
 
-          <v-card-text>
-            <v-form ref="form" lazy-validation>
-              <v-container>
-                <v-text-field
-                  v-model="username"
-                  :counter="70"
-                  label="brukernavn"
-                  maxlength="70"
-                  required
-                />
+            <v-card-text>
+              <v-form ref="form" lazy-validation>
+                <v-container>
+                  <v-text-field
+                    v-model="username"
+                    :counter="70"
+                    label="brukernavn"
+                    maxlength="70"
+                    required
+                  />
 
-                <v-text-field
-                  type="password"
-                  v-model="password"
-                  :counter="20"
-                  label="passord"
-                  maxlength="20"
-                  required
-                />
-              </v-container>
-              <v-btn class="pink white--text" @click="login">Logg inn</v-btn>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+                  <v-text-field
+                    type="password"
+                    v-model="password"
+                    :counter="20"
+                    label="passord"
+                    maxlength="20"
+                    required
+                  />
+                </v-container>
+                <v-btn class="pink white--text" @click="login">Logg inn</v-btn>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -47,7 +47,7 @@ import Navbar from "./Navbar";
 export default {
   name: "Auth",
   components: {
-    Navbar,
+    Navbar
   },
   data() {
     return {
@@ -67,15 +67,14 @@ export default {
           this.token = resp.data.token;
           console.log(this.token);
           localStorage.setItem("user-token", resp.data.token);
-          this.$router.push('/');
+          this.$router.push("/");
           this.$router.go(0);
         })
         .catch(err => {
           localStorage.removeItem("user-token");
           console.log(err);
         });
-     
     }
-  },
+  }
 };
 </script>

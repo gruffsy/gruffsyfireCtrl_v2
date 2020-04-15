@@ -105,7 +105,7 @@ export default {
     Customer,
     PickedObject
   },
-  props: ["objid", "kid",],
+  props: ["objid", "kid"],
   data() {
     return {
       items: [

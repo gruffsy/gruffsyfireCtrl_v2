@@ -5,16 +5,16 @@ class DataService {
     return http.get("/customers/?aktiv=true");
   }
   getCustomerObjects(id, strFilter) {
-      return http.get(`/customers/${id}/objects/?${strFilter}`);
+    return http.get(`/customers/${id}/objects/?${strFilter}`);
   }
   getAllMonths() {
-    return http.get("/months/")
+    return http.get("/months/");
   }
   getMonth(id) {
-    return http.get(`/months/${id}/`)
+    return http.get(`/months/${id}/`);
   }
   updateMonth(id, data) {
-    return http.put(`/months/${id}/`, data)
+    return http.put(`/months/${id}/`, data);
   }
   getPrevCustomers() {
     return http.get("/prev_customers/");
@@ -35,10 +35,10 @@ class DataService {
     return http.get(`/objects/${id}/`);
   }
   updateObject(id, data) {
-    return http.patch(`/objects/${id}/`, data)
+    return http.patch(`/objects/${id}/`, data);
   }
   getAllExtinguishants() {
-    return http.get("/extinguishants/")
+    return http.get("/extinguishants/");
   }
 }
 

@@ -6,7 +6,6 @@
           <!-- Etasje -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-             
               label="Etasje"
               v-model="objectInput.etg"
               type="number"
@@ -17,7 +16,6 @@
           <!-- Lokasjon -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              
               label="Lokasjon"
               v-model="objectInput.lokasjon"
               prepend-icon="mdi-home-import-outline"
@@ -27,7 +25,6 @@
           <!-- Plassering -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-             
               label="Plassering"
               prepend-icon="mdi-home-search-outline"
               v-model="objectInput.plassering"
@@ -39,7 +36,6 @@
           <!-- Slokkervalg -->
           <v-col cols="12" sm="6" md="4">
             <v-select
-             
               :items="extinguishantItems"
               label="Slokker"
               prepend-icon="mdi-fire-extinguisher"
@@ -65,7 +61,6 @@
           <!-- Produksjonsår -->
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-            
               label="Produksjonsår"
               v-model="objectInput.prodyear"
               prepend-icon="mdi-update"
@@ -74,8 +69,6 @@
           </v-col>
 
           <!-- Test monthpicker -->
-
-        
         </v-row>
 
         <v-row>
@@ -94,7 +87,6 @@
                   v-model="objectInput.sisteservice"
                   label="Forrige 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
-               
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -174,7 +166,7 @@
 
 <script>
 export default {
-  props: ["kid", "objid", "object", ],
+  props: ["kid", "objid", "object"],
   data() {
     return {
       extinguishantItems: [],
@@ -206,7 +198,6 @@ export default {
   mounted() {
     this.retrieveExtinguishants();
     this.objectInput = this.object;
-    
   },
   methods: {
     submit() {
@@ -237,7 +228,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
+    }
   }
 };
 </script>

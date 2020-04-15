@@ -11,7 +11,7 @@
         <v-tab @click="isActive = 'search'">Søk kunder</v-tab>
         <v-tab @click="isActive = 'month'">Kontrollmåned</v-tab>
       </v-tabs>
-
+<CustomerTable />
       <Search :hide="hidden" v-if="isActive == 'search'" />
 
       <Month v-if="isActive == 'month'" />
@@ -31,6 +31,7 @@ import Search from "../components/Search";
 import Month from "../components/Month";
 import PrevCustomers from "../components/PrevCustomers";
 import PrevObject from "../components/PrevObject";
+import CustomerTable from "../components/CustomerTable"
 export default {
   name: "Index",
   components: {
@@ -38,7 +39,8 @@ export default {
     Search,
     Month,
     PrevCustomers,
-    PrevObject
+    PrevObject,
+    CustomerTable
   },
   data() {
     return {

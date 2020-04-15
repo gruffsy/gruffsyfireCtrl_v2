@@ -8,7 +8,7 @@
         <v-icon v-if="hidden">mdi-menu-down</v-icon>
         <v-icon v-if="!hidden">mdi-menu-up</v-icon>
       </v-btn>
-      
+
       <v-spacer></v-spacer>
       <v-menu right>
         <template v-slot:activator="{ on }">
@@ -46,15 +46,12 @@ export default {
   name: "PickedObject",
   data() {
     return {
-      hidden: false,
-      
+      hidden: false
     };
   },
-props: ['objid', 'kid', "object"],
-  methods: {
-  },
+  props: ["objid", "kid", "object"],
+  methods: {},
 
-  mounted() {
-  }
+  mounted() {}
 };
 </script>

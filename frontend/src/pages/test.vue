@@ -1,9 +1,10 @@
 <template>
   <div>
     <Navbar />
-{{month}} <br>
-{{message}}
-<VBtn color="success" @click="updateO()">text</VBtn>
+    {{month}}
+    <br />
+    {{message}}
+    <VBtn color="success" @click="updateO()">text</VBtn>
   </div>
 </template>
 
@@ -19,20 +20,20 @@ export default {
     return {
       month: [],
       message: null
-     
     };
   },
-  
+
   methods: {
     updateO() {
-      this.$dataservice.updateMonth(1, {"navn": "Janu"})
-      .then(response => {
+      this.$dataservice
+        .updateMonth(1, { navn: "Janu" })
+        .then(response => {
           console.log(response.data);
-          this.message = 'The tutorial was updated successfully!';
+          this.message = "The tutorial was updated successfully!";
         })
         .catch(e => {
           console.log(e);
-          this.message = 'noe gokk forferdelg galt!';
+          this.message = "noe gokk forferdelg galt!";
         });
     },
     retrieveMonth(id) {
@@ -45,11 +46,10 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
+    }
   },
   mounted() {
     this.retrieveMonth(1);
-    
   }
 };
 </script>
