@@ -32,6 +32,7 @@ class MonthSerializer(serializers.ModelSerializer):
 
 class CustomerSerializer(serializers.ModelSerializer):
    # id = serializers.IntegerField(read_only=True)
+    month_navn = serializers.ReadOnlyField(source='month.navn')
 
     class Meta:
         model = Customer

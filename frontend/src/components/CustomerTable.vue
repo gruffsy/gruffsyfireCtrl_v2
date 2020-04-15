@@ -47,7 +47,7 @@ export default {
           sortable: false,
           value: "kunde"
         },
-        { text: "Kontrollmåned", value: "month_name" },
+        { text: "Kontrollmåned", value: "month_navn" },
         { text: "Adresse", value: "badresse" },
         { text: "Postnr", value: "bpostnr" },
         { text: "Poststed", value: "bpoststed" },
