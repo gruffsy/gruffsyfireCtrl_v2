@@ -6,11 +6,10 @@
       <PrevCustomers />
 
       <PrevObject class="my-1" />
- 
-     
-        <v-card class="my-1 mb-2" flat dark :color="chipColor">
+
+      <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          {{resultCount}} {{filterText}} test
+          {{resultCount}} {{filterText}} selectefilter {{selectedFilter}}
           <v-spacer></v-spacer>
           <v-menu right>
             <template v-slot:activator="{ on }">
@@ -26,7 +25,31 @@
           </v-menu>
         </v-card-title>
       </v-card>
-       <CustomerTable class="my-2" />
+      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte siste {{slider}} dager</v-chip>
+      <v-chip
+        class="ma-1"
+        color="warning"
+        @click="ikkeKontrollerte"
+      >Ikke kontrollert på {{slider}} dager</v-chip>
+      <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
+      <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
+      <v-chip class="ma-1" color="light">
+        <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
+      </v-chip>
+      {{strFilter}} {{resultCount}}
+      <div :hidden="sliderHidden">
+      <v-slider
+        v-model="slider"
+        step="10"
+        :thumb-size="18"
+        thumb-label
+        max="740"
+        min="0"
+       
+        :hidden="sliderHidden"
+        @change="getString(selectedFilter)"
+      ></v-slider> </div>
+      <CustomerTable :customers="customers" class="my-2" />
 
       <br />
       <br />
@@ -52,19 +75,82 @@ export default {
   },
   data() {
     return {
-      isActive: "prev",
+      strFilter: this.selectedFilter,
+      selectedFilter: this.filterIkkeKontrollerte,
+      filterIkkeKontrollerte: "objekter__sistekontroll__lte=",
+      filterKontrollerte: "objekter__sistekontroll__gte=",
+      filterAlle: "",
+      FIlterAvvik: "objekter__avvik=true",
+      filterText: " gjenstår å kontrollere",
+      chipColor: "warning",
+      slider: 150,
+      sliderHidden: false,
       items: [
         { title: "Click Me" },
         { title: "Click Me" },
         { title: "Click Me" },
         { title: "Click Me 2" }
       ],
+      customers: []
     };
   },
-  created() {},
+  mounted() {
+    this.getString(this.filterIkkeKontrollerte);
+  },
 
-  methods: {},
-  computed: {}
+  methods: {
+    ikkeKontrollerte() {
+      this.filterText = " gjenstår å kontrollere";
+      this.getString(this.filterIkkeKontrollerte);
+      this.sliderHidden = false;
+      this.chipColor = "warning";
+    },
+    kontrollerte() {
+      this.filterText = " er kontrollert";
+      this.getString(this.filterKontrollerte);
+      this.sliderHidden = false;
+      this.chipColor = "success";
+    },
+    alleTilKontroll() {
+      this.filterText = " totalt";
+      this.sliderHidden = true;
+      this.getString(this.filterAlle);
+      this.chipColor = "primary";
+      console.log(this.strFilter);
+    },
+    kontrollerteAvvik() {
+      this.strFilter = this.FIlterAvvik;
+      this.filterText = " er kontrollert med avvik";
+      this.sliderHidden = true;
+      this.getString(this.FIlterAvvik);
+      this.chipColor = "error";
+      console.log(this.strFilter);
+    },
+    getString(filter) {
+      var dt = new Date();
+      dt.setDate(dt.getDate() - this.slider);
+      this.selectedFilter = filter;
+      if (!this.sliderHidden)
+        filter = filter + dt.toISOString().substring(0, 10);
+      this.retrieveCustomers(filter);
+    },
+    retrieveCustomers(strFilter) {
+      this.$dataservice
+        .getAllCustomers(strFilter)
+        .then(response => {
+          this.customers = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
+  computed: {
+    resultCount() {
+      return this.customers.length + " stk ";
+    }
+  }
 };
 </script>
 <style>

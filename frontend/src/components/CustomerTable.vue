@@ -3,22 +3,6 @@
     <div id="app-instasearch">
       <v-card>
         <v-container fluid>
-          
-          
-          <v-chip class="ma-1" color="error" @click="getString">Ikke kontrollert på {{slider}} dager</v-chip>
-          {{strFilter}} {{resultCount}}
-          <v-slider
-          v-model="slider"
-          step="10"
-          :thumb-size="18"
-          thumb-label
-          max="740"
-          min="0"
-          @change="getString"
-        ></v-slider>
-          
-          
-          
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
@@ -51,14 +35,12 @@
 export default {
   name: "CustomerTable",
   components: {},
+  props: ["customers"],
   data() {
     return {
       search: "",
       selectedItem: null,
       dense: false,
-      strFilter: "",
-      kontrollerteKunder: "objekter__sistekontroll__lte=",
-      slider: 150,
       //strFilter: this.str.concat(this.isoDate),
       headers: [
         {
@@ -73,24 +55,12 @@ export default {
         { text: "Poststed", value: "bpoststed" },
         { text: "Tripletex", value: "tripletex" },
         { text: "Kontaktperson", value: "kontaktperson" }
-      ],
-
-      kundeNameSearchString: "",
-      customers: []
+      ]
     };
   },
 
-  mounted() {
-    
-    this.getString();
-  },
+  mounted() {},
   methods: {
-      getString() {
-         var dt = new Date();
-         dt.setDate( dt.getDate() - this.slider );
-         this.strFilter = this.kontrollerteKunder + dt.toISOString().substring(0, 10);
-         this.retrieveCustomers(this.strFilter);
-      },
     selectItem(item) {
       console.log("Item selected: " + item.id);
       // with query, resulting in /register?plan=private
@@ -98,25 +68,8 @@ export default {
         path: "../customer-objects/",
         query: { kid: item.id }
       });
-    },
-    retrieveCustomers(strFilter) {
-      this.$dataservice
-        .getAllCustomers(strFilter)
-        .then(response => {
-          this.customers = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-  },
-  computed: {
-    resultCount() {
-      return this.customers && this.customers.length + " stk ";
     }
   }
-  
 };
 </script>
 <style scoped>
