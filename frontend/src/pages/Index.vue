@@ -9,7 +9,8 @@
 
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          {{resultCount}} {{filterText}} selectefilter {{selectedFilter}}
+           <div v-if="chipColor=='success' || chipColor=='warning'">{{resultCount}} {{filterText}} {{slider}} dager</div>
+          <div v-else>{{resultCount}} {{filterText}}</div>
           <v-spacer></v-spacer>
           <v-menu right>
             <template v-slot:activator="{ on }">
@@ -25,18 +26,17 @@
           </v-menu>
         </v-card-title>
       </v-card>
-      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte siste {{slider}} dager</v-chip>
+      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte</v-chip>
       <v-chip
         class="ma-1"
         color="warning"
         @click="ikkeKontrollerte"
-      >Ikke kontrollert på {{slider}} dager</v-chip>
+      >Ikke kontrollert</v-chip>
       <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
       <v-chip class="ma-1" color="light">
         <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
       </v-chip>
-      {{strFilter}} {{resultCount}}
       <div :hidden="sliderHidden">
       <v-slider
         v-model="slider"
@@ -75,13 +75,13 @@ export default {
   },
   data() {
     return {
-      strFilter: this.selectedFilter,
+     
       selectedFilter: this.filterIkkeKontrollerte,
       filterIkkeKontrollerte: "objekter__sistekontroll__lte=",
       filterKontrollerte: "objekter__sistekontroll__gte=",
       filterAlle: "",
       FIlterAvvik: "objekter__avvik=true",
-      filterText: " gjenstår å kontrollere",
+      filterText: " er ikke kontrollert på over",
       chipColor: "warning",
       slider: 150,
       sliderHidden: false,
@@ -100,13 +100,13 @@ export default {
 
   methods: {
     ikkeKontrollerte() {
-      this.filterText = " gjenstår å kontrollere";
+      this.filterText = " er ikke kontrollert på over ";
       this.getString(this.filterIkkeKontrollerte);
       this.sliderHidden = false;
       this.chipColor = "warning";
     },
     kontrollerte() {
-      this.filterText = " er kontrollert";
+      this.filterText = " er kontrollert siste ";
       this.getString(this.filterKontrollerte);
       this.sliderHidden = false;
       this.chipColor = "success";
@@ -148,7 +148,10 @@ export default {
   },
   computed: {
     resultCount() {
-      return this.customers.length + " stk ";
+      return this.customers.length + " kunder ";
+    },
+    returnSlider() {
+      return this.slider;
     }
   }
 };

@@ -1,7 +1,5 @@
-<!-- TODO:    2. Filtrere kunderesultat
-     TODO:    3. Legge tre-punktsmenyen først.
-     TODO:    7  Lage meny Customer-kortet
-     TODO:   10. Lage ObjTr API
+<!-- TODO:    Index. Filtrere kunderesultat på måned
+     TODO:    CustomerObjects. ObjectTable filtreres på same måte som CustomerTable
 -->
 <template>
   <nav>
