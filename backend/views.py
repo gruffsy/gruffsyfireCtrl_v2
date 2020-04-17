@@ -12,7 +12,8 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework_extensions.mixins import NestedViewSetMixin
 from url_filter.integrations.drf import DjangoFilterBackend
-
+from .filters import KontrollFilter
+from django.db.models import Prefetch
 
 class UserViewSet(NestedViewSetMixin, ModelViewSet):
     queryset = User.objects.all()
@@ -32,14 +33,18 @@ class MonthViewSet(NestedViewSetMixin, ModelViewSet):
 
 
 class CustomerViewset(NestedViewSetMixin, ModelViewSet):
-    queryset = Customer.objects.all()
+    #queryset = Customer.objects.all()
+    queryset = Customer.objects.prefetch_related(Prefetch(
+        'objekter',
+        queryset=Object.objects.all()))
     serializer_class = CustomerSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = '__all__'
     authentication_classes = (
         TokenAuthentication, SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, )
-    filters_custom = django_filters.DateTimeFilter(name=("modified", "created"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
+    filters_custom = django_filters.DateTimeFilter(name=("modified", "created", "objekter__sistekontroll"), lookup_expr=('gte', 'lte', 'gt', 'lt'))
+
 
     def get_queryset(self):
         queryset = super(CustomerViewset, self).get_queryset()

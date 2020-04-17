@@ -76,7 +76,7 @@ class ObjectQuerySet(QuerySet, GroupByMixin):
 class Object(models.Model):
     objects = ObjectQuerySet.as_manager()
 
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="objekter")
     lokasjon = models.CharField(max_length=255)
     etg = models.SmallIntegerField(blank=False)
     plassering = models.CharField(max_length=255)

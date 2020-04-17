@@ -1,8 +1,8 @@
 import http from "../http-common";
 
 class DataService {
-  getAllCustomers() {
-    return http.get("/customers/?aktiv=true");
+  getAllCustomers(strFilter) {
+    return http.get(`/customers/?aktiv=true&${strFilter}`);
   }
   getCustomerObjects(id, strFilter) {
     return http.get(`/customers/${id}/objects/?${strFilter}`);

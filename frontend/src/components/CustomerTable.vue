@@ -3,6 +3,22 @@
     <div id="app-instasearch">
       <v-card>
         <v-container fluid>
+          
+          
+          <v-chip class="ma-1" color="error" @click="getString">Ikke kontrollert på {{slider}} dager</v-chip>
+          {{strFilter}} {{resultCount}}
+          <v-slider
+          v-model="slider"
+          step="10"
+          :thumb-size="18"
+          thumb-label
+          max="740"
+          min="0"
+          @change="getString"
+        ></v-slider>
+          
+          
+          
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
@@ -40,6 +56,10 @@ export default {
       search: "",
       selectedItem: null,
       dense: false,
+      strFilter: "",
+      kontrollerteKunder: "objekter__sistekontroll__lte=",
+      slider: 150,
+      //strFilter: this.str.concat(this.isoDate),
       headers: [
         {
           text: "Kunde",
@@ -61,9 +81,16 @@ export default {
   },
 
   mounted() {
-    this.retrieveCustomers();
+    
+    this.getString();
   },
   methods: {
+      getString() {
+         var dt = new Date();
+         dt.setDate( dt.getDate() - this.slider );
+         this.strFilter = this.kontrollerteKunder + dt.toISOString().substring(0, 10);
+         this.retrieveCustomers(this.strFilter);
+      },
     selectItem(item) {
       console.log("Item selected: " + item.id);
       // with query, resulting in /register?plan=private
@@ -72,9 +99,9 @@ export default {
         query: { kid: item.id }
       });
     },
-    retrieveCustomers() {
+    retrieveCustomers(strFilter) {
       this.$dataservice
-        .getAllCustomers()
+        .getAllCustomers(strFilter)
         .then(response => {
           this.customers = response.data;
           console.log(response.data);
@@ -85,25 +112,11 @@ export default {
     }
   },
   computed: {
-    filteredCustomerFeed: function() {
-      var customers = this.customers;
-      var kundeNameSearchString = this.kundeNameSearchString;
-
-      if (!kundeNameSearchString) {
-        return customers;
-      }
-
-      kundeNameSearchString = kundeNameSearchString.trim().toLowerCase();
-
-      customers = customers.filter(function(item) {
-        if (item.kunde.toLowerCase().indexOf(kundeNameSearchString) !== -1) {
-          return item;
-        }
-      });
-
-      return customers;
+    resultCount() {
+      return this.customers && this.customers.length + " stk ";
     }
   }
+  
 };
 </script>
 <style scoped>
