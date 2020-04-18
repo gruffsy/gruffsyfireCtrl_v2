@@ -9,7 +9,9 @@
 
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-           <div v-if="chipColor=='success' || chipColor=='warning'">{{resultCount}} {{filterText}} {{slider}} dager</div>
+          <div
+            v-if="chipColor=='success' || chipColor=='warning'"
+          >{{resultCount}} {{filterText}} {{slider}} dager</div>
           <div v-else>{{resultCount}} {{filterText}}</div>
           <v-spacer></v-spacer>
           <v-menu right>
@@ -27,29 +29,36 @@
         </v-card-title>
       </v-card>
       <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte</v-chip>
-      <v-chip
-        class="ma-1"
-        color="warning"
-        @click="ikkeKontrollerte"
-      >Ikke kontrollert</v-chip>
+      <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Ikke kontrollert</v-chip>
       <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
       <v-chip class="ma-1" color="light">
-        <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
+        <v-icon small>mdi-plus</v-icon>Legg til ny kunde
       </v-chip>
       <div :hidden="sliderHidden">
-      <v-slider
-        v-model="slider"
-        step="10"
-        :thumb-size="18"
-        thumb-label
-        max="740"
-        min="0"
-       
-        :hidden="sliderHidden"
-        @change="getString(selectedFilter)"
-      ></v-slider> </div>
-      <CustomerTable :customers="customers" class="my-2" />
+        <v-slider
+          v-model="slider"
+          step="10"
+          :thumb-size="18"
+          thumb-label
+          max="740"
+          min="0"
+          :hidden="sliderHidden"
+          @change="getString(selectedFilter)"
+        ></v-slider>
+      </div><br>
+      selectedFilter: {{selectedFilter}} <br>
+      filterMonth: {{filterMonth}} <br>
+      filterIkkeKontrollerte: {{filterIkkeKontrollerte}} <br>
+      filterKontrollerte: {{filterKontrollerte}} <br>
+      filterAlle: {{filterAlle}} <br>
+      FIlterAvvik: {{FIlterAvvik}}<br>
+      <CustomerTable
+        :customers="customers"
+        :months="months"
+        class="my-2"
+        @filterMonth="handleFilterMonth"
+      />
 
       <br />
       <br />
@@ -75,12 +84,13 @@ export default {
   },
   data() {
     return {
-     
       selectedFilter: this.filterIkkeKontrollerte,
-      filterIkkeKontrollerte: "objekter__sistekontroll__lte=",
-      filterKontrollerte: "objekter__sistekontroll__gte=",
-      filterAlle: "",
-      FIlterAvvik: "objekter__avvik=true",
+      filterMonth: "",
+      filterIkkeKontrollerte: this.filterMonth + "&objekter__sistekontroll__lte=",
+      filterKontrollerte: this.filterMonth + "&objekter__sistekontroll__gte=",
+      filterAlle: this.filterMonth + "&",
+      FIlterAvvik: this.filterMonth + "&objekter__avvik=true",
+      
       filterText: " er ikke kontrollert på over",
       chipColor: "warning",
       slider: 150,
@@ -91,14 +101,34 @@ export default {
         { title: "Click Me" },
         { title: "Click Me 2" }
       ],
-      customers: []
+      customers: [],
+      months: []
     };
   },
   mounted() {
     this.getString(this.filterIkkeKontrollerte);
+    this.getMonths();
   },
 
   methods: {
+    handleFilterMonth(event) {
+      console.log("data after child handle: ", event); // get the data after child dealing
+      this.filterMonth = "month__navn=" + event;
+      this.sliderHidden = true;
+      this.getString(this.filterMonth);
+      console.log(this.filterMonth);
+    },
+    getMonths() {
+      this.$dataservice
+        .getAllMonths()
+        .then(response => {
+          this.months = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     ikkeKontrollerte() {
       this.filterText = " er ikke kontrollert på over ";
       this.getString(this.filterIkkeKontrollerte);
@@ -152,6 +182,9 @@ export default {
     },
     returnSlider() {
       return this.slider;
+    },
+    returnFilterMonth() {
+      return this.filterMonth;
     }
   }
 };

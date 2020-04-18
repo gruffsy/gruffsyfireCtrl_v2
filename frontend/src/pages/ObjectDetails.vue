@@ -27,13 +27,12 @@
           scrollable
         >
           <v-card>
-            <v-toolbar dark color="primary">
+            <v-app-bar class="primary darken-2" dark app height="84" hide-on-scroll>
               <v-btn icon dark @click="dialog = false">
-                <v-icon>mdi-close</v-icon>
+                <v-icon x-large>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Settings</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
+            </v-app-bar>
+            <PickedObject class="my-1" :kid="kid" :objid="objid" :object="object" />
             <v-card-subtitle>
               <v-btn color="primary" dark class="ma-2" @click="dialog2 = !dialog2">Open Dialog 2</v-btn>
               <v-tooltip right>

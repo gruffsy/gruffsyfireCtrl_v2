@@ -27,7 +27,9 @@
       <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Gjenstår</v-chip>
       <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
-      <v-chip class="ma-1" color="light"><v-icon small>mdi-plus</v-icon> Legg til nytt objekt</v-chip>
+      <v-chip class="ma-1" color="light">
+        <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
+      </v-chip>
       <v-tabs>
         <v-tab @click="hideTable">Pr. etasje</v-tab>
         <v-tab @click="hideEtg">Tabell</v-tab>
@@ -108,11 +110,12 @@ export default {
     Navbar,
     Customer,
     ObjectTable,
-    PrevObject,
+    PrevObject
   },
   data() {
     return {
       hidden: "table",
+      slider: 200,
       items: [
         { title: "Click Me" },
         { title: "Click Me" },
@@ -124,19 +127,20 @@ export default {
       plasserings: null,
       objects: [],
       strFilter: this.filterIkkeKontrollerte,
-      filterIkkeKontrollerte: "sistekontroll__lte=2020-04-10",
-      filterKontrollerte: "sistekontroll__gte=2020-04-10",
+      filterIkkeKontrollerte: "sistekontroll__lte=",
+      filterKontrollerte: "sistekontroll__gte=",
       filterAlle: "",
-      FIlterAvvik: "",
+      filterAvvik: "avvik=true",
       filterText: " gjenstår å kontrollere",
       chipColor: "warning",
-      arrow: "true"
+      arrow: "true",
+      selectedFilter: ""
     };
   },
 
   props: ["objid", "kid"],
   created() {
-    this.retrieveAll();
+    this.retrieveAll(this.kid, this.filterIkkeKontrollerte);
   },
   methods: {
     hideTable() {
@@ -146,39 +150,42 @@ export default {
       this.hidden = "etg";
     },
     ikkeKontrollerte() {
-      this.strFilter = this.filterIkkeKontrollerte;
       this.filterText = " gjenstår å kontrollere";
-      this.retrieveAll();
       this.chipColor = "warning";
-      console.log(this.strFilter);
+      this.retrieveAll(this.kid, this.filterIkkeKontrollerte);
     },
     kontrollerte() {
-      this.strFilter = this.filterKontrollerte;
       this.filterText = " er kontrollert";
-      this.retrieveAll();
       this.chipColor = "success";
-      console.log(this.strFilter);
+      this.retrieveAll(this.kid, this.filterKontrollerte);
+      console.log(this.chipColor);
     },
     alleTilKontroll() {
-      this.strFilter = this.filterAlle;
       this.filterText = " totalt";
-      this.retrieveAll();
+
       this.chipColor = "primary";
+      this.retrieveAll(this.kid, this.filterAlle);
       console.log(this.strFilter);
     },
     kontrollerteAvvik() {
-      this.strFilter = this.FIlterAvvik;
       this.filterText = " er kontrollert med avvik";
-      this.retrieveAll();
       this.chipColor = "error";
+      this.retrieveAll(this.kid, this.filterAvvik);
+
       console.log(this.strFilter);
     },
-    retrieveAll() {
-      [
-        this.retrieveObjects(this.kid, this.strFilter),
-        this.retrieveEtgs(this.kid, this.strFilter),
-        this.retrieveLokasjons(this.kid, this.strFilter),
-        this.retrievePlasserings(this.kid, this.strFilter)
+    retrieveAll(kid, filter) {
+      var dt = new Date();
+      dt.setDate(dt.getDate() - this.slider);
+      this.selectedFilter = filter;
+      if (this.chipColor != "error")
+        filter = filter + dt.toISOString().substring(0, 10);
+
+      console.log(filter)[
+        (this.retrieveObjects(kid, filter),
+        this.retrieveEtgs(kid, filter),
+        this.retrieveLokasjons(kid, filter),
+        this.retrievePlasserings(kid, filter))
       ];
     },
     retrieveObjects(id, strFilter) {

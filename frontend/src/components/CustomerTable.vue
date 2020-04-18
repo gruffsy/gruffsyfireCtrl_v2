@@ -3,13 +3,24 @@
     <div id="app-instasearch">
       <v-card>
         <v-container fluid>
+        <v-row>
+          <v-col>
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
             label="Søk"
             single-line
             hide-details
-          ></v-text-field>
+          ></v-text-field></v-col> <v-col>
+          <v-select
+            :items="months"
+            v-model="key"
+            item-key="id"
+            item-text="navn"
+            value="id"
+            label="Filtrer på måned"
+            @change="filterMonth"
+          ></v-select></v-col></v-row>
         </v-container>
         <v-data-table
           :headers="headers"
@@ -21,11 +32,7 @@
           hide-default-footer="true"
           :search="search"
           :dense="dense"
-        >
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length">More info about {{ item.name }}</td>
-          </template>
-        </v-data-table>
+        ></v-data-table>
       </v-card>
     </div>
   </div>
@@ -35,9 +42,15 @@
 export default {
   name: "CustomerTable",
   components: {},
-  props: ["customers"],
+  //props: ["customers", "months",],
+  props: {
+    customers: { type: Array },
+    months: { type: Array }
+  },
   data() {
     return {
+      value: "I am the child.",
+      key: "",
       search: "",
       selectedItem: null,
       dense: false,
@@ -59,7 +72,9 @@ export default {
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.$emit("send-message", this.value);
+  },
   methods: {
     selectItem(item) {
       console.log("Item selected: " + item.id);
@@ -68,6 +83,9 @@ export default {
         path: "../customer-objects/",
         query: { kid: item.id }
       });
+    },
+    filterMonth() {
+      this.$emit("filterMonth", this.key);
     }
   }
 };
