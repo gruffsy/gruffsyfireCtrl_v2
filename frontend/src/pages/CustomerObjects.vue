@@ -139,8 +139,10 @@ export default {
   },
 
   props: ["objid", "kid"],
-  created() {
+  mounted() {
     this.retrieveAll(this.kid, this.filterIkkeKontrollerte);
+    //console.log(this.filterIkkeKontrollerte);
+    //console.log("kid what");
   },
   methods: {
     hideTable() {
@@ -162,7 +164,6 @@ export default {
     },
     alleTilKontroll() {
       this.filterText = " totalt";
-
       this.chipColor = "primary";
       this.retrieveAll(this.kid, this.filterAlle);
       console.log(this.strFilter);
@@ -177,11 +178,12 @@ export default {
     retrieveAll(kid, filter) {
       var dt = new Date();
       dt.setDate(dt.getDate() - this.slider);
-      this.selectedFilter = filter;
-      if (this.chipColor != "error")
+      this.strFilter = filter;
+      if (this.chipColor != "error") {
         filter = filter + dt.toISOString().substring(0, 10);
-
-      console.log(filter)[
+      }
+      console.log(filter);
+      [
         (this.retrieveObjects(kid, filter),
         this.retrieveEtgs(kid, filter),
         this.retrieveLokasjons(kid, filter),

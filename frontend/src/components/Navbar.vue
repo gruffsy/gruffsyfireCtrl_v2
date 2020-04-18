@@ -1,5 +1,4 @@
-<!-- TODO:    Index. Filtrere kunderesultat på måned
-     TODO:    CustomerObjects. ObjectTable filtreres på same måte som CustomerTable
+<!-- TODO:    CustomerObjects. ObjectTable filtreres på lokasjon og etage
 -->
 <template>
   <nav>

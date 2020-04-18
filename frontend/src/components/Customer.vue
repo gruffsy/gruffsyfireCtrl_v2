@@ -60,7 +60,13 @@ export default {
   data() {
     return {
       hidden: true,
-      customer: []
+      customer: [],
+      items: [
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
+      ],
     };
   },
   props: ["kid", "strFilter", "arrow"],

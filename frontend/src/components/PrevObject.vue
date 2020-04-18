@@ -57,7 +57,13 @@ export default {
   data() {
     return {
       hidden: true,
-      object: []
+      object: [],
+      items: [
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
+      ],
     };
   },
 

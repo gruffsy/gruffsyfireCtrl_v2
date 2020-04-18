@@ -9,10 +9,10 @@
 
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          <div
-            v-if="chipColor=='success' || chipColor=='warning'"
-          >{{resultCount}} {{filterText}} {{slider}} dager</div>
-          <div v-else>{{resultCount}} {{filterText}}</div>
+          <div v-if="chipColor == 'success' || chipColor == 'warning'">
+            {{ resultCount }} {{ filterText }} {{ slider }} dager
+          </div>
+          <div v-else>{{ resultCount }} {{ filterText }}</div>
           <v-spacer></v-spacer>
           <v-menu right>
             <template v-slot:activator="{ on }">
@@ -28,15 +28,25 @@
           </v-menu>
         </v-card-title>
       </v-card>
-      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte</v-chip>
-      <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Ikke kontrollert</v-chip>
-      <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
-      <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
-      <v-chip class="ma-1" color="light">
+
+      <v-chip class="mx-1" color="success" @click="kontrollerte"
+        >Kontrollerte</v-chip
+      >
+      <v-chip class="mx-1" color="warning" @click="ikkeKontrollerte"
+        >Ikke kontrollert</v-chip
+      >
+      <v-chip class="mx-1" color="error" @click="kontrollerteAvvik"
+        >Avvik</v-chip
+      >
+      <v-chip class="mx-1" color="primary" @click="alleTilKontroll"
+        >Alle</v-chip
+      >
+      <v-chip class="mx-1" color="light">
         <v-icon small>mdi-plus</v-icon>Legg til ny kunde
       </v-chip>
       <div :hidden="sliderHidden">
         <v-slider
+          dense
           v-model="slider"
           step="10"
           :thumb-size="18"
@@ -46,17 +56,11 @@
           :hidden="sliderHidden"
           @change="getString(selectedFilter)"
         ></v-slider>
-      </div><br>
-      selectedFilter: {{selectedFilter}} <br>
-      filterMonth: {{filterMonth}} <br>
-      filterIkkeKontrollerte: {{filterIkkeKontrollerte}} <br>
-      filterKontrollerte: {{filterKontrollerte}} <br>
-      filterAlle: {{filterAlle}} <br>
-      FIlterAvvik: {{FIlterAvvik}}<br>
+      </div>
       <CustomerTable
         :customers="customers"
         :months="months"
-        class="my-2"
+        class="my-1"
         @filterMonth="handleFilterMonth"
       />
 
@@ -86,11 +90,11 @@ export default {
     return {
       selectedFilter: this.filterIkkeKontrollerte,
       filterMonth: "",
-      filterIkkeKontrollerte: this.filterMonth + "&objekter__sistekontroll__lte=",
-      filterKontrollerte: this.filterMonth + "&objekter__sistekontroll__gte=",
-      filterAlle: this.filterMonth + "&",
-      FIlterAvvik: this.filterMonth + "&objekter__avvik=true",
-      
+      filterIkkeKontrollerte: "&objekter__sistekontroll__lte=",
+      filterKontrollerte: "&objekter__sistekontroll__gte=",
+      filterAlle: "",
+      filterAvvik: "&objekter__avvik=true",
+
       filterText: " er ikke kontrollert på over",
       chipColor: "warning",
       slider: 150,
@@ -113,10 +117,18 @@ export default {
   methods: {
     handleFilterMonth(event) {
       console.log("data after child handle: ", event); // get the data after child dealing
-      this.filterMonth = "month__navn=" + event;
       this.sliderHidden = true;
-      this.getString(this.filterMonth);
-      console.log(this.filterMonth);
+      if (event !== null) {
+        this.filterMonth = "month__navn=" + event;
+
+        this.getString(this.filterMonth);
+        console.log(this.filterMonth);
+      } else {
+        this.filterText = " totalt";
+        this.chipColor = "primary";
+        this.getString(this.filterAlle);
+        console.log(this.filterAlle);
+      }
     },
     getMonths() {
       this.$dataservice
@@ -130,29 +142,29 @@ export default {
         });
     },
     ikkeKontrollerte() {
-      this.filterText = " er ikke kontrollert på over ";
-      this.getString(this.filterIkkeKontrollerte);
       this.sliderHidden = false;
+      this.filterText = " er ikke kontrollert på over ";
+      this.getString(this.filterMonth + this.filterIkkeKontrollerte);
       this.chipColor = "warning";
     },
     kontrollerte() {
-      this.filterText = " er kontrollert siste ";
-      this.getString(this.filterKontrollerte);
       this.sliderHidden = false;
+      this.filterText = " er kontrollert siste ";
+      this.getString(this.filterMonth + this.filterKontrollerte);
       this.chipColor = "success";
     },
     alleTilKontroll() {
-      this.filterText = " totalt";
       this.sliderHidden = true;
-      this.getString(this.filterAlle);
+      this.filterText = " totalt";
+      this.getString(this.filterMonth + this.filterAlle);
       this.chipColor = "primary";
       console.log(this.strFilter);
     },
     kontrollerteAvvik() {
-      this.strFilter = this.FIlterAvvik;
-      this.filterText = " er kontrollert med avvik";
       this.sliderHidden = true;
-      this.getString(this.FIlterAvvik);
+      this.strFilter = this.filterAvvik;
+      this.filterText = " er kontrollert med avvik";
+      this.getString(this.filterMonth + this.filterAvvik);
       this.chipColor = "error";
       console.log(this.strFilter);
     },

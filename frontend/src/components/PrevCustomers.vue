@@ -3,17 +3,16 @@
     <div class="overline ma-2">Siste aktive kunde</div>
     <v-card-title class="headline mb-1" primary-title>
       <v-icon x-large class="px-1">mdi-home-city</v-icon>
-      {{customer.kunde}}
-      <v-btn dark icon @click="hidden=!hidden">
+      {{ customer.kunde }}
+      <v-btn dark icon @click="hidden = !hidden">
         <v-icon v-if="hidden">mdi-menu-down</v-icon>
         <v-icon v-if="!hidden">mdi-menu-up</v-icon>
       </v-btn>
       <router-link
-        v-if="!arrow"
         :to="{
-            path: '/customer-objects/',
-            query: {kid: customer.id}
-          }"
+          path: '/customer-objects/',
+          query: { kid: customer.id }
+        }"
       >
         <v-btn class="ml-10" dark icon depressed>
           <v-icon x-large>mdi-menu-right</v-icon>
@@ -35,16 +34,16 @@
     </v-card-title>
 
     <v-card-subtitle :hidden="hidden">
-      Trippletex: {{customer.tripletex}}
+      Trippletex: {{ customer.tripletex }}
       <br />
-      Adresse: {{customer.badresse}},
+      Adresse: {{ customer.badresse }},
       <br />
-      Postnr./-sted: {{customer.bpostnr}} {{customer.bpoststed}}
+      Postnr./-sted: {{ customer.bpostnr }} {{ customer.bpoststed }}
       <br />
-      Kontaktperson: {{customer.kontaktperson}}
+      Kontaktperson: {{ customer.kontaktperson }}
       <br />
-      tlf: {{customer.tlf1}}
-      <span v-if="customer.tlf2">/ {{customer.tlf2}}</span>
+      tlf: {{ customer.tlf1 }}
+      <span v-if="customer.tlf2">/ {{ customer.tlf2 }}</span>
     </v-card-subtitle>
   </v-card>
 </template>
@@ -55,7 +54,13 @@ export default {
     return {
       customer: [],
       kid: 344,
-      hidden: true
+      hidden: true,
+      items: [
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
+      ],
     };
   },
   methods: {

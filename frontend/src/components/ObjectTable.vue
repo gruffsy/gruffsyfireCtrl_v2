@@ -8,8 +8,8 @@
       :items="objects"
       class="cursor-pointer elevation-3"
       @click:row="selectItem"
-      disable-pagination="true"
-      hide-default-footer="true"
+      disable-pagination
+      hide-default-footer
       :search="search"
     ></v-data-table>
   </v-card>
@@ -39,7 +39,8 @@ export default {
         { text: "Neste 5/10-årskontroll", value: "nesteservice" },
         { text: "Avvik", value: "avvik" },
         { text: "ID", value: "id" }
-      ]
+      ],
+      
     };
   },
   methods: {
