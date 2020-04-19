@@ -12,13 +12,19 @@
       hide-default-footer
       :search="search"
     ></v-data-table>
+<ObjectDialog :objid="objid" :visibility="dialog=true" />
   </v-card>
 </template>
 <script>
+import ObjectDialog from "../components/ObjectDialog"
 export default {
   props: ["objects", "kid", "objid"],
+  components: {
+    ObjectDialog
+  },
   data() {
     return {
+      dialog: true,
       search: "",
       selectedItem: null,
       headers: [
@@ -48,12 +54,14 @@ export default {
       return this.object.fabrikat;
     },
     selectItem(item) {
-      console.log("Item selected: " + item.id);
+      //console.log("Item selected: " + item.id);
       // with query, resulting in /register?plan=private
-      this.$router.push({
-        path: "../object-details/",
-        query: { objid: item.id, kid: this.kid }
-      });
+      //this.$router.push({
+        //path: "../object-details/",
+        //query: { objid: item.id, kid: this.kid }
+      this.dialog=true;
+      this.objid=item.id;
+      //});
     }
   }
 };
