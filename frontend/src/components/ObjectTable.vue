@@ -1,8 +1,10 @@
 <template>
   <v-card>
     <v-container fluid>
+      <v-btn color="accent" large @click="showScheduleForm=true"></v-btn>
       <v-text-field v-model="search" append-icon="mdi-magnify" label="Søk" single-line hide-details></v-text-field>
     </v-container>
+    objid {{returnObjid}} {{object}}
     <v-data-table
       :headers="headers"
       :items="objects"
@@ -12,21 +14,24 @@
       hide-default-footer
       :search="search"
     ></v-data-table>
-<ObjectDialog :objid="objid" :visibility="dialog=true" />
+<ObjectDialog :object="object" :objid="returnObjid" v-model="showScheduleForm" />
   </v-card>
 </template>
 <script>
 import ObjectDialog from "../components/ObjectDialog"
 export default {
-  props: ["objects", "kid", "objid"],
+  props: ["objects", "kid"],
   components: {
     ObjectDialog
   },
   data() {
     return {
+      showScheduleForm: false,
       dialog: true,
       search: "",
       selectedItem: null,
+      objid: 3391,
+      object: [],
       headers: [
         {
           text: "Objekttype",
@@ -54,16 +59,33 @@ export default {
       return this.object.fabrikat;
     },
     selectItem(item) {
-      //console.log("Item selected: " + item.id);
-      // with query, resulting in /register?plan=private
-      //this.$router.push({
-        //path: "../object-details/",
-        //query: { objid: item.id, kid: this.kid }
-      this.dialog=true;
-      this.objid=item.id;
+     
+      
+      this.retrieveObject(item.id);
+      this.showForm();
+      
       //});
+    },
+    retrieveObject(id) {
+      
+      this.$dataservice
+        .getObject(id)
+        .then(response => {
+          this.object = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    showForm(){
+          this.showScheduleForm=true;
     }
-  }
+  },
+  computed:{
+    
+    
+    
+   }
 };
 </script>
 <style scoped>

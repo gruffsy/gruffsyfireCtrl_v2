@@ -43,15 +43,18 @@
               item-text="fabrikat"
               item-value="id"
             >
-              <template
-                slot="selection"
-                slot-scope="data"
-              >{{ data.item.fabrikat }} - {{ data.item.type }}</template>
+              <template slot="selection" slot-scope="data"
+                >{{ data.item.fabrikat }} - {{ data.item.type }}</template
+              >
               <template slot="item" slot-scope="data">
                 <template>
                   <v-list-item-content>
-                    <v-list-item-title v-html="data.item.fabrikat"></v-list-item-title>
-                    <v-list-item-subtitle v-html="data.item.type"></v-list-item-subtitle>
+                    <v-list-item-title
+                      v-html="data.item.fabrikat"
+                    ></v-list-item-title>
+                    <v-list-item-subtitle
+                      v-html="data.item.type"
+                    ></v-list-item-subtitle>
                   </v-list-item-content>
                 </template>
               </template>
@@ -155,10 +158,10 @@
             </v-menu>
           </v-col>
         </v-row>
-
+        {{ objectInput }}
         <v-btn class="mr-4" @click="updateObject()">Oppdater</v-btn>
         <br />
-        {{message}}
+        {{ message }}
       </form>
     </v-container>
   </v-card>
@@ -188,16 +191,29 @@ export default {
       nextServiceDateMenu: false
     };
   },
-
+watch: {
+    setObjectInput() {
+      this.objectInput = this.object;
+    },
+},
   computed: {
     fromDateDisp() {
       return this.fromDateVal;
       // format/do something with date
+    },
+    getObjectInput: {
+    // getter
+    get: function () {
+      console.log(this.objectInput)
+      return this.objectInput
+
+    },
+    // setter
+    set: function () {
+      this.objectInput = this.object
+      
     }
-  },
-  mounted() {
-    this.retrieveExtinguishants();
-    this.objectInput = this.object;
+  }
   },
   methods: {
     submit() {

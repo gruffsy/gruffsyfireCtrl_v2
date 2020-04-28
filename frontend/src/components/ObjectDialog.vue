@@ -1,18 +1,22 @@
 <template>
+  
+    
+  
   <v-dialog
-    v-model="dialog"
+    v-model="show"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
     scrollable
   >
     <v-card>
-      <v-app-bar class="primary darken-2" dark app height="84" hide-on-scroll>
-        <v-btn icon dark @click="dialog = false">
+      <v-toolbar class="primary darken-2" dark>
+        <v-btn icon dark @click.stop="show=false">
           <v-icon x-large>mdi-close</v-icon>
         </v-btn>
-      </v-app-bar>
-      <PickedObject class="my-1" :kid="kid" :objid="objid" :object="object" />
+      </v-toolbar>
+      <v-container fluid>
+     <PickedObject class="my-1" :object="object" />
       <v-card-subtitle>
         <v-btn color="primary" dark class="ma-2" @click="dialog2 = !dialog2">Open Dialog 2</v-btn>
         <v-tooltip right>
@@ -22,11 +26,12 @@
           Tool Tip
         </v-tooltip>
 
+object: {{object}}
         <v-divider></v-divider>
-        <Object :kid="kid" :objid="objid" :object="object" />
+        <Object :object="object" />
       </v-card-subtitle>
 
-      <div style="flex: 1 1 auto;"></div>
+      <div style="flex: 1 1 auto;"></div></v-container>
     </v-card>
   </v-dialog>
 </template>
@@ -35,12 +40,13 @@ import Object from "../components/Object";
 import PickedObject from "../components/PickedObject";
 
 export default {
-  name: "ObjectDetails",
+  name: "ObjectDialog",
   components: {
     Object,
     PickedObject
   },
-  props: ["objid", "kid"],
+  props: ["object", "value"],
+ 
   data() {
     return {
       items: [
@@ -66,38 +72,23 @@ export default {
         { text: "State 6" },
         { text: "State 7" }
       ],
-      dialog: false,
+   
 
-      object: [],
-      customer: []
+     
+     
     };
   },
-  created() {
-    this.retrieveObject(this.objid);
-    this.retrieveCustomer(this.kid);
-  },
-  methods: {
-    retrieveObject(id) {
-      this.$dataservice
-        .getObject(id)
-        .then(response => {
-          this.object = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    retrieveCustomer(id) {
-      this.$dataservice
-        .getCustomer(id)
-        .then(response => {
-          this.customer = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+  
+  computed: {
+    
+    show: {
+      get () {
+        return this.value
+      },
+      set (value) {
+         this.$emit('input', value)
+      }
     }
-  },
-  computed: {}
+  }
 };
 </script>
