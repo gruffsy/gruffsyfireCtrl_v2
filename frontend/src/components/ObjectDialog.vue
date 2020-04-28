@@ -1,22 +1,18 @@
 <template>
-  
-    
-  
   <v-dialog
-    v-model="show"
+    v-model="dialog"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
     scrollable
   >
     <v-card>
-      <v-toolbar class="primary darken-2" dark>
-        <v-btn icon dark @click.stop="show=false">
+      <v-app-bar class="primary darken-2" dark app height="84" hide-on-scroll>
+        <v-btn icon dark @click="dialog = false">
           <v-icon x-large>mdi-close</v-icon>
         </v-btn>
-      </v-toolbar>
-      <v-container fluid>
-     <PickedObject class="my-1" :object="object" />
+      </v-app-bar>
+      <PickedObject class="my-1" :kid="kid" :objid="objid" :object="object" />
       <v-card-subtitle>
         <v-btn color="primary" dark class="ma-2" @click="dialog2 = !dialog2">Open Dialog 2</v-btn>
         <v-tooltip right>
@@ -26,27 +22,24 @@
           Tool Tip
         </v-tooltip>
 
-object: {{object}}
         <v-divider></v-divider>
-        <Object :object="object" />
+        <Object :kid="kid" :objid="objid" :object="object" />
       </v-card-subtitle>
 
-      <div style="flex: 1 1 auto;"></div></v-container>
+      <div style="flex: 1 1 auto;"></div>
     </v-card>
   </v-dialog>
 </template>
 <script>
 import Object from "../components/Object";
 import PickedObject from "../components/PickedObject";
-
 export default {
-  name: "ObjectDialog",
+  name: "ObjectDetails",
   components: {
     Object,
     PickedObject
   },
-  props: ["object", "value"],
- 
+  props: ["objid", "kid"],
   data() {
     return {
       items: [
@@ -72,23 +65,37 @@ export default {
         { text: "State 6" },
         { text: "State 7" }
       ],
-   
-
-     
-     
+      dialog: false,
+      object: [],
+      customer: []
     };
   },
-  
-  computed: {
-    
-    show: {
-      get () {
-        return this.value
-      },
-      set (value) {
-         this.$emit('input', value)
-      }
+  created() {
+    this.retrieveObject(this.objid);
+    this.retrieveCustomer(this.kid);
+  },
+  methods: {
+    retrieveObject(id) {
+      this.$dataservice
+        .getObject(id)
+        .then(response => {
+          this.object = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    retrieveCustomer(id) {
+      this.$dataservice
+        .getCustomer(id)
+        .then(response => {
+          this.customer = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
-  }
+  },
+  computed: {}
 };
 </script>

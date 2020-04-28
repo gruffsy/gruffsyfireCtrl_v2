@@ -137,7 +137,6 @@ export default {
       selectedFilter: ""
     };
   },
-
   props: ["objid", "kid"],
   mounted() {
     this.retrieveAll(this.kid, this.filterIkkeKontrollerte);
@@ -172,7 +171,6 @@ export default {
       this.filterText = " er kontrollert med avvik";
       this.chipColor = "error";
       this.retrieveAll(this.kid, this.filterAvvik);
-
       console.log(this.strFilter);
     },
     retrieveAll(kid, filter) {
