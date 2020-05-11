@@ -29,72 +29,8 @@
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
       <v-chip class="ma-1" color="light">
         <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
-      </v-chip>
-      <v-tabs>
-        <v-tab @click="hideTable">Pr. etasje</v-tab>
-        <v-tab @click="hideEtg">Tabell</v-tab>
-      </v-tabs>
-      <ObjectTable :hidden="hidden=='table'" :objects="objects" :kid="kid" :objid="objid" />
-      <v-expansion-panels :hidden="hidden=='etg'">
-        <v-expansion-panel v-for="etg in etgs" :key="etg.id">
-          <v-expansion-panel-header>{{etg.etg}}. etg</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-list>
-              <!-- eslint-disable -->
-              <v-list-group v-if="lok.etg == etg.etg" v-for="lok in lokasjons" :key="lok.id">
-                <template v-slot:activator>
-                  <v-list-item-title>{{lok.lokasjon}}</v-list-item-title>
-                </template>
-                <!-- eslint-enable -->
-                <!-- eslint-disable -->
-                <v-list-group
-                  no-action
-                  sub-group
-                  v-if="(plassering.lokasjon == lok.lokasjon) & 
-                  (plassering.etg == etg.etg)"
-                  v-for="plassering in plasserings"
-                  :key="plassering.id"
-                >
-                  <!-- eslint-enable -->
-                  <template v-slot:activator>
-                    <v-list-item-content>
-                      <v-list-item-title>{{plassering.plassering}}</v-list-item-title>
-                    </v-list-item-content>
-                  </template>
-                  <!-- eslint-disable -->
-                  <v-list-item
-                    v-if="(obj.etg == etg.etg) &
-                          (obj.lokasjon == lok.lokasjon) &
-                          (obj.plassering == plassering.plassering)"
-                    v-for="obj in objects"
-                    :key="obj.id"
-                    link
-                    :to="{
-            path: '/object-details/',
-            query: { kid: obj.customer, objid: obj.id }
-          }"
-                  >
-                    <v-list-item-content>
-                      <!-- eslint-enable -->
-                      <v-list-item-title x-large>
-                        <v-list-item-icon>
-                          <v-icon x-large>mdi-fire-extinguisher</v-icon>
-                        </v-list-item-icon>
-                        {{obj.fabrikat}} {{obj.type}} {{obj.slukkemiddel}} {{obj.lengde}}
-                      </v-list-item-title>
-                      <v-list-item-subtitle>Objektnr. {{obj.id}}</v-list-item-subtitle>
-                      <v-list-item-subtitle>Produksjonsår: {{obj.prodyear}}</v-list-item-subtitle>
-                      <v-list-item-subtitle>Forrige 1-årskontroll: {{obj.sistekontroll}}</v-list-item-subtitle>
-                      <v-list-item-subtitle>Forrige 5-/10-årskontroll: {{ obj.sisteservice }}</v-list-item-subtitle>
-                      <v-list-item-subtitle>Neste 5-/10-årskontroll: {{ obj.nesteservice }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-group>
-              </v-list-group>
-            </v-list>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      </v-chip>TODO: Gi nytt navn til besteforeldre-barn metoder
+      <ObjectTable :objects="objects" :kid="kid" :objid="objid" @toggle-value="toggleValue" />
     </v-container>
   </div>
 </template>
@@ -144,11 +80,8 @@ export default {
     //console.log("kid what");
   },
   methods: {
-    hideTable() {
-      this.hidden = "table";
-    },
-    hideEtg() {
-      this.hidden = "etg";
+    toggleValue() {
+      this.alleTilKontroll();
     },
     ikkeKontrollerte() {
       this.filterText = " gjenstår å kontrollere";
@@ -193,39 +126,6 @@ export default {
         .getCustomerObjects(id, strFilter)
         .then(response => {
           this.objects = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    retrieveEtgs(id, strFilter) {
-      this.$dataservice
-        .getEtgs(id, strFilter)
-        .then(response => {
-          this.etgs = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    retrieveLokasjons(id, strFilter) {
-      this.$dataservice
-        .getLokasjons(id, strFilter)
-        .then(response => {
-          this.lokasjons = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    retrievePlasserings(id, strFilter) {
-      this.$dataservice
-        .getPlasserings(id, strFilter)
-        .then(response => {
-          this.plasserings = response.data;
           console.log(response.data);
         })
         .catch(e => {

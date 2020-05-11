@@ -19,7 +19,11 @@
             <v-btn dark text>Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <Object :object="object" />
+        
+        <Object 
+        :object="object"
+        v-on="$listeners"
+        />
       </v-card>
     </v-dialog>
   </div>
@@ -37,7 +41,9 @@ export default {
     return {};
   },
 
-  methods: {},
+  methods: {
+    
+  },
   mounted() {}
 };
 </script>

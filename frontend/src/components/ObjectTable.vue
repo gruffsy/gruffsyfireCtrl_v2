@@ -15,7 +15,7 @@
 
     <ObjectDialog 
     :object="object" 
-    
+    v-on="$listeners"
     v-model="dialog"/>
 
   </v-card>
