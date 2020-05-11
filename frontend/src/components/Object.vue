@@ -7,7 +7,7 @@
           <v-col cols="12" sm="6" md="4">
             <v-text-field
               label="Etasje"
-              v-model="objectInput.etg"
+              v-model="object.etg"
               type="number"
               prepend-icon="mdi-home-floor-1"
             ></v-text-field>
@@ -17,7 +17,7 @@
           <v-col cols="12" sm="6" md="4">
             <v-text-field
               label="Lokasjon"
-              v-model="objectInput.lokasjon"
+              v-model="object.lokasjon"
               prepend-icon="mdi-home-import-outline"
             ></v-text-field>
           </v-col>
@@ -27,7 +27,7 @@
             <v-text-field
               label="Plassering"
               prepend-icon="mdi-home-search-outline"
-              v-model="objectInput.plassering"
+              v-model="object.plassering"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -39,22 +39,19 @@
               :items="extinguishantItems"
               label="Slokker"
               prepend-icon="mdi-fire-extinguisher"
-              v-model="objectInput.extinguishant"
+              v-model="object.extinguishant"
               item-text="fabrikat"
               item-value="id"
             >
-              <template slot="selection" slot-scope="data"
-                >{{ data.item.fabrikat }} - {{ data.item.type }}</template
-              >
+              <template
+                slot="selection"
+                slot-scope="data"
+              >{{ data.item.fabrikat }} - {{ data.item.type }}</template>
               <template slot="item" slot-scope="data">
                 <template>
                   <v-list-item-content>
-                    <v-list-item-title
-                      v-html="data.item.fabrikat"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-html="data.item.type"
-                    ></v-list-item-subtitle>
+                    <v-list-item-title v-html="data.item.fabrikat"></v-list-item-title>
+                    <v-list-item-subtitle v-html="data.item.type"></v-list-item-subtitle>
                   </v-list-item-content>
                 </template>
               </template>
@@ -65,7 +62,7 @@
           <v-col cols="12" sm="6" md="4">
             <v-text-field
               label="Produksjonsår"
-              v-model="objectInput.prodyear"
+              v-model="object.prodyear"
               prepend-icon="mdi-update"
               type="text"
             ></v-text-field>
@@ -87,7 +84,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="objectInput.sisteservice"
+                  v-model="object.sisteservice"
                   label="Forrige 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
                   v-on="on"
@@ -96,7 +93,7 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="objectInput.sisteservice"
+                v-model="object.sisteservice"
                 @input="prevServiceDateMenu = false"
               ></v-date-picker>
             </v-menu>
@@ -114,7 +111,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="objectInput.nesteservice"
+                  v-model="object.nesteservice"
                   label="Neste 5/10-årskontroll"
                   prepend-icon="mdi-calendar"
                   readonly
@@ -124,7 +121,7 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="objectInput.nesteservice"
+                v-model="object.nesteservice"
                 @input="nextServiceDateMenu = false"
               ></v-date-picker>
             </v-menu>
@@ -142,7 +139,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="objectInput.sistekontroll"
+                  v-model="object.sistekontroll"
                   label="Forrige 1-årskontroll"
                   prepend-icon="mdi-calendar"
                   readonly
@@ -152,7 +149,7 @@
               <v-date-picker
                 locale="no-nb"
                 no-title
-                v-model="objectInput.sistekontroll"
+                v-model="object.sistekontroll"
                 @input="prevKontrollDateMenu = false"
               ></v-date-picker>
             </v-menu>
@@ -169,51 +166,27 @@
 
 <script>
 export default {
-  props: ["kid", "objid", "object"],
+  props: ["object"],
   data() {
     return {
       extinguishantItems: [],
       message: null,
-      objectInput: {
-        extinguishant: null,
-        etg: null,
-        plassering: null,
-        lokasjon: null,
-        prodyear: null,
-        sisteservice: null,
-        nesteservice: null,
-        sistekontroll: null,
-        modified: Date.now()
-      },
       checkbox: false,
       prevServiceDateMenu: false,
       prevKontrollDateMenu: false,
       nextServiceDateMenu: false
     };
   },
-watch: {
-    setObjectInput() {
-      this.objectInput = this.object;
-    },
-},
+  
   computed: {
     fromDateDisp() {
       return this.fromDateVal;
       // format/do something with date
     },
-    getObjectInput: {
-    // getter
-    get: function () {
-      console.log(this.objectInput)
-      return this.objectInput
-
-    },
-    // setter
-    set: function () {
-      this.objectInput = this.object
-      
-    }
-  }
+    
+  },
+  created() {
+    this.retrieveExtinguishants()
   },
   methods: {
     submit() {
@@ -224,7 +197,7 @@ watch: {
     },
     updateObject() {
       this.$dataservice
-        .updateObject(this.object.id, this.objectInput)
+        .updateObject(this.object.id, this.object)
         .then(response => {
           console.log(response.data);
           this.message = "Objektet ble oppdatert!";

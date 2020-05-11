@@ -12,19 +12,24 @@
       hide-default-footer
       :search="search"
     ></v-data-table>
-<ObjectDialog :objid="objid" :visibility="dialog=true" />
+
+    <ObjectDialog 
+    :object="object" 
+    
+    v-model="dialog"/>
+
   </v-card>
 </template>
 <script>
-import ObjectDialog from "../components/ObjectDialog"
+import ObjectDialog from "../components/ObjectDialog";
 export default {
-  props: ["objects", "kid", "objid"],
-  components: {
-    ObjectDialog
-  },
+  props: ["objects", "kid"],
+  components: {ObjectDialog},
   data() {
     return {
-      dialog: true,
+      object: [],
+      objid: 123,
+      dialog: false,
       search: "",
       selectedItem: null,
       headers: [
@@ -45,23 +50,34 @@ export default {
         { text: "Neste 5/10-årskontroll", value: "nesteservice" },
         { text: "Avvik", value: "avvik" },
         { text: "ID", value: "id" }
-      ],
-      
+      ]
     };
   },
   methods: {
+    retrieveObject(id) {
+      this.$dataservice
+        .getObject(id)
+        .then(response => {
+          this.object = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     objektnavn() {
       return this.object.fabrikat;
     },
     selectItem(item) {
-      //console.log("Item selected: " + item.id);
-      // with query, resulting in /register?plan=private
-      //this.$router.push({
-        //path: "../object-details/",
-        //query: { objid: item.id, kid: this.kid }
-      this.dialog=true;
-      this.objid=item.id;
-      //});
+      console.log("Item selected: " + item.id);
+
+      /*this.$router.push({
+        path: "../object-details/",
+        query: { objid: item.id, kid: this.kid }
+      });*/
+
+      this.objid = item.id;
+      this.retrieveObject(item.id);
+      this.dialog = true;
     }
   }
 };
@@ -71,3 +87,4 @@ export default {
   cursor: pointer;
 }
 </style>
+
