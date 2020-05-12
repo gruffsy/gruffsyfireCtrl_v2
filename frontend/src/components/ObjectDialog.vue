@@ -16,7 +16,7 @@
           <v-toolbar-title>TESTMODAL DIALOG!!!!</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text>Save</v-btn>
+            
           </v-toolbar-items>
         </v-toolbar>
         

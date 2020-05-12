@@ -1,8 +1,12 @@
 <template>
   <v-card>
     <v-container fluid>
-      TODO: Gi nytt navn til besteforeldre-barn metoder
-      <p>I am the grand-child: <v-btn color="success" @click="emitToggleEvent">Toggle the value</v-btn></p>
+<!-- TODO: Form flyttes til egen PROP
+     TODO: Oppdatert flyttes til Dialog-melding 
+     TODO: FLytte flere funksjoner inn i Object 
+     TODO: Gjøre tabellene mere lesbare i mobilform
+     TODO: Skrive kun tabell
+      -->
       <form>
         <v-row>
           <!-- Etasje -->
@@ -191,7 +195,7 @@ export default {
     this.retrieveExtinguishants()
   },
   methods: {
-    emitToggleEvent() { this.$emit('toggle-value') },
+    updateTable() { this.$emit('updateTable') },
     submit() {
       this.$v.$touch();
     },
@@ -204,7 +208,7 @@ export default {
         .then(response => {
           console.log(response.data);
           this.message = "Objektet ble oppdatert!";
-          this.emitToggleEvent(); 
+          this.updateTable(); 
           this.dialog = false;
         })
         .catch(e => {

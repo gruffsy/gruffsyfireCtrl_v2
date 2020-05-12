@@ -29,8 +29,8 @@
       <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
       <v-chip class="ma-1" color="light">
         <v-icon small>mdi-plus</v-icon>Legg til nytt objekt
-      </v-chip>TODO: Gi nytt navn til besteforeldre-barn metoder
-      <ObjectTable :objects="objects" :kid="kid" :objid="objid" @toggle-value="toggleValue" />
+      </v-chip>
+      <ObjectTable :objects="objects" :kid="kid" :objid="objid" @updateTable="updateTable" />
     </v-container>
   </div>
 </template>
@@ -80,8 +80,8 @@ export default {
     //console.log("kid what");
   },
   methods: {
-    toggleValue() {
-      this.alleTilKontroll();
+    updateTable() {
+      this.ikkeKontrollerte();
     },
     ikkeKontrollerte() {
       this.filterText = " gjenstår å kontrollere";
@@ -143,3 +143,28 @@ export default {
   }
 };
 </script>
+<style scoped>
+@media print {
+    body * {
+        visibility: hidden;
+        font-size: 20px !important;
+    }
+
+    #print, #print * {
+        visibility: visible;
+        border-bottom: none;
+    }
+
+    #title {
+        visibility: hidden;
+    }
+
+    #print {
+        padding: 20px;
+        position: fixed;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+}
+</style>

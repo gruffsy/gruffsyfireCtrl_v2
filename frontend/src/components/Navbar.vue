@@ -1,4 +1,6 @@
-<!-- TODO:    CustomerObjects. ObjectTable filtreres på lokasjon og etage
+<!-- TODO: Flytte akit og siste aktive kunde opp i navbar
+     TODO: Fjerne siste aktive objekt
+     TODO: Vurdere om det er behov for at navbar forsvinner ved scroll
 -->
 <template>
   <nav>
