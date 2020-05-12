@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-container fluid>
+    <v-container>
       <v-text-field v-model="search" append-icon="mdi-magnify" label="Søk" single-line hide-details></v-text-field>
     </v-container>
     <v-data-table

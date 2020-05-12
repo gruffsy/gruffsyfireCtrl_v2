@@ -1,29 +1,11 @@
 <template>
-  <v-card outlined color="primary" dark>
+  <v-layout align-center justify-center>
+  <v-card color="primary" dark>
     <div class="overline ma-2">Aktiv kunde</div>
-    <v-card-title class="headline mb-1" primary-title>
-      <v-icon x-large class="px-1">mdi-home-city</v-icon>
+    <v-card-title class="headline mb-1" primary-title> 
+      <v-icon x-large class="px-1">mdi-home</v-icon>
       {{customer.kunde}}
-      <v-btn dark icon @click="hidden=!hidden">
-        <v-icon v-if="hidden">mdi-menu-down</v-icon>
-        <v-icon v-if="!hidden">mdi-menu-up</v-icon>
-      </v-btn>
-      <router-link
-        v-if="!arrow"
-        :to="{
-            path: '/customer-objects/',
-            query: {kid: customer.id}
-          }"
-      >
-        <v-btn class="ml-10" dark icon depressed>
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on" x-large>mdi-menu-right</v-icon>
-            </template>
-            <span>Se kundens objekter</span>
-          </v-tooltip>
-        </v-btn>
-      </router-link>
+      
       <v-spacer></v-spacer>
       <v-menu top>
         <template v-slot:activator="{ on }">
@@ -52,6 +34,7 @@
       <span v-if="customer.tlf2">/ {{customer.tlf2}}</span>
     </v-card-subtitle>
   </v-card>
+  </v-layout>
 </template>
 
 <script>
@@ -59,7 +42,7 @@ export default {
   name: "Customer",
   data() {
     return {
-      hidden: true,
+      hidden: false,
       customer: [],
       items: [
         { title: "Click Me" },
@@ -82,7 +65,7 @@ export default {
         });
     }
   },
-  mounted() {
+  created() {
     this.retrieveCustomer(this.kid);
   }
 };

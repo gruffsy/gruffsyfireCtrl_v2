@@ -3,15 +3,11 @@
     <Navbar />
 
     <v-container>
-      <PrevCustomers />
-
-      <PrevObject class="my-1" />
-
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
-          <div v-if="chipColor == 'success' || chipColor == 'warning'">
-            {{ resultCount }} {{ filterText }} {{ slider }} dager
-          </div>
+          <div
+            v-if="chipColor == 'success' || chipColor == 'warning'"
+          >{{ resultCount }} {{ filterText }} {{ slider }} dager</div>
           <div v-else>{{ resultCount }} {{ filterText }}</div>
           <v-spacer></v-spacer>
           <v-menu right>
@@ -29,21 +25,18 @@
         </v-card-title>
       </v-card>
 
-      <v-chip class="mx-1" color="success" @click="kontrollerte"
-        >Kontrollerte</v-chip
-      >
-      <v-chip class="mx-1" color="warning" @click="ikkeKontrollerte"
-        >Ikke kontrollert</v-chip
-      >
-      <v-chip class="mx-1" color="error" @click="kontrollerteAvvik"
-        >Avvik</v-chip
-      >
-      <v-chip class="mx-1" color="primary" @click="alleTilKontroll"
-        >Alle</v-chip
-      >
-      <v-chip class="mx-1" color="light">
+      <v-chip class="ma-1" color="success" @click="kontrollerte">Kontrollerte</v-chip>
+      <v-chip class="ma-1" color="warning" @click="ikkeKontrollerte">Ikke kontrollert</v-chip>
+      <v-chip class="ma-1" color="error" @click="kontrollerteAvvik">Avvik</v-chip>
+      <v-chip class="ma-1" color="primary" @click="alleTilKontroll">Alle</v-chip>
+      <v-chip class="ma-1" color="light">
+        <v-icon small>mdi-home-city</v-icon>
+        <PrevSmallCustomer class="mx-1" />
+      </v-chip>
+      <v-chip class="ma-1" color="light">
         <v-icon small>mdi-plus</v-icon>Legg til ny kunde
       </v-chip>
+
       <div :hidden="sliderHidden">
         <v-slider
           dense
@@ -75,15 +68,15 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import PrevCustomers from "../components/PrevCustomers";
-import PrevObject from "../components/PrevObject";
+import PrevSmallCustomer from "../components/PrevSmallCustomer";
+//import PrevObject from "../components/PrevObject";
 import CustomerTable from "../components/CustomerTable";
 export default {
   name: "Index",
   components: {
     Navbar,
-    PrevCustomers,
-    PrevObject,
+    PrevSmallCustomer,
+    //  PrevObject,
     CustomerTable
   },
   data() {

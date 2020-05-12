@@ -1,10 +1,7 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar :kid="kid"/>
     <v-container>
-      <Customer :kid="kid" :arrow="arrow" />
-      <PrevObject class="my-1" />
-
       <v-card class="my-1 mb-2" flat dark :color="chipColor">
         <v-card-title>
           {{resultCount}} {{filterText}}
@@ -37,20 +34,15 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import Customer from "../components/Customer";
 import ObjectTable from "../components/ObjectTable";
-import PrevObject from "../components/PrevObject";
 export default {
   name: "CustomerObjects",
   components: {
     Navbar,
-    Customer,
     ObjectTable,
-    PrevObject
   },
   data() {
     return {
-      hidden: "table",
       slider: 200,
       items: [
         { title: "Click Me" },
@@ -58,9 +50,6 @@ export default {
         { title: "Click Me" },
         { title: "Click Me 2" }
       ],
-      etgs: null,
-      lokasjons: null,
-      plasserings: null,
       objects: [],
       strFilter: this.filterIkkeKontrollerte,
       filterIkkeKontrollerte: "sistekontroll__lte=",
@@ -76,9 +65,8 @@ export default {
   props: ["objid", "kid"],
   mounted() {
     this.retrieveAll(this.kid, this.filterIkkeKontrollerte);
-    //console.log(this.filterIkkeKontrollerte);
-    //console.log("kid what");
-  },
+    
+    },
   methods: {
     updateTable() {
       this.ikkeKontrollerte();
@@ -115,10 +103,8 @@ export default {
       }
       console.log(filter);
       [
-        (this.retrieveObjects(kid, filter),
-        this.retrieveEtgs(kid, filter),
-        this.retrieveLokasjons(kid, filter),
-        this.retrievePlasserings(kid, filter))
+        (this.retrieveObjects(kid, filter)
+        )
       ];
     },
     retrieveObjects(id, strFilter) {
@@ -143,28 +129,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-@media print {
-    body * {
-        visibility: hidden;
-        font-size: 20px !important;
-    }
-
-    #print, #print * {
-        visibility: visible;
-        border-bottom: none;
-    }
-
-    #title {
-        visibility: hidden;
-    }
-
-    #print {
-        padding: 20px;
-        position: fixed;
-        height: 100%;
-        left: 0;
-        top: 0;
-    }
-}
-</style>

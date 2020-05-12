@@ -161,7 +161,7 @@
             </v-menu>
           </v-col>
         </v-row>
-        {{ objectInput }}
+        
         <v-btn class="mr-4" @click="updateObject()">Oppdater</v-btn>
         <br />
         {{ message }}

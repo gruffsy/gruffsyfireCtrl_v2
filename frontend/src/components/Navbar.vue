@@ -1,6 +1,4 @@
-<!-- TODO: Flytte akit og siste aktive kunde opp i navbar
-     TODO: Fjerne siste aktive objekt
-     TODO: Vurdere om det er behov for at navbar forsvinner ved scroll
+<!-- TODO:
 -->
 <template>
   <nav>
@@ -16,46 +14,24 @@
           <span>Ctrl</span>
         </v-toolbar-title>
       </router-link>
-
-      <v-spacer></v-spacer>
+      <v-spacer />
+        <v-toolbar-title><SmallCustomer :kid="kid" v-if="kid"/></v-toolbar-title>
+      <v-spacer />
+      
       <v-btn v-if="token" @click="logout" text dark>
         <span>Logg ut</span>
         <v-icon right>mdi-exit-to-app</v-icon>
       </v-btn>
     </v-app-bar>
 
-    <!--
-
-    <v-navigation-drawer class="primary darken-1" color="white--text" dark app v-model="drawer">
-      <v-list-item>
-        <v-list-item-content @click="meny">
-          <v-list-item-title class="title">Meny</v-list-item-title>
-
-          <v-list-item-subtitle>
-            <v-icon size="20">{{ meny_icon }}</v-icon>fireCtrl
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list nav>
-        <v-list-item v-for="item in items" :key="item.title" link router :to="item.route">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>-->
+   
   </nav>
 </template>
 <script>
+import SmallCustomer from "./SmallCustomer"
 export default {
   name: "Navbar",
+  components: {SmallCustomer},
   data() {
     return {
       // token: localStorage.getItem("user-token") || null,
@@ -84,6 +60,7 @@ export default {
   created() {
     this.token = this.$token.getToken();
   },
+  props: ['kid'],
   methods: {
     meny() {
       this.drawer = !this.drawer;

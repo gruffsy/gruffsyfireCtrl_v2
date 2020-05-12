@@ -2,7 +2,7 @@
   <div>
     <div id="app-instasearch">
       <v-card>
-        <v-container fluid>
+        <v-container>
         <v-row>
            
           <v-col>
@@ -25,7 +25,7 @@
             @change="filterMonth"
           ></v-select></v-col>
           <v-col><br>
-            <v-chip bottom small @click="resetMonth()">Nullstill måned</v-chip>
+            <v-chip bottom small @click="resetMonth()">Nullstill søk og filter</v-chip>
           </v-col></v-row>
         </v-container>
         <v-data-table
@@ -92,6 +92,7 @@ export default {
     },
     resetMonth() {
       this.key = null;
+      this.search = "";
       this.filterMonth();
     },
     filterMonth() {
